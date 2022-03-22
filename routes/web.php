@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+// User Login
+Route::get('login/student', 'App\Http\Controllers\Auth\LoginController@showUserloginform')->name('userlogin');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 

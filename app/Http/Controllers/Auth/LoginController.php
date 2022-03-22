@@ -33,8 +33,29 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function logout()
     {
-        $this->middleware('guest')->except('logout');
+        Auth::logout();
+        $notification = array(
+            'message' => 'লগআউট সম্পন্ন হয়েছে!',
+            'alert-type' => 'error'
+        );
+        return redirect('/login/student')->with($notification);
+    }
+
+    // this is for admin 
+    // public function showAdminloginform()
+    // {
+    //     return view('auth.login', ['url'=>'admin']);
+    // }
+
+    // this is for agent
+    // public function showUserAgentloginform()
+    // {
+    //     return view('auth.login', ['url'=>'agent']);
+    // }
+    // This is for user login form
+    public function showUserloginform(){
+        return view('auth.login', ['url'=>'user']);
     }
 }

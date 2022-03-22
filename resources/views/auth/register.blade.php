@@ -68,6 +68,17 @@
                                                 </span>
                                             @enderror
                                         </div>
+                                        <div class="mb-3">
+                                            <label for="phone" class="form-label">Phone</label>
+                                            <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                                            value="{{ old('phone') }}" id="phone" name="phone" autofocus required
+                                                placeholder="Enter phone">
+                                            @error('phone')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
 
                                         <div class="mb-3">
                                             <label for="userpassword" class="form-label">Password</label>
