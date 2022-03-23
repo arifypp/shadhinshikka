@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Auth;
+use Response;
+use Session;
 
 class LoginController extends Controller
 {
@@ -54,8 +58,36 @@ class LoginController extends Controller
     // {
     //     return view('auth.login', ['url'=>'agent']);
     // }
+
     // This is for user login form
     public function showUserloginform(){
-        return view('auth.login', ['url'=>'user']);
+        return view('auth.login', ['url'=>'student']);
+    }
+
+    // this is for user login access 
+    public function Userlogin(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required',
+            'password' => 'required|min:8'
+        ]);
+    
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true) || Auth::attempt(['phone' => request('phone'), 'password' => request('password')], true)) {
+            if(Auth::user()->auth_role == 0)
+            {
+                $notification = array(
+                    'message' => 'স্বাগতম লগইন সম্পন্ন হয়েছে!',
+                    'alert-type' => 'success'
+                );
+                return redirect()->route('user.dashboard')->with($notification);
+            }
+            
+        }
+        return back()->withInput($request->only('email', 'remember'))->withErrors(
+            [
+                'email' => 'Email or Password doesn\'t matched in our database!',
+            ]
+        );
     }
 }

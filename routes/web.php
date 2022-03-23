@@ -13,12 +13,25 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
 Auth::routes();
+
 // User Login
 Route::get('login/student', 'App\Http\Controllers\Auth\LoginController@showUserloginform')->name('userlogin');
+Route::post('/login/student', 'App\Http\Controllers\Auth\LoginController@Userlogin');
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+
+Auth::routes(['verify' => true]);
+// User Dashboard Fuction
+Route::middleware(['verified'])->group(function () {
+    Route::group(['prefix' => 'student'], function(){
+        Route::group(['middleware' => 'student'], function () {
+            Route::get('/dashboard','App\Http\Controllers\Backend\Student\DashboardController@index')->name('user.dashboard');
+        });
+    });
+});
+
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
