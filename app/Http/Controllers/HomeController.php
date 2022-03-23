@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use Response;
 
 class HomeController extends Controller
 {
+        // Get District
+        
     /**
      * Create a new controller instance.
      *
@@ -51,6 +54,7 @@ class HomeController extends Controller
             return redirect()->back();
         }
     }
+
 
     public function updateProfile(Request $request, $id)
     {

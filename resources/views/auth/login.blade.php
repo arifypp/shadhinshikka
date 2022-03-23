@@ -64,8 +64,7 @@
                                         <div class="mb-3">
                                             <label for="username" class="form-label">Email</label>
                                             <input name="email" type="email"
-                                                class="form-control @error('email') is-invalid @enderror"
-                                                value="{{ old('email', 'admin@themesbrand.com') }}" id="username"
+                                                class="form-control @error('email') is-invalid @enderror" id="username"
                                                 placeholder="Enter Email" autocomplete="email" autofocus>
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
@@ -80,7 +79,7 @@
                                                 class="input-group auth-pass-inputgroup @error('password') is-invalid @enderror">
                                                 <input type="password" name="password"
                                                     class="form-control  @error('password') is-invalid @enderror"
-                                                    id="userpassword" value="123456" placeholder="Enter password"
+                                                    id="userpassword" placeholder="Enter password"
                                                     aria-label="Password" aria-describedby="password-addon">
                                                 <button class="btn btn-light " type="button" id="password-addon"><i
                                                         class="mdi mdi-eye-outline"></i></button>
@@ -160,3 +159,12 @@
         <!-- end account-pages -->
 
     @endsection
+@section('script')
+<script>
+    @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+</script>
+@endsection

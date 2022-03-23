@@ -9,6 +9,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use View;
+use Response;
+use Session;
 
 class RegisterController extends Controller
 {
@@ -53,7 +56,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'max:255', 'unique:users'],
+            'phone' => ['required','min:8', 'numeric', 'regex:/(?:\d{17}|\d{13}|\d{10})/'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'dob' => ['required', 'date', 'before:today'],
             'avatar' => ['required', 'image' ,'mimes:jpg,jpeg,png','max:1024'],
@@ -84,4 +87,43 @@ class RegisterController extends Controller
             'avatar' => "/images/" . $avatarName,
         ]);
     }
+
+
+    // Student Registration Form
+    public function ShowStudentForm(){
+        return view('auth.register', ['url'=>'student']);
+    }
+
+    protected function RegisterStudent(Request $request){
+
+        $this->validator($request->all())->validate();
+ 
+         if (request()->has('avatar')) {            
+             $avatar = request()->file('avatar');
+             $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+             $avatarPath = public_path('/images/');
+             $avatar->move($avatarPath, $avatarName);
+         }
+ 
+         $student = User::create([
+             'name' => $request['name'],
+             'phone' => $request['phone'],
+             'address' => $request['address'],
+             'email' => $request['email'],
+             'studentid'    =>  rand(1, 100000),
+             'password' => Hash::make($request['password']),
+             'dob' => date('Y-m-d', strtotime($request['dob'])),
+             'avatar' => "/images/" . $avatarName,
+ 
+         ]);
+ 
+         $notification = array(
+             'message' => 'রেজিস্ট্রেশন সম্পন্ন হয়েছে!',
+             'alert-type' => 'success'
+         );
+
+         return redirect()->route('userlogin')->with($notification);
+ 
+        // return view('auth.thankyou', ['user' => $teacher])->with($notification);
+     }
 }

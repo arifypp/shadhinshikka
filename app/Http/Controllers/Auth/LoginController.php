@@ -47,18 +47,6 @@ class LoginController extends Controller
         return redirect('/login/student')->with($notification);
     }
 
-    // this is for admin 
-    // public function showAdminloginform()
-    // {
-    //     return view('auth.login', ['url'=>'admin']);
-    // }
-
-    // this is for agent
-    // public function showUserAgentloginform()
-    // {
-    //     return view('auth.login', ['url'=>'agent']);
-    // }
-
     // This is for user login form
     public function showUserloginform(){
         return view('auth.login', ['url'=>'student']);
@@ -74,7 +62,7 @@ class LoginController extends Controller
     
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true) || Auth::attempt(['phone' => request('phone'), 'password' => request('password')], true)) {
-            if(Auth::user()->auth_role == 0)
+            if(Auth::user()->role == 'student')
             {
                 $notification = array(
                     'message' => 'স্বাগতম লগইন সম্পন্ন হয়েছে!',
@@ -87,6 +75,72 @@ class LoginController extends Controller
         return back()->withInput($request->only('email', 'remember'))->withErrors(
             [
                 'email' => 'Email or Password doesn\'t matched in our database!',
+            ]
+        );
+    }
+
+    // This is for teacher login form
+    public function TeacherLoginForm()
+    {
+        return view('auth.login', ['url'=>'teacher']);
+    }
+
+    // Teacher login action form
+    public function TeacherRquest(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required',
+            'password' => 'required|min:8'
+        ]);
+    
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true) || Auth::attempt(['phone' => request('phone'), 'password' => request('password')], true)) {
+            if(Auth::user()->role == 'teacher')
+            {
+                $notification = array(
+                    'message' => 'স্বাগতম লগইন সম্পন্ন হয়েছে!',
+                    'alert-type' => 'success'
+                );
+                return redirect()->route('teacher.dashboard')->with($notification);
+            }
+            
+        }
+        return back()->withInput($request->only('email', 'remember'))->withErrors(
+            [
+                'email' => 'Email or Password doesn\'t matched in our database!',
+            ]
+        );
+    }
+
+    // This is admin login 
+    public function AdminLoginForm()
+    {
+        return view('auth.login', ['url'=>'admin']);
+    }
+
+    // Admin Login Request 
+    public function AdminRequest(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required',
+            'password' => 'required|min:8'
+        ]);
+    
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true) || Auth::attempt(['phone' => request('phone'), 'password' => request('password')], true)) {
+            if(Auth::user()->role == 'admin')
+            {
+                $notification = array(
+                    'message' => 'স্বাগতম লগইন সম্পন্ন হয়েছে!',
+                    'alert-type' => 'success'
+                );
+                return redirect()->route('admin.dashboard')->with($notification);
+            }
+            
+        }
+        return back()->withInput($request->only('email', 'remember'))->withErrors(
+            [
+                'email' => 'You Dont have acceess in this page!',
             ]
         );
     }
