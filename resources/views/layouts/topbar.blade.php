@@ -14,10 +14,10 @@
 
                 <a href="index" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset ('/assets/images/logo-light.svg') }}" alt="" height="22">
+                        <img src="{{ 'storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset ('/assets/images/logo-light.png') }}" alt="" height="19">
+                        <img src="{{ 'storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="19">
                     </span>
                 </a>
             </div>

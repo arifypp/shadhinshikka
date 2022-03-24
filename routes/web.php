@@ -56,6 +56,14 @@ Route::middleware(['verified'])->group(function () {
     Route::group(['prefix' => 'admin'], function(){
         Route::group(['middleware' => 'admin'], function () {
             Route::get('/dashboard','App\Http\Controllers\Backend\Admin\DashboardController@index')->name('admin.dashboard');
+
+            // setting
+            Route::group(['prefix' => 'setting'], function(){
+                
+                Route::get('/manage','App\Http\Controllers\Backend\Admin\SettingController@index')->name('manage.settings');
+            });
+
+            
         });
     });
 });

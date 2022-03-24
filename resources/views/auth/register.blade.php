@@ -178,7 +178,7 @@
                                                 <div class="mb-3">
                                                     <label for="first-name" class="form-label">থানা</label>
                                                     <select name="thana" id="thana" class="form-control">
-                                                        <option value="0">থানা ানির্বাচন করুন</option>
+                                                        <option value="0">থানা নির্বাচন করুন</option>
                                                     </select>
                                                     @error('thana')
                                                         <span class="invalid-feedback" role="alert">
@@ -245,8 +245,8 @@
                                         </div> -->
 
                                         <div class="mt-4 text-center">
-                                            <p class="mb-0">By registering you agree to the Shahdhin Shikkha <a href="#"
-                                                    class="text-primary">Terms of Use</a></p>
+                                            <p class="mb-0">আপনি কি  Shahdhin Shikkha <a href="#"
+                                                    class="text-primary">শর্তাবালীর সাথে একমত?</a></p>
                                         </div>
                                     </form>
                                 </div>
@@ -256,12 +256,19 @@
                         <div class="mt-5 text-center">
 
                             <div>
-                                <p>Already have an account ? <a href="{{ url('login') }}" class="fw-medium text-primary">
-                                        Login</a> </p>
+                                <p>একাউন্ট তৈরি আছে ? 
+                                @isset($url)
+                                    <a href='{{ url("login/$url") }}' class="fw-medium text-primary">
+                                        লগইন করুন</a>
+                                @else
+                                <a href="{{ url('login/student') }}" class="fw-medium text-primary">
+                                        লগইন করুন</a>
+                                @endisset
+                                </p>
                                 <p>© <script>
                                         document.write(new Date().getFullYear())
 
-                                    </script> Shadhin Shikka. Crafted with <i class="mdi mdi-heart text-danger"></i> by Shadhin Shikka Team
+                                    </script> স্বাধীন শিক্ষা. ডিজাইন এবং ডেভেলোপমেন্ট <i class="mdi mdi-heart text-danger"></i> স্বাধীন শিক্ষা টিম
                                 </p>
                             </div>
                         </div>

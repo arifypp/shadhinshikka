@@ -10,65 +10,37 @@
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
 
                 <li>
-                    <a href="javascript: void(0);" class="waves-effect">
-                        <i class="bx bx-home-circle"></i><span class="badge rounded-pill bg-info float-end">04</span>
-                        <span key="t-dashboards">@lang('translation.Dashboards')</span>
+                    @if( Auth::user()->role == 'admin' )
+                    <a href="{{ route('admin.dashboard') }}" class="waves-effect">
+                        <span key="t-dashboards">ড্যাশবোর্ড</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="index" key="t-default">@lang('translation.Default')</a></li>
-                        <li><a href="dashboard-saas" key="t-saas">@lang('translation.Saas')</a></li>
-                        <li><a href="dashboard-crypto" key="t-crypto">@lang('translation.Crypto')</a></li>
-                        <li><a href="dashboard-blog" key="t-blog">@lang('translation.Blog')</a></li>
-                    </ul>
+                    @elseif( Auth::user()->role == 'teacher' )
+                    <a href="{{ route('teacher.dashboard') }}" class="waves-effect">
+                        <span key="t-dashboards">ড্যাশবোর্ড</span>
+                    </a>
+                    @elseif( Auth::user()->role == 'student' )
+                    <a href="{{ route('user.dashboard') }}" class="waves-effect">
+                        <span key="t-dashboards">ড্যাশবোর্ড</span>
+                    </a>
+                    @endif
+                    
                 </li>
 
+                <!--#### Admin Panel ####-->
+                @if( Auth::user()->role == 'admin' )
+                <li class="menu-title" key="t-apps">প্লাটফর্ম ফিচারড</li>
+                <!-- Basic settings -->
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-layout"></i>
-                        <span key="t-layouts">@lang('translation.Layouts')</span>
+                        <i class="bx bx-store"></i>
+                        <span key="t-basic">ব্যাসিক সেটিং</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow"
-                                key="t-vertical">@lang('translation.Vertical')</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="layouts-light-sidebar"
-                                        key="t-light-sidebar">@lang('translation.Light_Sidebar')</a></li>
-                                <li><a href="layouts-compact-sidebar"
-                                        key="t-compact-sidebar">@lang('translation.Compact_Sidebar')</a></li>
-                                <li><a href="layouts-icon-sidebar"
-                                        key="t-icon-sidebar">@lang('translation.Icon_Sidebar')</a></li>
-                                <li><a href="layouts-boxed" key="t-boxed-width">@lang('translation.Boxed_Width')</a>
-                                </li>
-                                <li><a href="layouts-preloader" key="t-preloader">@lang('translation.Preloader')</a>
-                                </li>
-                                <li><a href="layouts-colored-sidebar"
-                                        key="t-colored-sidebar">@lang('translation.Colored_Sidebar')</a></li>
-                                <li><a href="layouts-scrollable" key="t-scrollable">@lang('translation.Scrollable')</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow"
-                                key="t-horizontal">@lang('translation.Horizontal')</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="layouts-horizontal" key="t-horizontal">@lang('translation.Horizontal')</a>
-                                </li>
-                                <li><a href="layouts-hori-topbar-light"
-                                        key="t-topbar-light">@lang('translation.Topbar_Light')</a></li>
-                                <li><a href="layouts-hori-boxed-width"
-                                        key="t-boxed-width">@lang('translation.Boxed_Width')</a></li>
-                                <li><a href="layouts-hori-preloader"
-                                        key="t-preloader">@lang('translation.Preloader')</a></li>
-                                <li><a href="layouts-hori-colored-header"
-                                        key="t-colored-topbar">@lang('translation.Colored_Header')</a></li>
-                                <li><a href="layouts-hori-scrollable"
-                                        key="t-scrollable">@lang('translation.Scrollable')</a></li>
-                            </ul>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('manage.settings') }}" key="t-platform-settings">প্লাটফর্ম সেটিংস</a></li>
                         </li>
                     </ul>
                 </li>
+                @endif
 
                 <li class="menu-title" key="t-apps">@lang('translation.Apps')</li>
 
