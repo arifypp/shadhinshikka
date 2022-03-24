@@ -61,6 +61,10 @@ Route::middleware(['verified'])->group(function () {
             Route::group(['prefix' => 'setting'], function(){
                 
                 Route::get('/manage','App\Http\Controllers\Backend\Admin\SettingController@index')->name('manage.settings');
+
+                Route::post('/general-setting','App\Http\Controllers\Backend\Admin\SettingController@generelsetting')->name('general.settings');
+
+                Route::post('/mail-setting','App\Http\Controllers\Backend\Admin\SettingController@mailsetting')->name('mail.settings');
             });
 
             

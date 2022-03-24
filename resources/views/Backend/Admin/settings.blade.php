@@ -10,28 +10,23 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') Ecommerce @endslot
-        @slot('title') Checkout @endslot
+        @slot('li_1') বেসিক সেটিং @endslot
+        @slot('title') বেসিক সেটিং @endslot
     @endcomponent
 
     <div class="checkout-tabs">
         <div class="row">
             <div class="col-xl-2 col-sm-3">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-shipping-tab" data-bs-toggle="pill" href="#v-pills-shipping"
+                    <a class="nav-link active" id="general-setting" data-bs-toggle="pill" href="#v-pills-shipping"
                         role="tab" aria-controls="v-pills-shipping" aria-selected="true">
-                        <i class="bx bxs-truck d-block check-nav-icon mt-4 mb-2"></i>
-                        <p class="font-weight-bold mb-4">Shipping Info</p>
+                        <i class="bx bxs-cog d-block check-nav-icon mt-4 mb-2"></i>
+                        <p class="font-weight-bold mb-4">বেসিক সেটিং</p>
                     </a>
-                    <a class="nav-link" id="v-pills-payment-tab" data-bs-toggle="pill" href="#v-pills-payment" role="tab"
+                    <a class="nav-link" id="mail-setting" data-bs-toggle="pill" href="#v-pills-payment" role="tab"
                         aria-controls="v-pills-payment" aria-selected="false">
-                        <i class="bx bx-money d-block check-nav-icon mt-4 mb-2"></i>
-                        <p class="font-weight-bold mb-4">Payment Info</p>
-                    </a>
-                    <a class="nav-link" id="v-pills-confir-tab" data-bs-toggle="pill" href="#v-pills-confir" role="tab"
-                        aria-controls="v-pills-confir" aria-selected="false">
-                        <i class="bx bx-badge-check d-block check-nav-icon mt-4 mb-2"></i>
-                        <p class="font-weight-bold mb-4">Confirmation</p>
+                        <i class="bx bx-envelope d-block check-nav-icon mt-4 mb-2"></i>
+                        <p class="font-weight-bold mb-4">ই-মেইল সেটিং</p>
                     </a>
                 </div>
             </div>
@@ -40,461 +35,273 @@
                     <div class="card-body">
                         <div class="tab-content" id="v-pills-tabContent">
                             <div class="tab-pane fade show active" id="v-pills-shipping" role="tabpanel"
-                                aria-labelledby="v-pills-shipping-tab">
+                                aria-labelledby="general-setting">
                                 <div>
-                                    <h4 class="card-title">Shipping information</h4>
-                                    <p class="card-title-desc">Fill all information below</p>
-                                    <form>
+                                    <h4 class="card-title">প্লাটফর্ম সেটিং</h4>
+                                    <p class="card-title-desc">তথ্য পূরণ করুন এবং আপডেট করুন</p>
+                                    <form action="" method="POST" id="general-form" enctype="multipart/form-data">
+                                        @csrf
                                         <div class="form-group row mb-4">
-                                            <label for="billing-name" class="col-md-2 col-form-label">Name</label>
+                                            <label for="title" class="col-md-2 col-form-label">ওয়েবসাইট টাইটেল</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" id="billing-name"
-                                                    placeholder="Enter your name">
+                                                <input type="text" name="title" class="form-control" id="title"
+                                                value="{{ config('settings.title') }}"
+                                                    placeholder="সাইট টাইটেল লিখুন">
                                             </div>
                                         </div>
+                                       
                                         <div class="form-group row mb-4">
-                                            <label for="billing-email-address" class="col-md-2 col-form-label">Email
-                                                Address</label>
+                                            <label for="address" class="col-md-2 col-form-label">কোম্পানির ঠিকানা</label>
                                             <div class="col-md-10">
-                                                <input type="email" class="form-control" id="billing-email-address"
-                                                    placeholder="Enter your email">
+                                                <textarea class="form-control" name="address" id="address" rows="3"
+                                                    placeholder="ঠিকানা লিখুন">{{ config('settings.address') }}</textarea>
                                             </div>
                                         </div>
+
                                         <div class="form-group row mb-4">
-                                            <label for="billing-phone" class="col-md-2 col-form-label">Phone</label>
+                                            <label for="logo" class="col-md-2 col-form-label">প্লাটফর্ম লোগো</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" id="billing-phone"
-                                                    placeholder="Enter your Phone no.">
+                                                <div id="logo">
+
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="old_logo" id="old_logo" value="{{ config('settings.logo') }}">
+                                        </div>
+
+                                        <div class="form-group row mb-4">
+                                            <label for="adminlogo" class="col-md-2 col-form-label">এডমিন লোগো</label>
+                                            <div class="col-md-10">
+                                                <div id="adminlogo">
+                                                    
+                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="form-group row mb-4">
-                                            <label for="billing-address" class="col-md-2 col-form-label">Address</label>
+                                            <label for="favicon" class="col-md-2 col-form-label">প্লাটফর্ম ফেভকোন</label>
                                             <div class="col-md-10">
-                                                <textarea class="form-control" id="billing-address" rows="3"
-                                                    placeholder="Enter full address"></textarea>
+                                                <div id="favicon">
+                                                    
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="old_favicon" id="old_favicon" value="{{ config('settings.favicon') }}">
+                                        </div>
+
+                                        <div class="form-group row mb-4">
+                                            <label for="adminfevicon" class="col-md-2 col-form-label">এডমিন ফেভকোন</label>
+                                            <div class="col-md-10">
+                                                <div id="adminfavicon">
+                                                    
+                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="form-group row mb-4">
-                                            <label class="col-md-2 col-form-label">Country</label>
+                                            <label for="currency_code" class="col-md-2 col-form-label">কারেন্সি কোড</label>
                                             <div class="col-md-10">
-                                                <select class="form-control select2" title="Country">
-                                                    <option value="0">Select Country</option>
-                                                    <option value="AF">Afghanistan</option>
-                                                    <option value="AL">Albania</option>
-                                                    <option value="DZ">Algeria</option>
-                                                    <option value="AS">American Samoa</option>
-                                                    <option value="AD">Andorra</option>
-                                                    <option value="AO">Angola</option>
-                                                    <option value="AI">Anguilla</option>
-                                                    <option value="AQ">Antarctica</option>
-                                                    <option value="AR">Argentina</option>
-                                                    <option value="AM">Armenia</option>
-                                                    <option value="AW">Aruba</option>
-                                                    <option value="AU">Australia</option>
-                                                    <option value="AT">Austria</option>
-                                                    <option value="AZ">Azerbaijan</option>
-                                                    <option value="BS">Bahamas</option>
-                                                    <option value="BH">Bahrain</option>
-                                                    <option value="BD">Bangladesh</option>
-                                                    <option value="BB">Barbados</option>
-                                                    <option value="BY">Belarus</option>
-                                                    <option value="BE">Belgium</option>
-                                                    <option value="BZ">Belize</option>
-                                                    <option value="BJ">Benin</option>
-                                                    <option value="BM">Bermuda</option>
-                                                    <option value="BT">Bhutan</option>
-                                                    <option value="BO">Bolivia</option>
-                                                    <option value="BW">Botswana</option>
-                                                    <option value="BV">Bouvet Island</option>
-                                                    <option value="BR">Brazil</option>
-                                                    <option value="BN">Brunei Darussalam</option>
-                                                    <option value="BG">Bulgaria</option>
-                                                    <option value="BF">Burkina Faso</option>
-                                                    <option value="BI">Burundi</option>
-                                                    <option value="KH">Cambodia</option>
-                                                    <option value="CM">Cameroon</option>
-                                                    <option value="CA">Canada</option>
-                                                    <option value="CV">Cape Verde</option>
-                                                    <option value="KY">Cayman Islands</option>
-                                                    <option value="CF">Central African Republic</option>
-                                                    <option value="TD">Chad</option>
-                                                    <option value="CL">Chile</option>
-                                                    <option value="CN">China</option>
-                                                    <option value="CX">Christmas Island</option>
-                                                    <option value="CC">Cocos (Keeling) Islands</option>
-                                                    <option value="CO">Colombia</option>
-                                                    <option value="KM">Comoros</option>
-                                                    <option value="CG">Congo</option>
-                                                    <option value="CK">Cook Islands</option>
-                                                    <option value="CR">Costa Rica</option>
-                                                    <option value="CI">Cote d'Ivoire</option>
-                                                    <option value="HR">Croatia (Hrvatska)</option>
-                                                    <option value="CU">Cuba</option>
-                                                    <option value="CY">Cyprus</option>
-                                                    <option value="CZ">Czech Republic</option>
-                                                    <option value="DK">Denmark</option>
-                                                    <option value="DJ">Djibouti</option>
-                                                    <option value="DM">Dominica</option>
-                                                    <option value="DO">Dominican Republic</option>
-                                                    <option value="EC">Ecuador</option>
-                                                    <option value="EG">Egypt</option>
-                                                    <option value="SV">El Salvador</option>
-                                                    <option value="GQ">Equatorial Guinea</option>
-                                                    <option value="ER">Eritrea</option>
-                                                    <option value="EE">Estonia</option>
-                                                    <option value="ET">Ethiopia</option>
-                                                    <option value="FK">Falkland Islands (Malvinas)</option>
-                                                    <option value="FO">Faroe Islands</option>
-                                                    <option value="FJ">Fiji</option>
-                                                    <option value="FI">Finland</option>
-                                                    <option value="FR">France</option>
-                                                    <option value="GF">French Guiana</option>
-                                                    <option value="PF">French Polynesia</option>
-                                                    <option value="GA">Gabon</option>
-                                                    <option value="GM">Gambia</option>
-                                                    <option value="GE">Georgia</option>
-                                                    <option value="DE">Germany</option>
-                                                    <option value="GH">Ghana</option>
-                                                    <option value="GI">Gibraltar</option>
-                                                    <option value="GR">Greece</option>
-                                                    <option value="GL">Greenland</option>
-                                                    <option value="GD">Grenada</option>
-                                                    <option value="GP">Guadeloupe</option>
-                                                    <option value="GU">Guam</option>
-                                                    <option value="GT">Guatemala</option>
-                                                    <option value="GN">Guinea</option>
-                                                    <option value="GW">Guinea-Bissau</option>
-                                                    <option value="GY">Guyana</option>
-                                                    <option value="HT">Haiti</option>
-                                                    <option value="HN">Honduras</option>
-                                                    <option value="HK">Hong Kong</option>
-                                                    <option value="HU">Hungary</option>
-                                                    <option value="IS">Iceland</option>
-                                                    <option value="IN">India</option>
-                                                    <option value="ID">Indonesia</option>
-                                                    <option value="IQ">Iraq</option>
-                                                    <option value="IE">Ireland</option>
-                                                    <option value="IL">Israel</option>
-                                                    <option value="IT">Italy</option>
-                                                    <option value="JM">Jamaica</option>
-                                                    <option value="JP">Japan</option>
-                                                    <option value="JO">Jordan</option>
-                                                    <option value="KZ">Kazakhstan</option>
-                                                    <option value="KE">Kenya</option>
-                                                    <option value="KI">Kiribati</option>
-                                                    <option value="KR">Korea, Republic of</option>
-                                                    <option value="KW">Kuwait</option>
-                                                    <option value="KG">Kyrgyzstan</option>
-                                                    <option value="LV">Latvia</option>
-                                                    <option value="LB">Lebanon</option>
-                                                    <option value="LS">Lesotho</option>
-                                                    <option value="LR">Liberia</option>
-                                                    <option value="LY">Libyan Arab Jamahiriya</option>
-                                                    <option value="LI">Liechtenstein</option>
-                                                    <option value="LT">Lithuania</option>
-                                                    <option value="LU">Luxembourg</option>
-                                                    <option value="MO">Macau</option>
-                                                    <option value="MG">Madagascar</option>
-                                                    <option value="MW">Malawi</option>
-                                                    <option value="MY">Malaysia</option>
-                                                    <option value="MV">Maldives</option>
-                                                    <option value="ML">Mali</option>
-                                                    <option value="MT">Malta</option>
-                                                    <option value="MH">Marshall Islands</option>
-                                                    <option value="MQ">Martinique</option>
-                                                    <option value="MR">Mauritania</option>
-                                                    <option value="MU">Mauritius</option>
-                                                    <option value="YT">Mayotte</option>
-                                                    <option value="MX">Mexico</option>
-                                                    <option value="MD">Moldova, Republic of</option>
-                                                    <option value="MC">Monaco</option>
-                                                    <option value="MN">Mongolia</option>
-                                                    <option value="MS">Montserrat</option>
-                                                    <option value="MA">Morocco</option>
-                                                    <option value="MZ">Mozambique</option>
-                                                    <option value="MM">Myanmar</option>
-                                                    <option value="NA">Namibia</option>
-                                                    <option value="NR">Nauru</option>
-                                                    <option value="NP">Nepal</option>
-                                                    <option value="NL">Netherlands</option>
-                                                    <option value="AN">Netherlands Antilles</option>
-                                                    <option value="NC">New Caledonia</option>
-                                                    <option value="NZ">New Zealand</option>
-                                                    <option value="NI">Nicaragua</option>
-                                                    <option value="NE">Niger</option>
-                                                    <option value="NG">Nigeria</option>
-                                                    <option value="NU">Niue</option>
-                                                    <option value="NF">Norfolk Island</option>
-                                                    <option value="MP">Northern Mariana Islands</option>
-                                                    <option value="NO">Norway</option>
-                                                    <option value="OM">Oman</option>
-                                                    <option value="PW">Palau</option>
-                                                    <option value="PA">Panama</option>
-                                                    <option value="PG">Papua New Guinea</option>
-                                                    <option value="PY">Paraguay</option>
-                                                    <option value="PE">Peru</option>
-                                                    <option value="PH">Philippines</option>
-                                                    <option value="PN">Pitcairn</option>
-                                                    <option value="PL">Poland</option>
-                                                    <option value="PT">Portugal</option>
-                                                    <option value="PR">Puerto Rico</option>
-                                                    <option value="QA">Qatar</option>
-                                                    <option value="RE">Reunion</option>
-                                                    <option value="RO">Romania</option>
-                                                    <option value="RU">Russian Federation</option>
-                                                    <option value="RW">Rwanda</option>
-                                                    <option value="KN">Saint Kitts and Nevis</option>
-                                                    <option value="LC">Saint LUCIA</option>
-                                                    <option value="WS">Samoa</option>
-                                                    <option value="SM">San Marino</option>
-                                                    <option value="ST">Sao Tome and Principe</option>
-                                                    <option value="SA">Saudi Arabia</option>
-                                                    <option value="SN">Senegal</option>
-                                                    <option value="SC">Seychelles</option>
-                                                    <option value="SL">Sierra Leone</option>
-                                                    <option value="SG">Singapore</option>
-                                                    <option value="SK">Slovakia (Slovak Republic)</option>
-                                                    <option value="SI">Slovenia</option>
-                                                    <option value="SB">Solomon Islands</option>
-                                                    <option value="SO">Somalia</option>
-                                                    <option value="ZA">South Africa</option>
-                                                    <option value="ES">Spain</option>
-                                                    <option value="LK">Sri Lanka</option>
-                                                    <option value="SH">St. Helena</option>
-                                                    <option value="PM">St. Pierre and Miquelon</option>
-                                                    <option value="SD">Sudan</option>
-                                                    <option value="SR">Suriname</option>
-                                                    <option value="SZ">Swaziland</option>
-                                                    <option value="SE">Sweden</option>
-                                                    <option value="CH">Switzerland</option>
-                                                    <option value="SY">Syrian Arab Republic</option>
-                                                    <option value="TW">Taiwan, Province of China</option>
-                                                    <option value="TJ">Tajikistan</option>
-                                                    <option value="TZ">Tanzania, United Republic of</option>
-                                                    <option value="TH">Thailand</option>
-                                                    <option value="TG">Togo</option>
-                                                    <option value="TK">Tokelau</option>
-                                                    <option value="TO">Tonga</option>
-                                                    <option value="TT">Trinidad and Tobago</option>
-                                                    <option value="TN">Tunisia</option>
-                                                    <option value="TR">Turkey</option>
-                                                    <option value="TM">Turkmenistan</option>
-                                                    <option value="TC">Turks and Caicos Islands</option>
-                                                    <option value="TV">Tuvalu</option>
-                                                    <option value="UG">Uganda</option>
-                                                    <option value="UA">Ukraine</option>
-                                                    <option value="AE">United Arab Emirates</option>
-                                                    <option value="GB">United Kingdom</option>
-                                                    <option value="US">United States</option>
-                                                    <option value="UY">Uruguay</option>
-                                                    <option value="UZ">Uzbekistan</option>
-                                                    <option value="VU">Vanuatu</option>
-                                                    <option value="VE">Venezuela</option>
-                                                    <option value="VN">Viet Nam</option>
-                                                    <option value="VG">Virgin Islands (British)</option>
-                                                    <option value="VI">Virgin Islands (U.S.)</option>
-                                                    <option value="WF">Wallis and Futuna Islands</option>
-                                                    <option value="EH">Western Sahara</option>
-                                                    <option value="YE">Yemen</option>
-                                                    <option value="ZM">Zambia</option>
-                                                    <option value="ZW">Zimbabwe</option>
+                                                <input type="text" name="currency_code" class="form-control" id="currency_code"
+                                                value="{{ config('settings.currency_code') }}"
+                                                    placeholder="BDT / USD / NOR">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-4">
+                                            <label for="currency_symbol" class="col-md-2 col-form-label">কারেন্সি সিম্বোল</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="currency_symbol" class="form-control" id="currency_symbol"
+                                                value="{{ config('settings.currency_symbol') }}"
+                                                    placeholder="BDT / USD / NOR">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-4">
+                                            <label for="currency_symbol" class="col-md-2 col-form-label">কারেন্সি পজিশন</label>
+                                            <div class="col-md-10">
+                                                <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="currency_position" id="suffix" value="prefix" {{ config('settings.currency_direction') == 'suffix' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="inlineRadio1">Suffix</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="currency_position" id="prefix" value="prefix" {{ config('settings.currency_direction') == 'prefix' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="inlineRadio2">Prefix</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row mb-4">
+                                            <label class="col-md-2 col-form-label">টাইমজোন</label>
+                                            <div class="col-md-10">
+                                                <select class="form-control select2" title="timezone" name="timezone">
+                                                @foreach ($zones_array as $zone)
+                                                    <option value="{{ $zone['zone'] }}" {{ config('settings.timezone') == $zone['zone'] ? 'selected' : '' }}>
+                                                        {{ $zone['diff_from_GMT'].' - '.$zone['zone'] }}
+                                                    </option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="form-group row mb-4">
-                                            <label class="col-md-2 col-form-label">States</label>
+                                            <label class="col-md-2 col-form-label">তারিখ ফরমেট</label>
                                             <div class="col-md-10">
-                                                <select class="form-control select2" title="Country">
-                                                    <option value="0">Select States</option>
-                                                    <option value="AL">Alabama</option>
-                                                    <option value="AK">Alaska</option>
-                                                    <option value="AZ">Arizona</option>
-                                                    <option value="AR">Arkansas</option>
-                                                    <option value="CA">California</option>
-                                                    <option value="CO">Colorado</option>
-                                                    <option value="DE">Delaware</option>
-                                                    <option value="Fl"> Florida</option>
-                                                    <option value="GA">Georgia</option>
-                                                    <option value="HI">Hawaii</option>
-                                                    <option value="MT">Montana</option>
-                                                    <option value="NV">Nevada</option>
-                                                    <option value="NM">New Mexico</option>
-                                                    <option value="NY">New York</option>
-                                                    <option value="NC">North Dakota</option>
-                                                    <option value="TX">Texas</option>
-                                                    <option value="VA">Virginia</option>
-                                                    <option value="WI">Wisconsin</option>
-                                                    <option value="WY">Wyoming</option>
+                                                <select class="form-control select2" title="Date Format" name="date_format">
+                                                @foreach ($zones_array as $zone)
+                                                    <option value="F j, Y" {{ config('settings.date_format') == 'F j, Y' ? 'selected' : '' }}>
+                                                        {{ date('F j, Y') }}
+                                                    </option>
+                                                    <option value="M j, Y" {{ config('settings.date_format') == 'M j, Y' ? 'selected' : '' }}>
+                                                        {{ date('M j, Y') }}
+                                                    </option>
+                                                    <option value="j F, Y" {{ config('settings.date_format') == 'j F, Y' ? 'selected' : '' }}>
+                                                        {{ date('j F, Y') }}
+                                                    </option>
+                                                    <option value="j M, Y" {{ config('settings.date_format') == 'j M, Y' ? 'selected' : '' }}>
+                                                        {{ date('j M, Y') }}
+                                                    </option>
+                                                    <option value="Y-m-d" {{ config('settings.date_format') == 'Y-m-d' ? 'selected' : '' }}>
+                                                        {{ date('Y-m-d') }}
+                                                    </option>
+                                                    <option value="Y-M-d" {{ config('settings.date_format') == 'Y-M-d' ? 'selected' : '' }}>
+                                                        {{ date('Y-M-d') }}
+                                                    </option>
+                                                    <option value="Y/m/d" {{ config('settings.date_format') == 'Y/m/d' ? 'selected' : '' }}>
+                                                        {{ date('Y/m/d') }}
+                                                    </option>
+                                                    <option value="m/d/Y" {{ config('settings.date_format') == 'm/d/Y' ? 'selected' : '' }}>
+                                                        {{ date('m/d/Y') }}
+                                                    </option>
+                                                    <option value="d/m/Y" {{ config('settings.date_format') == 'd/m/Y' ? 'selected' : '' }}>
+                                                        {{ date('d/m/Y') }}
+                                                    </option>
+                                                    <option value="d.m.Y" {{ config('settings.date_format') == 'd.m.Y' ? 'selected' : '' }}>
+                                                        {{ date('d.m.Y') }}
+                                                    </option>
+                                                    <option value="d-m-Y" {{ config('settings.date_format') == 'd-m-Y' ? 'selected' : '' }}>
+                                                        {{ date('d-m-Y') }}
+                                                    </option>
+                                                    <option value="d-M-Y" {{ config('settings.date_format') == 'd-M-Y' ? 'selected' : '' }}>
+                                                        {{ date('d-M-Y') }}
+                                                    </option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group row mb-0">
-                                            <label for="example-textarea" class="col-md-2 col-form-label">Order
-                                                Notes:</label>
+
+                                        <div class="form-group row mb-4">
+                                            <label for="invoice_prefix" class="col-md-2 col-form-label">ইনভয়েস প্রেফিক্স</label>
                                             <div class="col-md-10">
-                                                <textarea class="form-control" id="example-textarea" rows="3"
-                                                    placeholder="Write some note.."></textarea>
+                                                <input type="text" name="invoice_prefix" class="form-control" id="invoice_prefix"
+                                                value="{{ config('settings.invoice_prefix') }}">
                                             </div>
                                         </div>
 
+                                        <div class="form-group row mb-4">
+                                            <label for="invoice_number" class="col-md-2 col-form-label">ইনভয়েস নাম্বার</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="invoice_number" class="form-control" id="invoice_number"
+                                                value="{{ config('settings.invoice_number') }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-4">
+                                            <div class="col-sm-6">                                       
+                                            </div> <!-- end col -->
+                                            <div class="col-sm-6">
+                                                <div class="text-end">
+                                                    <button type="button" class="btn btn-primary" id="general-save-btn" onclick="save_data('general')">সেভ করুন</button>
+                                                </div>
+                                            </div> <!-- end col -->
+                                        </div> <!-- end row -->
                                     </form>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="v-pills-payment" role="tabpanel"
                                 aria-labelledby="v-pills-payment-tab">
                                 <div>
-                                    <h4 class="card-title">Payment information</h4>
-                                    <p class="card-title-desc">Fill all information below</p>
+                                    <h4 class="card-title">ই-মেইল সেটিংস</h4>
+                                    <p class="card-title-desc">প্লাটফম ই-মেইল সেটিংস</p>
 
-                                    <div>
-                                        <div class="form-check form-check-inline font-size-16">
-                                            <input class="form-check-input" type="radio" name="paymentoptionsRadio"
-                                                id="paymentoptionsRadio1" checked>
-                                            <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i
-                                                    class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Credit /
-                                                Debit Card</label>
+                                    <form id="mail-form" method="post">
+                                        @csrf
+                                        <div class="form-group row mb-4">
+                                            <label class="col-md-2 col-form-label">মেইল ড্রাইভার</label>
+                                            <div class="col-md-10">
+                                                <select class="form-control " title="mail mailer" name="mail_mailer">
+                                                @foreach (MAIL_MAILER as $driver)
+                                                    <option value="{{ $driver }}" {{ config('settings.mail_mailer') == $driver ? 'selected' : '' }}>
+                                                        {{ $driver }}
+                                                    </option>
+                                                @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-check form-check-inline font-size-16">
-                                            <input class="form-check-input" type="radio" name="paymentoptionsRadio"
-                                                id="paymentoptionsRadio2">
-                                            <label class="form-check-label font-size-13" for="paymentoptionsRadio2"><i
-                                                    class="fab fa-cc-paypal me-1 font-size-20 align-top"></i> Paypal</label>
-                                        </div>
-                                        <div class="form-check form-check-inline font-size-16">
-                                            <input class="form-check-input" type="radio" name="paymentoptionsRadio"
-                                                id="paymentoptionsRadio3">
-                                            <label class="form-check-label font-size-13" for="paymentoptionsRadio3"><i
-                                                    class="far fa-money-bill-alt me-1 font-size-20 align-top"></i> Cash on
-                                                Delivery</label>
-                                        </div>
-                                    </div>
 
-                                    <h5 class="mt-5 mb-3 font-size-15">For card Payment</h5>
-                                    <div class="p-4 border">
-                                        <form>
-                                            <div class="form-group mb-0">
-                                                <label for="cardnumberInput">Card Number</label>
-                                                <input type="text" class="form-control" id="cardnumberInput"
-                                                    placeholder="0000 0000 0000 0000">
+                                        <div class="form-group row mb-4">
+                                            <label for="mail_host" class="col-md-2 col-form-label">মেইল হোস্ট নাম</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="mail_host" class="form-control" id="mail_host" value="{{ config('settings.mail_host') }}">
                                             </div>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="form-group mt-4 mb-0">
-                                                        <label for="cardnameInput">Name on card</label>
-                                                        <input type="text" class="form-control" id="cardnameInput"
-                                                            placeholder="Name on Card">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <div class="form-group mt-4 mb-0">
-                                                        <label for="expirydateInput">Expiry date</label>
-                                                        <input type="text" class="form-control" id="expirydateInput"
-                                                            placeholder="MM/YY">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <div class="form-group mt-4 mb-0">
-                                                        <label for="cvvcodeInput">CVV Code</label>
-                                                        <input type="text" class="form-control" id="cvvcodeInput"
-                                                            placeholder="Enter CVV Code">
-                                                    </div>
-                                                </div>
+                                        </div>
+
+                                        <div class="form-group row mb-4">
+                                            <label for="mail_username" class="col-md-2 col-form-label">মেইল ইউজার নাম</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="mail_username" class="form-control" id="mail_username" value="{{ config('settings.mail_username') }}">
                                             </div>
-                                        </form>
-                                    </div>
+                                        </div>
+
+                                        <div class="form-group row mb-4">
+                                            <label for="mail_password" class="col-md-2 col-form-label">মেইল পাসওয়ার্ড</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="mail_password" class="form-control" id="mail_password" value="{{ config('settings.mail_password') }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-4">
+                                            <label for="mail_from_name" class="col-md-2 col-form-label">সেন্ডার নাম</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="mail_from_name" class="form-control" id="mail_from_name" value="{{ config('settings.mail_from_name') }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-4">
+                                            <label for="mail_port" class="col-md-2 col-form-label">মেইল পোর্ট</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="mail_port" class="form-control" id="mail_port" value="{{ config('settings.mail_port') }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-4">
+                                            <label class="col-md-2 col-form-label">মেইল এন্ক্রিপশন</label>
+                                            <div class="col-md-10">
+                                                <select class="form-control" title="mail encryption" name="mail_encryption">
+                                                @foreach (MAIL_ENCRYPTION as $key => $value)
+                                                    <option value="{{ $value }}" {{ config('settings.mail_encryption') == $value ? 'selected' : '' }}>
+                                                        {{ $key }}
+                                                    </option>
+                                                @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-4">
+                                            <div class="col-sm-6">                                       
+                                            </div> <!-- end col -->
+                                            <div class="col-sm-6">
+                                                <div class="text-end">
+                                                    <button type="button" class="btn btn-primary" id="mail-save-btn" onclick="save_data('mail')">সেভ করুন</button>
+                                                </div>
+                                            </div> <!-- end col -->
+                                        </div> <!-- end row -->
+                                    </form>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="v-pills-confir" role="tabpanel"
-                                aria-labelledby="v-pills-confir-tab">
-                                <div class="card shadow-none border mb-0">
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-4">Order Summary</h4>
-
-                                        <div class="table-responsive">
-                                            <table class="table align-middle mb-0 table-nowrap">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th scope="col">Product</th>
-                                                        <th scope="col">Product Desc</th>
-                                                        <th scope="col">Price</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row"><img
-                                                                src="{{ URL::asset('/assets/images/product/img-1.png') }}"
-                                                                alt="product-img" title="product-img" class="avatar-md">
-                                                        </th>
-                                                        <td>
-                                                            <h5 class="font-size-14 text-truncate"><a
-                                                                    href="ecommerce-product-detail"
-                                                                    class="text-dark">Half sleeve T-shirt (64GB) </a></h5>
-                                                            <p class="text-muted mb-0">$ 450 x 1</p>
-                                                        </td>
-                                                        <td>$ 450</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row"><img
-                                                                src="{{ URL::asset('/assets/images/product/img-7.png') }}"
-                                                                alt="product-img" title="product-img" class="avatar-md">
-                                                        </th>
-                                                        <td>
-                                                            <h5 class="font-size-14 text-truncate"><a
-                                                                    href="ecommerce-product-detail"
-                                                                    class="text-dark">Wirless Headphone </a></h5>
-                                                            <p class="text-muted mb-0">$ 225 x 1</p>
-                                                        </td>
-                                                        <td>$ 225</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <h6 class="m-0 text-end">Sub Total:</h6>
-                                                        </td>
-                                                        <td>
-                                                            $ 675
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3">
-                                                            <div class="bg-primary bg-soft p-3 rounded">
-                                                                <h5 class="font-size-14 text-primary mb-0"><i
-                                                                        class="fas fa-shipping-fast me-2"></i> Shipping
-                                                                    <span class="float-end">Free</span>
-                                                                </h5>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <h6 class="m-0 text-end">Total:</h6>
-                                                        </td>
-                                                        <td>
-                                                            $ 675
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
-                <div class="row mt-4">
-                    <div class="col-sm-6">
-                        <a href="ecommerce-cart" class="btn text-muted d-none d-sm-inline-block btn-link">
-                            <i class="mdi mdi-arrow-left me-1"></i> Back to Shopping Cart </a>
-                    </div> <!-- end col -->
-                    <div class="col-sm-6">
-                        <div class="text-end">
-                            <a href="ecommerce-checkout" class="btn btn-success">
-                                <i class="mdi mdi-truck-fast me-1"></i> Proceed to Shipping </a>
-                        </div>
-                    </div> <!-- end col -->
-                </div> <!-- end row -->
+                
             </div>
         </div>
     </div>
@@ -507,4 +314,142 @@
 
     <!-- init js -->
     <script src="{{ URL::asset('/assets/js/pages/ecommerce-select2.init.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/pages/spartan-multi-image-picker-min.js') }}"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#logo').spartanMultiImagePicker({
+            fieldName: 'logo',
+            maxCount: 1,
+            rowHeight: '100px',
+            groupClassName: 'col-md-12 com-sm-12 com-xs-12',
+            maxFileSize: '',
+            dropFileLabel: 'Drop Here',
+            allowExt: 'png|jpg|jpeg',
+            onExtensionErr: function(index, file){
+                Swal.fire({icon:'error',title:'Oops...',text: 'Only png, jpg and jpeg file format allowed!'});
+            }
+        });
+        $('#adminlogo').spartanMultiImagePicker({
+            fieldName: 'adminlogo',
+            maxCount: 1,
+            rowHeight: '100px',
+            groupClassName: 'col-md-12 com-sm-12 com-xs-12',
+            maxFileSize: '',
+            dropFileLabel: 'Drop Here',
+            allowExt: 'png|jpg|jpeg',
+            onExtensionErr: function(index, file){
+                Swal.fire({icon:'error',title:'Oops...',text: 'Only png, jpg and jpeg file format allowed!'});
+            }
+        });
+        
+        $('#favicon').spartanMultiImagePicker({
+            fieldName: 'favicon',
+            maxCount: 1,
+            rowHeight: '100px',
+            groupClassName: 'col-md-12 com-sm-12 com-xs-12',
+            maxFileSize: '',
+            dropFileLabel: 'Drop Here',
+            allowExt: 'png',
+            onExtensionErr: function(index, file){
+                Swal.fire({icon:'error',title:'Oops...',text: 'Only png file format allowed!'});
+            }
+        });
+
+        $('#adminfavicon').spartanMultiImagePicker({
+            fieldName: 'adminfavicon',
+            maxCount: 1,
+            rowHeight: '100px',
+            groupClassName: 'col-md-12 com-sm-12 com-xs-12',
+            maxFileSize: '',
+            dropFileLabel: 'Drop Here',
+            allowExt: 'png',
+            onExtensionErr: function(index, file){
+                Swal.fire({icon:'error',title:'Oops...',text: 'Only png file format allowed!'});
+            }
+        });
+
+
+        $('input[name="logo"],input[name="adminlogo"],input[name="adminfavicon"],input[name="favicon"]').prop('required',true);
+
+        $('.remove-files').on('click', function(){
+            $(this).parents('.col-md-12').remove();
+        });
+
+
+        @if(config('settings.logo'))
+        $('#logo img.spartan_image_placeholder').css('display','none');
+        $('#logo .spartan_remove_row').css('display','none');
+        $('#logo .img_').css('display','block');
+        $('#logo .img_').attr('src','{{ asset("storage/".LOGO_PATH.config("settings.logo")) }}');
+        @endif
+
+        @if(config('settings.adminlogo'))
+        $('#adminlogo img.spartan_image_placeholder').css('display','none');
+        $('#adminlogo .spartan_remove_row').css('display','none');
+        $('#adminlogo .img_').css('display','block');
+        $('#adminlogo .img_').attr('src','{{ asset("storage/".LOGO_PATH.config("settings.adminlogo")) }}');
+        @endif
+
+        @if(config('settings.favicon'))
+        $('#favicon img.spartan_image_placeholder').css('display','none');
+        $('#favicon .spartan_remove_row').css('display','none');
+        $('#favicon .img_').css('display','block');
+        $('#favicon .img_').attr('src','{{ asset("storage/".LOGO_PATH.config("settings.favicon")) }}');
+        @endif
+
+        @if(config('settings.adminfavicon'))
+        $('#adminfavicon img.spartan_image_placeholder').css('display','none');
+        $('#adminfavicon .spartan_remove_row').css('display','none');
+        $('#adminfavicon .img_').css('display','block');
+        $('#adminfavicon .img_').attr('src','{{ asset("storage/".LOGO_PATH.config("settings.adminfavicon")) }}');
+        @endif
+       
+    });
+
+    function save_data(form_id) {
+    let form = document.getElementById(form_id+'-form');
+    let formData = new FormData(form);
+    let url;
+    if(form_id == 'general'){
+        url = "{{ route('general.settings') }}";
+    }else{
+        url = "{{ route('mail.settings') }}";
+    }
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: formData,
+        dataType: "JSON",
+        contentType: false,
+        processData: false,
+        cache: false,
+        beforeSend: function(){
+            $('#'+form_id+'-save-btn').addClass('spinner-border spinner-border-sm');
+        },
+        complete: function(){
+            $('#'+form_id+'-save-btn').removeClass('spinner-border spinner-border-sm');
+        },
+        success: function (data) {
+            $('#'+form_id+'-form').find('.is-invalid').removeClass('is-invalid');
+            $('#'+form_id+'-form').find('.error').remove();
+            if (data.status == false) {
+                $.each(data.errors, function (key, value) {
+                    $('#'+form_id+'-form input#' + key).addClass('is-invalid');
+                    $('#'+form_id+'-form textarea#' + key).addClass('is-invalid');
+                    $('#'+form_id+'-form select#' + key).parent().addClass('is-invalid');
+                $('#'+form_id+'-form #' + key).parent().append(
+                    '<small class="error text-danger">' + value + '</small>');
+                });
+            } else {
+                notification(data.status, data.message);
+            }
+        },
+        error: function (xhr, ajaxOption, thrownError) {
+            console.log(thrownError + '\r\n' + xhr.statusText + '\r\n' + xhr.responseText);
+        }
+    });
+}
+
+</script>
 @endsection

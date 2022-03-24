@@ -38,9 +38,10 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function generelsetting(Request $request)
     {
         //
+        dd("working general setting");
     }
 
     /**
@@ -49,9 +50,10 @@ class SettingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function mailsetting(Request $request)
     {
         //
+        dd("working mail setting");
     }
 
     /**
