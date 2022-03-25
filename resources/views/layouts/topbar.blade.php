@@ -5,19 +5,19 @@
             <div class="navbar-brand-box">
                 <a href="index" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset ('/assets/images/logo.svg') }}" alt="" height="22">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset ('/assets/images/logo-dark.png') }}" alt="" height="17">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="17">
                     </span>
                 </a>
 
                 <a href="index" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ 'storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="22">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminfavicon') }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ 'storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="19">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="60">
                     </span>
                 </a>
             </div>

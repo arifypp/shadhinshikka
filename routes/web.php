@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/login', function () {
+    return redirect(route('userlogin'));
+});
+
 // Student Login
 Route::get('login/student', 'App\Http\Controllers\Auth\LoginController@showUserloginform')->name('userlogin');
 Route::post('/login/student', 'App\Http\Controllers\Auth\LoginController@Userlogin');

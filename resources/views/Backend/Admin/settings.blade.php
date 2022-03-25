@@ -75,6 +75,7 @@
                                                     
                                                 </div>
                                             </div>
+                                            <input type="hidden" name="old_adminlogo" id="old_adminlogo" value="{{ config('settings.adminlogo') }}">
                                         </div>
 
                                         <div class="form-group row mb-4">
@@ -94,6 +95,7 @@
                                                     
                                                 </div>
                                             </div>
+                                            <input type="hidden" name="old_adminfavicon" id="old_adminfavicon" value="{{ config('settings.adminfavicon') }}">
                                         </div>
 
                                         <div class="form-group row mb-4">
@@ -115,7 +117,7 @@
                                         </div>
 
                                         <div class="form-group row mb-4">
-                                            <label for="currency_symbol" class="col-md-2 col-form-label">কারেন্সি পজিশন</label>
+                                            <label for="currency_position" class="col-md-2 col-form-label">কারেন্সি পজিশন</label>
                                             <div class="col-md-10">
                                                 <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="currency_position" id="suffix" value="prefix" {{ config('settings.currency_direction') == 'suffix' ? 'checked' : '' }}>
@@ -254,7 +256,7 @@
                                         <div class="form-group row mb-4">
                                             <label for="mail_password" class="col-md-2 col-form-label">মেইল পাসওয়ার্ড</label>
                                             <div class="col-md-10">
-                                                <input type="text" name="mail_password" class="form-control" id="mail_password" value="{{ config('settings.mail_password') }}">
+                                                <input type="password" name="mail_password" class="form-control" id="mail_password" value="{{ config('settings.mail_password') }}">
                                             </div>
                                         </div>
 
@@ -315,7 +317,13 @@
     <!-- init js -->
     <script src="{{ URL::asset('/assets/js/pages/ecommerce-select2.init.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/pages/spartan-multi-image-picker-min.js') }}"></script>
-
+    <script>
+        @if(count($errors) > 0)
+            @foreach($errors->all() as $error)
+                toastr.error("{{ $error }}");
+            @endforeach
+        @endif
+    </script>
 <script>
     $(document).ready(function(){
         $('#logo').spartanMultiImagePicker({
@@ -442,7 +450,7 @@
                     '<small class="error text-danger">' + value + '</small>');
                 });
             } else {
-                notification(data.status, data.message);
+                toastr.success(data.status, data.message);
             }
         },
         error: function (xhr, ajaxOption, thrownError) {

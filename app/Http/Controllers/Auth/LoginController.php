@@ -115,7 +115,18 @@ class LoginController extends Controller
     // This is admin login 
     public function AdminLoginForm()
     {
-        return view('auth.login', ['url'=>'admin']);
+        if( Auth::check() )
+        {
+            $notification = array(
+                'message' => 'আপনি লগডইন অবস্থায় রয়েছেন!',
+                'alert-type' => 'warning'
+            );
+
+            return redirect()->route('admin.dashboard')->with($notification);
+
+        } else {
+            return view('auth.login', ['url'=>'admin']);
+        }
     }
 
     // Admin Login Request 
