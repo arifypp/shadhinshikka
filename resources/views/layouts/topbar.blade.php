@@ -3,7 +3,8 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="index" class="logo logo-dark">
+            @if( Auth::user()->role == 'admin' )
+                <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="22">
                     </span>
@@ -11,8 +12,28 @@
                         <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="17">
                     </span>
                 </a>
+            @elseif( Auth::user()->role == 'teacher' )
+            <a href="{{ route('teacher.dashboard') }}" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="17">
+                    </span>
+                </a>
+            @elseif( Auth::user()->role == 'student' )
+            <a href="{{ route('user.dashboard') }}" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="17">
+                    </span>
+                </a>
+            @endif
 
-                <a href="index" class="logo logo-light">
+            @if( Auth::user()->role == 'admin' )
+                <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminfavicon') }}" alt="" height="22">
                     </span>
@@ -20,6 +41,25 @@
                         <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="60">
                     </span>
                 </a>
+            @elseif( Auth::user()->role == 'teacher')
+            <a href="{{ route('teacher.dashboard') }}" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminfavicon') }}" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="60">
+                    </span>
+                </a>
+            @elseif( Auth::user()->role == 'student')
+                <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminfavicon') }}" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminlogo') }}" alt="" height="60">
+                    </span>
+                </a>
+            @endif
             </div>
 
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
@@ -111,84 +151,54 @@
             <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="bx bx-bell bx-tada"></i>
-                <span class="badge bg-danger rounded-pill">3</span>
+                <span class="badge bg-danger rounded-pill">
+                {{ count( auth()->user()->unreadNotifications ) }}
+                </span>
             </button>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                 aria-labelledby="page-header-notifications-dropdown">
-                <div class="p-3">
+                <div class="p-3 border-bottom">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h6 class="m-0" key="t-notifications"> @lang('translation.Notifications') </h6>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#!" class="small" key="t-view-all"> @lang('translation.View_All')</a>
+                            <h6 class="m-0" key="t-notifications">নোটিফিকেশন </h6>
                         </div>
                     </div>
                 </div>
                 <div data-simplebar style="max-height: 230px;">
-                    <a href="" class="text-reset notification-item">
+                @forelse (auth()->user()->unreadNotifications as $notification)
+                    @if(Str::snake(class_basename($notification->type)) == 'course_assigned_notification')
+                    <a href="{{ route('teacher.dashboard') }}" class="text-reset notification-item" id="MarkasRead" data-id="{{ $notification->id }}" data-attr="{{ route('notify.seend', $notification->id) }}">
                         <div class="media">
                             <div class="avatar-xs me-3">
                                 <span class="avatar-title bg-primary rounded-circle font-size-16">
-                                    <i class="bx bx-cart"></i>
+                                    <i class="bx bx-bell"></i>
                                 </span>
                             </div>
-                            <div class="media-body">
-                                <h6 class="mt-0 mb-1" key="t-your-order">@lang('translation.Your_order_is_placed')</h6>
+                            <div class="flex-grow-1">
+                                <h6 class="mt-0 mb-1" key="t-your-order">
+                                    {{ $notification->data['name'] }} এই কোর্সে নিযুক্ত করা হয়েছে। 
+                                </h6>
                                 <div class="font-size-12 text-muted">
-                                    <p class="mb-1" key="t-grammer">@lang('translation.If_several_languages_coalesce_the_grammar')</p>
-                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">@lang('translation.3_min_ago')</span></p>
+                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{ $notification->created_at->format('M d, H:i A') }}</span></p>
                                 </div>
                             </div>
                         </div>
                     </a>
-                    <a href="" class="text-reset notification-item">
+                    @endif
+                @empty
+                    <a href="javascript:void(0)" class="text-reset notification-item">
                         <div class="media">
-                            <img src="{{ URL::asset ('/assets/images/users/avatar-3.jpg') }}"
-                                class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                            
                             <div class="media-body">
-                                <h6 class="mt-0 mb-1">@lang('translation.James_Lemire')</h6>
-                                <div class="font-size-12 text-muted">
-                                    <p class="mb-1" key="t-simplified">@lang('translation.It_will_seem_like_simplified_English')</p>
-                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-hours-ago">@lang('translation.1_hours_ago')</span></p>
-                                </div>
+                                <h6 class="mt-0 mb-1 text-danger" key="t-your-order"> কোনো নোটিফিকেশন পাওয়া যায়নি! </h6>
                             </div>
                         </div>
                     </a>
-                    <a href="" class="text-reset notification-item">
-                        <div class="media">
-                            <div class="avatar-xs me-3">
-                                <span class="avatar-title bg-success rounded-circle font-size-16">
-                                    <i class="bx bx-badge-check"></i>
-                                </span>
-                            </div>
-                            <div class="media-body">
-                                <h6 class="mt-0 mb-1" key="t-shipped">@lang('translation.Your_item_is_shipped')</h6>
-                                <div class="font-size-12 text-muted">
-                                    <p class="mb-1" key="t-grammer">@lang('translation.If_several_languages_coalesce_the_grammar')</p>
-                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">@lang('translation.3_min_ago')</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="" class="text-reset notification-item">
-                        <div class="media">
-                            <img src="{{ URL::asset ('/assets/images/users/avatar-4.jpg') }}"
-                                class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                            <div class="media-body">
-                                <h6 class="mt-0 mb-1">@lang('translation.Salena_Layfield')</h6>
-                                <div class="font-size-12 text-muted">
-                                    <p class="mb-1" key="t-occidental">@lang('translation.As_a_skeptical_Cambridge_friend_of_mine_occidental')</p>
-                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-hours-ago">@lang('translation.1_hours_ago')</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                @endforelse
                 </div>
                 <div class="p-2 border-top d-grid">
                     <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
-                        <i class="mdi mdi-arrow-right-circle me-1"></i> <span key="t-view-more">@lang('translation.View_More')</span> 
+                        <i class="mdi mdi-arrow-right-circle me-1"></i> <span key="t-view-more"> আরো দেখুন </span> 
                     </a>
                 </div>
             </div>
@@ -264,3 +274,39 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+@section('script-bottom')
+<script>
+      $(document).ready(function(){
+            $('a[data-id]').click(function () {
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                var token = '{{ Session::token() }}';
+            
+                var notif_id   = $(this).attr('data-id');
+                var href        = $(this).attr('href');
+                var targetHref = $(this).data('data-attr');
+
+                $.ajax({
+                    type:'GET',
+                    url:'/notifyseen/'+notif_id,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data : {id:notif_id, _token: token},
+                    success:function(data){
+                        if(data.success){
+                            console.log('Success for read notification');
+                            window.location= href;
+                        }
+                    }
+                });
+
+                return false;
+            });
+        });
+</script>
+
+@endsection

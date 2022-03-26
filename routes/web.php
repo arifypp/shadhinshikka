@@ -40,10 +40,12 @@ Route::post('/district-by-division', 'App\Http\Controllers\Frontend\HomeControll
 Route::post('/thana-by-district', 'App\Http\Controllers\Frontend\HomeController@getThanaByDistrict');
 
 
-
 Auth::routes(['verify' => true]);
 // User Dashboard Fuction
 Route::middleware(['verified'])->group(function () {
+
+    Route::get('/notifyseen/{id}', 'App\Http\Controllers\Backend\NotificationController@notify')->name('notify.seend');
+
     // Student Route Settings
     Route::group(['prefix' => 'student'], function(){
         Route::group(['middleware' => 'student'], function () {
@@ -70,6 +72,10 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/store', 'App\Http\Controllers\Backend\Admin\CourseController@store')->name('course.store');
 
                 Route::get('/edit/{slug}', 'App\Http\Controllers\Backend\Admin\CourseController@edit')->name('course.edit');
+
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\Admin\CourseController@update')->name('course.update');
+
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\CourseController@destroy')->name('course.delete');
             });
 
             // setting

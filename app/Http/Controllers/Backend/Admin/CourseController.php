@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\Admin\Course;
 use App\Models\Backend\Admin\CourseItem;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\CourseAssignedNotification;
+use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Image;
@@ -118,7 +121,11 @@ class CourseController extends Controller
                 'name' => $feaitems,
             ]);
         }
-        
+
+
+
+        $teacherNotify = User::where('id', $course->teacher)->get();
+        Notification::send($teacherNotify, new CourseAssignedNotification($course));
 
         $notification = array(
             'message'       => 'কোর্স সেভ সম্পন্ন হয়েছে!!!',
@@ -179,6 +186,69 @@ class CourseController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'cname'             =>  ['required'],
+            'cseat'             =>  ['required'],
+            'cstartdate'        =>  ['required'],
+            'clocation'         =>  ['required', 'not_in:0'],
+            'cteacher'          =>  ['required', 'not_in:0'],
+            'cenddate'          =>  ['required'],
+            'cprise'            =>  ['required'],
+            'moreFields.*.name' => ['required'],
+        ],
+        $message = [
+            'cname.required'        =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cseat.required'        =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cstartdate.required'   =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cstartdate.date'   =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cstartdate.after'   =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'clocation.required'    =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'clocation.not_in'    =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cteacher.required'     =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cteacher.not_in'     =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cenddate.required'     =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cenddate.date'     =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cenddate.after'     =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cprise.required'       =>  'তথ্যটি পূরণ করা আবশ্যক',
+        ]);
+
+
+        $course = Course::find($id);
+
+        $course->name                   =   $request->cname;
+        $course->student_capacity       =   $request->cseat;
+        $course->batch_no               =   $request->cbatch;
+        $course->teacher                =   $request->cteacher;
+        $course->start_on               =   $request->cstartdate;
+        $course->end_on                 =   $request->cenddate;
+        $course->class_location         =   $request->clocation;
+        $course->price                  =   $request->cprise;
+
+        if( !is_null($request->image) )
+        {
+            // Delete Existing Image
+            if( File::exists('assets/images/course/' . $course->image) ) {
+                File::delete('assets/images/course/' . $course->image);
+            }
+
+            $image = $request->file('image');
+            $img = rand() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('assets/images/course/' . $img);
+
+            Image::make($image)->save($location);
+            $course->image = $img;
+
+        }
+
+        $course->save();
+               
+
+        $notification = array(
+            'message'       => 'কোর্স সেভ সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return redirect()->route('course.manage')->with($notification);
     }
 
     /**
@@ -190,5 +260,30 @@ class CourseController extends Controller
     public function destroy($id)
     {
         //
+        $featureItem = CourseItem::where('course_id', $id)->get();
+        
+        foreach ($featureItem as $featItems) {
+            $featItems->delete();
+        }
+
+        $delImage = Course::find($id);
+        unlink("assets/images/course/".$delImage->image);
+        
+        $delete = Course::where('id', $id)->delete();
+
+        // check data deleted or not
+        if ($delete == 1) {
+            $success = true;
+            $message = "ডিলেট সম্পন্ন হয়েছে!!!";            
+        } else {
+            $success = false;
+            $message = "ডিলেটে ত্রুটি রয়েছে!!!";
+        }
+
+        //  Return response
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
     }
 }

@@ -152,7 +152,7 @@
                             </div>
 
                             <div class="col-md-12 text-right align-right align-self-end justify-content-end float-right">
-                                <button class="btn btn-primary btn-block text-right float-right" type="submit" name="submit">সাবমিট করুন</button>
+                                <button class="btn btn-primary btn-block text-right float-right" id="submit" type="submit" name="submit">সাবমিট করুন</button>
                             </div>
                             
                         </div>
@@ -170,6 +170,15 @@
 <script src="{{ URL::asset('/assets/libs/datepicker/datepicker.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/pages/spartan-multi-image-picker-min.js') }}"></script>
 <script>
+    $(document).ready(function() {
+        $(document).on('submit', 'form', function() {
+            $('button').attr('disabled', 'disabled');
+            $("#submit").attr("disabled", true);
+            $("#submit").text("প্রসেসিং ...");
+            $('#submit').append('<div class="spinner-border spinner-border-sm"></div>')
+        });
+    });
+
     $(document).ready(function(){
         $('#logo').spartanMultiImagePicker({
             fieldName: 'image',

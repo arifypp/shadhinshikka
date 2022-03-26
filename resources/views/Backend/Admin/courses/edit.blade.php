@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title">কোর্সের বেসিক তথ্য</h2><hr>
-                    <form action="{{ route('course.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('course.update', $courses->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -137,7 +137,7 @@
                                     @foreach( $coursefeatures as $key => $value )
                                     <tr>                                        
                                         <td class="col-10">
-                                            <input type="text" name="moreFields[0][name]" placeholder="কোর্সের ফিচার লিখুন" class="form-control @error('moreFields') is-invalid @enderror" value="{{ $value->name }}" />
+                                            <input type="text" name="moreFields[{{ $key++ }}][name]" placeholder="কোর্সের ফিচার লিখুন" class="form-control @error('moreFields') is-invalid @enderror" value="{{ $value->name }}" />
                                             @error('moreFields')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -151,7 +151,7 @@
                             </div>
 
                             <div class="col-md-12 text-right align-right align-self-end justify-content-end float-right">
-                                <button class="btn btn-primary btn-block text-right float-right" type="submit" name="submit">সাবমিট করুন</button>
+                                <button class="btn btn-primary btn-block text-right float-right" type="submit" id="submit" name="submit">সাবমিট করুন</button>
                             </div>
                             
                         </div>
@@ -196,6 +196,14 @@
         $('#logo .img_').css('display','block');
         $('#logo .img_').attr('src','{{ asset("assets/images/course/$courses->image") }}');
         @endif
+    });
+    $(document).ready(function() {
+        $(document).on('submit', 'form', function() {
+            $('button').attr('disabled', 'disabled');
+            $("#submit").attr("disabled", true);
+            $("#submit").text("প্রসেসিং ...");
+            $('#submit').append('<div class="spinner-border spinner-border-sm"></div>')
+        });
     });
 </script>
 <script type="text/javascript">
