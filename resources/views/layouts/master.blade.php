@@ -8,7 +8,7 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ '/storage/'.LOGO_PATH.config('settings.favicon') ? 'storage/'.LOGO_PATH.config('settings.favicon') : URL::asset('assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ '/storage/'.LOGO_PATH.config('settings.favicon') }}">
     @include('layouts.head-css')
 </head>
 

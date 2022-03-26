@@ -29,6 +29,20 @@
                 <!--#### Admin Panel ####-->
                 @if( Auth::user()->role == 'admin' )
                 <li class="menu-title" key="t-apps">প্লাটফর্ম ফিচারড</li>
+                <!-- Course Manage -->
+                
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-play"></i>
+                        <span key="t-course">কোর্স সেটিংস</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('course.manage') }}" key="t-course-manage">ম্যানেজ কোর্স</a></li>
+                        </li>
+                        <li><a href="{{ route('course.create') }}" key="t-course-create">কোর্স তৈরি করুন</a></li>
+                        </li>
+                    </ul>
+                </li>
                 <!-- Basic settings -->
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

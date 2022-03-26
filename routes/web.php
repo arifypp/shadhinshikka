@@ -61,6 +61,17 @@ Route::middleware(['verified'])->group(function () {
         Route::group(['middleware' => 'admin'], function () {
             Route::get('/dashboard','App\Http\Controllers\Backend\Admin\DashboardController@index')->name('admin.dashboard');
 
+            // Course 
+            Route::group(['prefix' => 'courses'], function() {
+                Route::get('/manage', 'App\Http\Controllers\Backend\Admin\CourseController@index')->name('course.manage');
+
+                Route::get('/create', 'App\Http\Controllers\Backend\Admin\CourseController@create')->name('course.create');
+
+                Route::post('/store', 'App\Http\Controllers\Backend\Admin\CourseController@store')->name('course.store');
+
+                Route::get('/edit/{slug}', 'App\Http\Controllers\Backend\Admin\CourseController@edit')->name('course.edit');
+            });
+
             // setting
             Route::group(['prefix' => 'setting'], function(){
                 
