@@ -69,6 +69,7 @@ class CourseController extends Controller
             'cteacher'          =>  ['required', 'not_in:0'],
             'cenddate'          =>  ['required'],
             'cprise'            =>  ['required'],
+            'cclasscount'       =>  ['required'],
             'moreFields.*.name' => ['required'],
         ],
         $message = [
@@ -85,6 +86,7 @@ class CourseController extends Controller
             'cenddate.date'     =>  'তথ্যটি পূরণ করা আবশ্যক',
             'cenddate.after'     =>  'তথ্যটি পূরণ করা আবশ্যক',
             'cprise.required'       =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'cclasscount.required'  =>  'তথ্যটি পূরণ করা আবশ্যক'
         ]);
 
 
@@ -94,6 +96,7 @@ class CourseController extends Controller
         $course->slug                   =   Str::slug($request->cname);
         $course->student_capacity       =   $request->cseat;
         $course->batch_no               =   $request->cbatch;
+        $course->class_count            =   $request->cclasscount;
         $course->teacher                =   $request->cteacher;
         $course->start_on               =   $request->cstartdate;
         $course->end_on                 =   $request->cenddate;
@@ -194,6 +197,7 @@ class CourseController extends Controller
             'cteacher'          =>  ['required', 'not_in:0'],
             'cenddate'          =>  ['required'],
             'cprise'            =>  ['required'],
+            'cclasscount'       =>  ['required'],
             'moreFields.*.name' => ['required'],
         ],
         $message = [
@@ -217,7 +221,9 @@ class CourseController extends Controller
 
         $course->name                   =   $request->cname;
         $course->student_capacity       =   $request->cseat;
+        $course->class_count            =   $request->cclasscount;
         $course->batch_no               =   $request->cbatch;
+        $course->student_capacity       =   $request->cseat;
         $course->teacher                =   $request->cteacher;
         $course->start_on               =   $request->cstartdate;
         $course->end_on                 =   $request->cenddate;

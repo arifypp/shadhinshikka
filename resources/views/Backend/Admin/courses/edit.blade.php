@@ -119,6 +119,16 @@
                                 </div>
                             </div>
 
+                            <div class="form-group mb-3">
+                                <label for="Total Class">মোট ক্লাস</label>
+                                <input type="text" name="cclasscount" id="cclasscount" class="form-control  @error('cclasscount') is-invalid @enderror" value="{{ old('cclasscount', $courses->class_count) }}" placeholder="মোট ক্লাস" autocomplete="off">
+                                @error('cclasscount')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label for="আপলোড ফটো">আপলোড ফটো</label>

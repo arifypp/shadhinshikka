@@ -78,6 +78,16 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\CourseController@destroy')->name('course.delete');
             });
 
+            // Teacher Setting
+            Route::group(['prefix' => 'teacher'], function () {
+                Route::get('/manage', 'App\Http\Controllers\Backend\Admin\TeachersController@index')->name('teacher.manage');
+
+                Route::get('/create', 'App\Http\Controllers\Backend\Admin\TeachersController@create')->name('teacher.create');
+
+                Route::post('/store', 'App\Http\Controllers\Backend\Admin\TeachersController@store')->name('teacher.store');
+                
+            });
+
             // setting
             Route::group(['prefix' => 'setting'], function(){
                 

@@ -19,13 +19,12 @@
                                 <div class="row">
                                     <div class="col-7">
                                         <div class="text-primary p-4">
-                                            <h5 class="text-primary"> Reset Password</h5>
-                                            <p>Re-Password with Skote.</p>
+                                            <h5 class="text-primary"> রিসেট পাসওয়ার্ড</h5>
+                                            <p>একাউন্ট পাসওর্য়াড রিসেট করুন</p>
                                         </div>
                                     </div>
-                                    <div class="col-5 align-self-end">
-                                        <img src="{{ URL::asset('/assets/images/profile-img.png') }}" alt=""
-                                            class="img-fluid">
+                                    <div class="col-5 align-self-end text-right" style="text-align:right; opacity: .8">
+                                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.favicon') }}" alt="" class="img-fluid" width="60%">
                                     </div>
                                 </div>
                             </div>
@@ -34,8 +33,7 @@
                                     <a href="index">
                                         <div class="avatar-md profile-user-wid mb-4">
                                             <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{{ URL::asset('/assets/images/logo.svg') }}" alt=""
-                                                    class="rounded-circle" height="34">
+                                            <img src="{{ '/storage/'.LOGO_PATH.config('settings.favicon') }}" alt="" class="rounded-circle" height="60">
                                             </span>
                                         </div>
                                     </a>
@@ -50,9 +48,9 @@
                                     <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
                                         @csrf
                                         <div class="mb-3">
-                                            <label for="useremail" class="form-label">Email</label>
+                                            <label for="useremail" class="form-label">ই-মেইল</label>
                                             <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                                id="useremail" name="email" placeholder="Enter email"
+                                                id="useremail" name="email" placeholder="ই-মেইল দিন"
                                                 value="{{ old('email') }}" id="email">
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
@@ -63,7 +61,7 @@
 
                                         <div class="text-end">
                                             <button class="btn btn-primary w-md waves-effect waves-light"
-                                                type="submit">Reset</button>
+                                                type="submit">রসেট করুন</button>
                                         </div>
 
                                     </form>
@@ -72,12 +70,13 @@
                             </div>
                         </div>
                         <div class="mt-5 text-center">
-                            <p>Remember It ? <a href="{{ url('login') }}" class="fw-medium text-primary"> Sign In here</a>
+                            <p>মনে থাকলে ? <a href="{{ url('login/student') }}" class="fw-medium text-primary"> লগইন করুন</a>
                             </p>
                             <p>© <script>
-                                    document.write(new Date().getFullYear())
+                                        document.write(new Date().getFullYear())
 
-                                </script> Skote. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                                    </script> স্বাধীন শিক্ষা. ডিজাইন এবং ডেভেলোপমেন্ট <i class="mdi mdi-heart text-danger"></i> স্বাধীন শিক্ষা টিম
+                                </p>
                         </div>
 
                     </div>

@@ -19,6 +19,7 @@ class CreateCoursesTable extends Migration
             $table->string('slug');
             $table->integer('student_capacity')->default('0');
             $table->string('batch_no');
+            $table->string('class_count');
             $table->unsignedBigInteger('teacher');
             $table->foreign('teacher')->references('id')->on('users');
             $table->string('start_on')->nullable();

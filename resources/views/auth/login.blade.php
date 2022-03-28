@@ -23,9 +23,8 @@
                                             <p>{{ isset($url) ? ucwords($url) : " " }} সাইন ইন করুন.</p>
                                         </div>
                                     </div>
-                                    <div class="col-5 align-self-end">
-                                        <img src="{{ URL::asset('/assets/images/profile-img.png') }}" alt=""
-                                            class="img-fluid">
+                                    <div class="col-5 align-self-end text-right" style="text-align:right; opacity: .8">
+                                        <img src="{{ '/storage/'.LOGO_PATH.config('settings.favicon') }}" alt="" class="img-fluid" width="60%">
                                     </div>
                                 </div>
                             </div>
