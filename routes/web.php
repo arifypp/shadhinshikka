@@ -85,6 +85,8 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/create', 'App\Http\Controllers\Backend\Admin\TeachersController@create')->name('teacher.create');
 
                 Route::post('/store', 'App\Http\Controllers\Backend\Admin\TeachersController@store')->name('teacher.store');
+
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\TeachersController@destroy')->name('teacher.delete');
                 
             });
 

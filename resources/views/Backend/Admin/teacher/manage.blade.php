@@ -13,7 +13,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header bg-primary">
-                    <h2 class="card-title text-white">কোর্সের লিস্ট</h2>
+                    <h2 class="card-title text-white">শিক্ষক লিস্ট</h2>
                 </div>
                 <div class="card-body">
                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 align-middle">
@@ -63,4 +63,52 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+
+function deleteConfirmation(id) {
+        swal.fire({
+            title: "ডিলেট?",
+            icon: 'question',
+            text: "দয়া করে কনর্ফাম করুন!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "হ্যা, ডিলেট করুন!",
+            cancelButtonText: "না, বাতিল করুন!",
+            dangerMode: true,
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajaxSetup({
+	                headers: {
+	                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+	                }
+	            });
+                $.ajax({
+                    type: 'POST',
+                    url:  '{{ url("/admin/teacher/delete") }}/' + id,
+                    data: {_token: CSRF_TOKEN},
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            window.setTimeout(function(){location.reload()},2000)
+                            swal.fire("Done!", results.message, "success");
+                            // refresh page after 2 seconds
+                            // $('.table').load(document.URL + ' .table');     Using .reload() method.
+                        } else {
+                            swal.fire("Error!", results.message, "error");
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+    }
+</script>
 @endsection

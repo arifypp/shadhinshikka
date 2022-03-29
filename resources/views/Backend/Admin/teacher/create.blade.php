@@ -13,7 +13,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('teacher.store') }}" method="post" id="teacherRgter" class="needs-validation" novalidate>
+                    <form action="{{ route('teacher.store') }}" method="post" id="teacherRgter" class="needs-validation" enctype="multipart/form-data" novalidate>
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -27,12 +27,17 @@
                                     <div class="valid-feedback">
                                         ঠিক আছে
                                     </div>
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="Last Name" class="form-label">সম্পন্ন নাম</label>
-                                    <input type="text" name="lastname" class="form-control" id="LastName" placeholder="সম্পন্ন নাম লিখুন"
+                                    <input type="text" name="lastname" class="form-control" id="LastName" placeholder="সম্পন্ন নাম লিখুন" value="{{ old('lastname') }}"
                                         required>
                                     <div class="valid-feedback">
                                         ঠিক আছে
@@ -42,7 +47,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">ই-মেইল অ্যাড্রেস</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="ই-মেইল অ্যাড্রেস লিখুন"
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="ই-মেইল অ্যাড্রেস লিখুন" value="{{ old('email') }}"
                                         required>
                                     <div class="valid-feedback">
                                         ঠিক আছে
@@ -52,7 +57,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">মোবাইল নাম্বার</label>
-                                    <input type="phone" name="phone" class="form-control" id="phone" placeholder="মোবাইল নং লিখুন"
+                                    <input type="phone" name="phone" class="form-control" id="phone" placeholder="মোবাইল নং লিখুন" value="{{ old('phone') }}"
                                         required>
                                     <div class="valid-feedback">
                                         ঠিক আছে
@@ -62,7 +67,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="dob" class="form-label">জন্ম তারিখ</label>
-                                    <input type="text" name="dob" class="form-control" id="dob" placeholder="দিন - মাস - বছর"
+                                    <input type="date" name="dob" class="form-control" id="dob" placeholder="দিন - মাস - বছর" value="{{ old('date') }}"
                                         required>
                                     <div class="valid-feedback">
                                         ঠিক আছে
@@ -78,7 +83,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="address" class="form-label">বাড়ি / হোল্ডিং / গ্রাম</label>
-                                    <textarea name="address" class="form-control" id="address" cols="5" rows="3" required></textarea>
+                                    <textarea name="address" class="form-control" id="address" cols="5" rows="3" required>{{ old('address') }}</textarea>
                                     <div class="valid-feedback">
                                         ঠিক আছে
                                     </div>
@@ -89,7 +94,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="division" class="form-label">বিভাগ</label>
-                                    <select class="form-select" id="division" required>
+                                    <select class="form-select" id="division" name="division" required>
                                         <option selected disabled value="">নির্বাচন করুন...</option>
                                         <!-- all division here -->
                                         @foreach( $divisions as $division )
@@ -105,7 +110,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="district" class="form-label">জেলা</label>
-                                    <select class="form-select" id="district" required>
+                                    <select class="form-select" id="district" name="district" required>
                                         <option selected disabled value="">নির্বাচন করুন...</option>
                                         <!-- all district here -->                                       
                                     </select>
@@ -118,7 +123,7 @@
                             <div class="col-md-4 mb-3">
                                 <div class="mb-3">
                                     <label for="thana" class="form-label">থানা</label>
-                                    <select class="form-select" id="thana" required>
+                                    <select class="form-select" id="thana" name="thana" required>
                                         <option selected disabled value="">নির্বাচন করুন...</option>
                                         <!-- all thana here -->                                       
                                     </select>
@@ -213,7 +218,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <button type="button" name="add" id="add-btn" class="btn btn-success"> + </button>
+                                            <button type="button" name="add" id="add-experiencebtn" class="btn btn-success"> + </button>
                                         </td>
                                     </tr>
                                 </table>
@@ -239,7 +244,7 @@
                             </div>
                         </div>
                         <div>
-                            <button class="btn btn-primary" id="submit" type="submit">Submit form</button>
+                            <button class="btn btn-primary" id="submit" type="submit">সাবমিট করুন</button>
                         </div>
                     </form>
                 </div>
@@ -267,8 +272,8 @@
         $('#avater').spartanMultiImagePicker({
             fieldName: 'image',
             maxCount: 1,
-            rowHeight: '100px',
-            groupClassName: 'col-md-12 com-sm-12 com-xs-12',
+            rowHeight: '200px',
+            groupClassName: 'col-md-3 com-sm-12 com-xs-12',
             maxFileSize: '',
             dropFileLabel: 'আপলোড করুন',
             allowExt: 'png|jpg|jpeg',
@@ -349,11 +354,21 @@
 
     $("#add-btn").click(function(){
         ++i;
-        $("#dynamicAddRemove").append('<tr><td><select name="moreFields[0][name]" id="educationanem" class="form-control"><option value="0">নির্বাচন করুন</option><option value="1">SSC</option><option value="2">HSC</option><option value="3">B.Sc(Engineering/Architecture)</option><option value="4">B.Sc(Agricultural Science)</option><option value="5">M.B.B.S./B.D.S</option><option value="6">Honors</option><option value="7">Pass Course</option><option value="8">Fazil</option><option value="9">Graduation Equivalent</option></select></td><td><input type="text" name="moreFields[0][institue]" placeholder="প্রতিষ্ঠানের নাম লিখুন" class="form-control"/></td><td><select name="moreFields[0][passingyear]" id="educationanem" class="form-control"><option value="0">নির্বাচন করুন</option>@foreach(array_combine(range(date("Y"), 1990), range(date("Y"), 1990)) as $year)  <option value="{{ $year }}">{{ $year }}</option>   @endforeach </select>  </td><td><button type="button" class="btn btn-danger remove-tr">রিমুভ করুন</button></td></tr>');
+        $("#dynamicAddRemove").append('<tr><td><select name="moreFields['+i+'][name]" id="educationanem" class="form-control"><option value="0">নির্বাচন করুন</option><option value="1">SSC</option><option value="2">HSC</option><option value="3">B.Sc(Engineering/Architecture)</option><option value="4">B.Sc(Agricultural Science)</option><option value="5">M.B.B.S./B.D.S</option><option value="6">Honors</option><option value="7">Pass Course</option><option value="8">Fazil</option><option value="9">Graduation Equivalent</option></select></td><td><input type="text" name="moreFields['+i+'][institue]" placeholder="প্রতিষ্ঠানের নাম লিখুন" class="form-control"/></td><td><select name="moreFields['+i+'][passingyear]" id="educationanem" class="form-control"><option value="0">নির্বাচন করুন</option>@foreach(array_combine(range(date("Y"), 1990), range(date("Y"), 1990)) as $year)  <option value="{{ $year }}">{{ $year }}</option>   @endforeach </select>  </td><td><button type="button" class="btn btn-danger remove-tr">-</button></td></tr>');
     });
         $(document).on('click', '.remove-tr', function(){  
         $(this).parents('tr').remove();
-    });  
+    });
+    
+    $("#add-experiencebtn").click(function(){
+        ++i;
+        $("#dynamicAddRemoveExperience").append('<tr><td><input type="text" name="experience['+i+'][companyname]" placeholder="প্রতিষ্ঠানের নাম লিখুন" class="form-control @error('experience') is-invalid @enderror" /></td><td><select name="experience['+i+'][fromdate]" id="educationanem" class="form-control"><option value="0">নির্বাচন করুন</option> @foreach(array_combine(range(date("Y"), 1990), range(date("Y"), 1990)) as $year) <option value="{{ $year }}">{{ $year }}</option> @endforeach</select></td><td><select name="experience['+i+'][todate]" id="educationanem" class="form-control"> <option value="0">নির্বাচন করুন</option> @foreach(array_combine(range(date("Y"), 1990), range(date("Y"), 1990)) as $year) <option value="{{ $year }}">{{ $year }}</option> @endforeach</select></td><td><button type="button" class="btn btn-danger remove-tr">-</button></td></tr>');
+    });
+        $(document).on('click', '.remove-tr', function(){  
+        $(this).parents('tr').remove();
+    });
+    
+    
 
 </script>
 @endsection
