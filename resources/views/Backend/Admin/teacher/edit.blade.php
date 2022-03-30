@@ -13,7 +13,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('teacher.store') }}" method="post" id="teacherRgter" class="needs-validation" enctype="multipart/form-data" novalidate>
+                    <form action="{{ route('teacher.update', $user->id) }}" method="post" id="teacherRgter" class="needs-validation" enctype="multipart/form-data" novalidate>
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -21,9 +21,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="First Name" class="form-label">ডাক নাম</label>
+                                    <label for="First Name" class="form-label">সম্পন্ন নাম</label>
                                     <input type="text" name="name" class="form-control" id="FirstName" placeholder="ডাক নাম লিখুন"
-                                        value="{{ old('name') }}" required>
+                                        value="{{ old('name', $user->name) }}" required>
                                     <div class="valid-feedback">
                                         ঠিক আছে
                                     </div>
@@ -36,18 +36,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="Last Name" class="form-label">সম্পন্ন নাম</label>
-                                    <input type="text" name="lastname" class="form-control" id="LastName" placeholder="সম্পন্ন নাম লিখুন" value="{{ old('lastname') }}"
-                                        required>
-                                    <div class="valid-feedback">
-                                        ঠিক আছে
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
                                     <label for="email" class="form-label">ই-মেইল অ্যাড্রেস</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="ই-মেইল অ্যাড্রেস লিখুন" value="{{ old('email') }}"
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="ই-মেইল অ্যাড্রেস লিখুন" value="{{ old('email', $user->email) }}"
                                         required>
                                     <div class="valid-feedback">
                                         ঠিক আছে
@@ -57,7 +47,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">মোবাইল নাম্বার</label>
-                                    <input type="phone" name="phone" class="form-control" id="phone" placeholder="মোবাইল নং লিখুন" value="{{ old('phone') }}"
+                                    <input type="phone" name="phone" class="form-control" id="phone" placeholder="মোবাইল নং লিখুন" value="{{ old('phone', $user->phone) }}"
                                         required>
                                     <div class="valid-feedback">
                                         ঠিক আছে
@@ -67,7 +57,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="dob" class="form-label">জন্ম তারিখ</label>
-                                    <input type="date" name="dob" class="form-control" id="dob" placeholder="দিন - মাস - বছর" value="{{ old('date') }}"
+                                    <input type="date" name="dob" class="form-control" id="dob" placeholder="দিন - মাস - বছর" value="{{ old('date', $user->dob) }}"
                                         required>
                                     <div class="valid-feedback">
                                         ঠিক আছে
@@ -77,13 +67,13 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="teacherId" class="form-label">টিচার আইডি </label>
-                                    <input type="text" name="teacherId" value="SST-{{ rand('1', 100000) }}" class="form-control" id="teacherId" placeholder="দিন - মাস - বছর" readonly >
+                                    <input type="text" name="teacherId" value="{{ $user->studentid }}" class="form-control" id="teacherId" placeholder="দিন - মাস - বছর" readonly >
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="address" class="form-label">বাড়ি / হোল্ডিং / গ্রাম</label>
-                                    <textarea name="address" class="form-control" id="address" cols="5" rows="3" required>{{ old('address') }}</textarea>
+                                    <textarea name="address" class="form-control" id="address" cols="5" rows="3" required>{{ old('address', $user->address) }}</textarea>
                                     <div class="valid-feedback">
                                         ঠিক আছে
                                     </div>
@@ -144,21 +134,21 @@
                                             <th>পরীক্ষার নাম</th>
                                             <th>প্রতীষ্ঠানের নাম</th>
                                             <th>পাসের সন</th>
-                                            <th>অ্যাকশন</th>
                                         </tr>
+                                    @foreach( $Education as $key => $edudata )
                                         <tr>  
                                             <td class="col-4">
-                                                <select name="moreFields[0][ExamName]" id="educationanem" class="form-control">
-                                                    <option value="0">নির্বাচন করুন</option>
-                                                    <option value="1">SSC</option>
-                                                    <option value="2">HSC</option>
-                                                    <option value="3">B.Sc(Engineering/Architecture)</option>
-                                                    <option value="4">B.Sc(Agricultural Science)</option>
-                                                    <option value="5">M.B.B.S./B.D.S</option>
-                                                    <option value="6">Honors</option>
-                                                    <option value="7">Pass Course</option>
-                                                    <option value="8">Fazil</option>
-                                                    <option value="9">Graduation Equivalent</option>
+                                                <select name="moreFields[{{ $key+1 }}][ExamName]" id="educationanem" class="form-control">
+                                                    <option value="0" @if($edudata->ExamName == 0) selected @endif>নির্বাচন করুন</option>
+                                                    <option value="1" @if($edudata->ExamName == 1) selected @endif>SSC</option>
+                                                    <option value="2" @if($edudata->ExamName == 2) selected @endif>HSC</option>
+                                                    <option value="3" @if($edudata->ExamName == 3) selected @endif>B.Sc(Engineering/Architecture)</option>
+                                                    <option value="4" @if($edudata->ExamName == 4) selected @endif>B.Sc(Agricultural Science)</option>
+                                                    <option value="5" @if($edudata->ExamName == 5) selected @endif>M.B.B.S./B.D.S</option>
+                                                    <option value="6" @if($edudata->ExamName == 6) selected @endif>Honors</option>
+                                                    <option value="7" @if($edudata->ExamName == 7) selected @endif>Pass Course</option>
+                                                    <option value="8" @if($edudata->ExamName == 8) selected @endif>Fazil</option>
+                                                    <option value="9" @if($edudata->ExamName == 9) selected @endif>Graduation Equivalent</option>
                                                 </select>
                                                 @error('moreFields')
                                                     <span class="invalid-feedback" role="alert">
@@ -167,20 +157,18 @@
                                                 @enderror
                                             </td>
                                             <td class="col-4">
-                                                <input type="text" name="moreFields[0][InstituteName]" placeholder="প্রতিষ্ঠানের নাম লিখুন" class="form-control @error('moreFields') is-invalid @enderror" />
+                                                <input type="text" name="moreFields[{{ $key+1 }}][InstituteName]" placeholder="প্রতিষ্ঠানের নাম লিখুন" value="{{ $edudata->InstituteName }}" class="form-control @error('moreFields') is-invalid @enderror" />
                                             </td>  
                                             <td>
                                                 <select name="moreFields[0][PassingYear]" id="educationanem" class="form-control">
                                                     <option value="0">নির্বাচন করুন</option>
                                                     @foreach(array_combine(range(date("Y"), 1990), range(date("Y"), 1990)) as $year)
-                                                        <option value="{{ $year }}">{{ $year }}</option>
+                                                        <option value="{{ $year }}" @if( $edudata->PassingYear ==  $year ) selected @endif>{{ $year }}</option>
                                                     @endforeach
                                                 </select>
                                             </td>
-                                            <td>
-                                                <button type="button" name="add" id="add-btn" class="btn btn-success"> + </button>
-                                            </td>
-                                        </tr> 
+                                        </tr>
+                                    @endforeach 
                                     </table> 
                             </div>
                         </div>
@@ -195,32 +183,30 @@
                                         <th>প্রতিষ্ঠানের নাম</th>
                                         <th>শুরু তারিখ</th>
                                         <th>শেষ তারিখ</th>
-                                        <th>অ্যাকশন</th>
                                     </tr>
+                                @foreach( $Experiece as $key => $exdata )
                                     <tr>  
                                         <td class="col-4">
-                                            <input type="text" name="experience[0][companyname]" placeholder="প্রতিষ্ঠানের নাম লিখুন" class="form-control @error('moreFields') is-invalid @enderror" />
+                                            <input type="text" name="experience[{{$key+1}}][companyname]" placeholder="প্রতিষ্ঠানের নাম লিখুন"  value="{{ $exdata->InstituteName }}" class="form-control @error('moreFields') is-invalid @enderror" />
                                         </td>
                                         <td class="col-4">
-                                            <select name="experience[0][fromdate]" id="educationanem" class="form-control">
+                                            <select name="experience[{{$key+1}}][fromdate]" id="educationanem" class="form-control">
                                                 <option value="0">নির্বাচন করুন</option>
                                                 @foreach(array_combine(range(date("Y"), 1990), range(date("Y"), 1990)) as $year)
-                                                    <option value="{{ $year }}">{{ $year }}</option>
+                                                    <option value="{{ $year }}" @if( $exdata->from_date == $year ) selected @endif>{{ $year }}</option>
                                                 @endforeach
                                             </select>
                                         </td>  
                                         <td>
-                                            <select name="experience[0][todate]" id="educationanem" class="form-control">
+                                            <select name="experience[{{$key+1}}][todate]" id="todate" class="form-control">
                                                 <option value="0">নির্বাচন করুন</option>
                                                 @foreach(array_combine(range(date("Y"), 1990), range(date("Y"), 1990)) as $year)
-                                                    <option value="{{ $year }}">{{ $year }}</option>
+                                                    <option value="{{ $year }}" @if( $exdata->end_date == $year ) selected @endif>{{ $year }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td>
-                                            <button type="button" name="add" id="add-experiencebtn" class="btn btn-success"> + </button>
-                                        </td>
                                     </tr>
+                                    @endforeach
                                 </table>
                             </div>
                         </div>
@@ -281,7 +267,21 @@
                 Swal.fire({icon:'error', title:'দু:খিত...',text: 'শুধুমাত্র .PNG, .JPG, JPEG সার্পোটেড'});
             }
         });
+
+
+        $('.remove-files').on('click', function(){
+            $(this).parents('.col-md-3').remove();
+        });
+
+        @if( $user->avatar )
+            $('#avater img.spartan_image_placeholder').css('display','none');
+            $('#avater .spartan_remove_row').css('display','none');
+            $('#avater .img_').css('display','block');
+            $('#avater .img_').attr('src','{{ asset($user->avatar) }}');
+        @endif
     });
+
+    
 
     $("#division").on('change',function(e){
         e.preventDefault();

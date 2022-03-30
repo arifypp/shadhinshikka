@@ -52,7 +52,7 @@
                                 <td>{{ $value->email }}</td>
                                 <td>
                                     <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#CouseDetails{{$value->id}}"> <span><i class="mdi mdi-eye"></i></span> </a>
-                                    <a href="#" title="edit" class="text-info"> <span><i class="mdi mdi-lead-pencil"></i></span> </a>
+                                    <a href="{{ route('teacher.edit', $value->id) }}" title="edit" class="text-info"> <span><i class="mdi mdi-lead-pencil"></i></span> </a>
                                     <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"> <span><i class="mdi mdi-delete"></i></span> </a>
                                 </td>
                             </tr>

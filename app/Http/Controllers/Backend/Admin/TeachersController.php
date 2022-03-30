@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\CourseAssignedNotification;
+use App\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Common\UserExperience;
@@ -17,7 +17,7 @@ use Image;
 use File;
 use Session;
 use Auth;
-
+use DB;
 class TeachersController extends Controller
 {
     public function __construct()
@@ -105,21 +105,41 @@ class TeachersController extends Controller
             $user->dob          =   date('Y-m-d', strtotime($request['dob']));
             $user->avatar       =   "/images/" . $avatarName;
            
-            // $user->save();
+            $user->save();
 
+            // Add all education experience
             foreach ($request->moreFields as $key => $value) {
-                $feaitems = implode(" ",$value->name);
-                dd($request->name [$feaitems]); exit();
                 UserEducation::insert([
-                    'user_id'       =>  $user->id,
-                    'ExamName'      =>  $feaitems['name'],
-                    'InstituteName' =>  $feaitems['institue'],
-                    'PassingYear'   =>  $feaitems['passingyear'],
+                    'user_id'       => $user->id,
+                    'ExamName'      => $value['ExamName'],
+                    'InstituteName' => $value['InstituteName'],
+                    'PassingYear'   => $value['PassingYear'],
                 ]);
             }
 
+            // add all working experience            
+            foreach ($request->experience as $key => $value) {
+                UserExperience::insert([
+                    'user_id'       => $user->id,
+                    'InstituteName' => $value['companyname'],
+                    'from_date'     => $value['fromdate'],
+                    'end_date'      =>$value['todate'],
+                ]);
+            }
+
+            $token = Str::random(64);
+
+            DB::table(config('auth.passwords.users.table'))->insert([
+                'email' => $user->email, 
+                'token' => bcrypt($token),
+            ]);
+
+            $UserPassReset = User::where('id', $user->id)->get();
+            Notification::send($UserPassReset, new ResetPassword($token));
+            
+
             $notification = array(
-                'message'       => 'কোর্স সেভ সম্পন্ন হয়েছে!!!',
+                'message'       => 'শিক্ষক তৈরি সম্পন্ন হয়েছে!!!',
                 'alert-type'    => 'success'
             );
     
@@ -148,6 +168,25 @@ class TeachersController extends Controller
     public function edit($id)
     {
         //
+        $user = User::find($id);
+
+        $Education = UserEducation::where('user_id', $user->id)->get();
+        $Experiece = UserExperience::where('user_id', $user->id)->get();
+
+
+        if( !empty( $user ) )
+        {
+            return view('Backend.Admin.teacher.edit', compact('user', 'Education', 'Experiece'));
+        }
+        else{
+
+            $notification = array(
+                'message'       => 'কোনো শিক্ষক খুজেঁ পাওয়া যায়নি!!!',
+                'alert-type'    => 'info'
+            ); 
+            
+            return back()->with($notification);
+        }
     }
 
     /**
@@ -160,6 +199,43 @@ class TeachersController extends Controller
     public function update(Request $request, $id)
     {
         //
+     
+    
+        $user = User::find($id);
+
+        $user->name         =   $request->name;
+        $user->email        =   $request->email;
+        $user->phone        =   $request->phone;
+        $user->studentid    =   $request->teacherId;
+        $user->address      =   $request->address ." ". $request->thana ." ". $request->district ." ". $request->division;
+        $user->role         =   'teacher';
+        $user->dob          =   date('Y-m-d', strtotime($request['dob']));
+
+        if( !is_null($request->image) )
+        {
+            // Delete Existing Image
+            if( File::exists('images/' . $user->avatar) ) {
+                File::delete('images/' . $user->avatar);
+            }
+
+            $image = $request->file('image');
+            $img = rand() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/' ."/images/".$img);
+
+            Image::make($image)->save($location);
+            $user->avatar = $img;
+
+        }
+       
+        $user->save();
+       
+
+        $notification = array(
+            'message'       => 'শিক্ষক তৈরি সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return redirect()->route('teacher.manage')->with($notification);
     }
 
     /**
@@ -170,8 +246,17 @@ class TeachersController extends Controller
      */
     public function destroy($id)
     {
-        //
-        
+        //delete education
+        $UserEducation = UserEducation::where('user_id', $id)->get();        
+        foreach ($UserEducation as $education) {
+            $education->delete();
+        }
+
+        $UserExperience = UserExperience::where('user_id', $id)->get();        
+        foreach ($UserExperience as $experiece) {
+            $experiece->delete();
+        }
+
         $delImage = User::find($id);
         unlink(public_path() .$delImage->avatar);
 

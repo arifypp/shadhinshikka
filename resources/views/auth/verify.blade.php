@@ -67,10 +67,11 @@
                             </div>
                         </div>
                         <div class="mt-5 text-center">
-                            <p>© <script>
+                        <p>© <script>
                                     document.write(new Date().getFullYear())
 
-                                </script> {{ config('settings.footer_dev') }} </p>
+                                </script> স্বাধীন শিক্ষা. ডিজাইন এবং ডেভেলোপমেন্ট <i class="mdi mdi-heart text-danger"></i> স্বাধীন শিক্ষা টিম
+                            </p>
                         </div>
 
                     </div>

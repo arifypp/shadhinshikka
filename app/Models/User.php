@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -27,6 +28,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'avatar',
         'role'
     ];
+
+
+    public function sendPasswordResetNotification($user)
+    {
+        // Your your own implementation.
+        $this->notify(new ResetPasswordNotification($user));
+    }
 
     /**
      * The attributes that should be hidden for arrays.
