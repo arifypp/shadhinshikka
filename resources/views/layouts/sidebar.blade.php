@@ -53,7 +53,21 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('teacher.manage') }}" key="t-teacers-manage">শিক্ষকের লিস্ট</a></li>
                         </li>
-                        <li><a href="{{ route('teacher.create') }}" key="t-teacers-create">নতুন শিক্ষক তৈরি করুন</a></li>
+                        <li><a href="{{ route('teacher.create') }}" key="t-teacers-create"> শিক্ষক তৈরি করুন</a></li>
+                        </li>
+                    </ul>
+                </li>
+
+                 <!-- Student Settings -->
+                 <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="fas fa-users"></i>
+                        <span key="t-course">শিক্ষার্থী সেটিংস</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('teacher.manage') }}" key="t-teacers-manage">শিক্ষার্থীদের লিস্ট</a></li>
+                        </li>
+                        <li><a href="{{ route('teacher.create') }}" key="t-teacers-create"> শিক্ষার্থী তৈরি করুন</a></li>
                         </li>
                     </ul>
                 </li>

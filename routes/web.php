@@ -84,11 +84,16 @@ Route::middleware(['verified'])->group(function () {
 
                 Route::get('/create', 'App\Http\Controllers\Backend\Admin\TeachersController@create')->name('teacher.create');
 
+                Route::get('/show/{studentid}', 'App\Http\Controllers\Backend\Admin\TeachersController@show')->name('teacher.show');
+
                 Route::post('/store', 'App\Http\Controllers\Backend\Admin\TeachersController@store')->name('teacher.store');
 
                 Route::get('/edit/{id}', 'App\Http\Controllers\Backend\Admin\TeachersController@edit')->name('teacher.edit');
 
                 Route::post('/update/{id}', 'App\Http\Controllers\Backend\Admin\TeachersController@update')->name('teacher.update');
+
+                Route::get('/status/{id}', 'App\Http\Controllers\Backend\Admin\TeachersController@status')->name('teacher.status');
+
 
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\TeachersController@destroy')->name('teacher.delete');
                 

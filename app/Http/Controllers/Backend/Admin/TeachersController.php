@@ -154,9 +154,25 @@ class TeachersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($studentid)
     {
         //
+        $user = User::find($studentid);
+        $Education = UserEducation::where('user_id', $user->id)->get();
+        $Experiece = UserExperience::where('user_id', $user->id)->get();
+        if( $user )
+        {
+            return view('Backend.Admin.teacher.show', compact('user', 'Education', 'Experiece'));
+        }
+        else
+        {
+            $notification = array(
+                'message'       => 'শিক্ষক পাওয়া যায়নি!!!',
+                'alert-type'    => 'error'
+            );
+    
+            return back()->with($notification);
+        }
     }
 
     /**
@@ -232,6 +248,32 @@ class TeachersController extends Controller
 
         $notification = array(
             'message'       => 'শিক্ষক তৈরি সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return redirect()->route('teacher.manage')->with($notification);
+    }
+
+    // changes status
+
+    public function status(Request $request, $id)
+    {
+        $userdata = User::find($id);
+
+        if( $userdata->status == 1 )
+        {
+            $userdata->status = 0; //0 meant suspend user or deactive user
+        }
+        else if($userdata->status == 0)
+        {
+            $userdata->status = 1; //1 meant suspend user or active user
+        }
+
+
+        $userdata->save();
+
+        $notification = array(
+            'message'       => $userdata->name.' সাসপেন্ড সম্পন্ন হয়েছে!!!',
             'alert-type'    => 'success'
         );
 
