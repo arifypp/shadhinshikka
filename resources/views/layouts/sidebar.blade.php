@@ -65,9 +65,9 @@
                         <span key="t-course">শিক্ষার্থী সেটিংস</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('teacher.manage') }}" key="t-teacers-manage">শিক্ষার্থীদের লিস্ট</a></li>
+                        <li><a href="{{ route('student.manage') }}" key="t-student-manage">শিক্ষার্থীদের লিস্ট</a></li>
                         </li>
-                        <li><a href="{{ route('teacher.create') }}" key="t-teacers-create"> শিক্ষার্থী তৈরি করুন</a></li>
+                        <li><a href="{{ route('student.create') }}" key="t-student-create"> শিক্ষার্থী তৈরি করুন</a></li>
                         </li>
                     </ul>
                 </li>

@@ -247,7 +247,7 @@ class TeachersController extends Controller
        
 
         $notification = array(
-            'message'       => 'শিক্ষক তৈরি সম্পন্ন হয়েছে!!!',
+            'message'       => 'শিক্ষক এডিটিং সম্পন্ন হয়েছে!!!',
             'alert-type'    => 'success'
         );
 

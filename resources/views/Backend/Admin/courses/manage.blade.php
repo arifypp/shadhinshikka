@@ -65,7 +65,7 @@
                                                                 <tr>
                                                                     <th>শিক্ষকের নাম</th>
                                                                     <td>:</td>
-                                                                    <td>{{ $value->teachername->name }}</td>
+                                                                    <td> <a href="{{ route('student.show', $value->teachername->id) }}">{{ $value->teachername->name }}</a></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>মোট সিট</th>

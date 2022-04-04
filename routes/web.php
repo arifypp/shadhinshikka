@@ -99,6 +99,26 @@ Route::middleware(['verified'])->group(function () {
                 
             });
 
+            // Student Setting
+            Route::group(['prefix' => 'student'], function () {
+                Route::get('/manage', 'App\Http\Controllers\Backend\Admin\StudentController@index')->name('student.manage');
+
+                Route::get('/create', 'App\Http\Controllers\Backend\Admin\StudentController@create')->name('student.create');
+
+                Route::get('/show/{studentid}', 'App\Http\Controllers\Backend\Admin\StudentController@show')->name('student.show');
+
+                Route::post('/store', 'App\Http\Controllers\Backend\Admin\StudentController@store')->name('student.store');
+
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\Admin\StudentController@edit')->name('student.edit');
+
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\Admin\StudentController@update')->name('student.update');
+
+                Route::get('/status/{id}', 'App\Http\Controllers\Backend\Admin\StudentController@status')->name('student.status');
+
+
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\StudentController@destroy')->name('student.delete');
+            });
+
             // setting
             Route::group(['prefix' => 'setting'], function(){
                 

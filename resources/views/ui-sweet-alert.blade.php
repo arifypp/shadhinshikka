@@ -117,6 +117,14 @@
                             </div>
                         </div>
 
+                        <div class="col-xl-3 col-lg-4 col-sm-6 mb-2">
+                            <div class="p-3">
+                                <p>Laravel Mixin Notification</p>
+                                <button type="button" class="btn btn-primary waves-effect waves-light"
+                                    id="sa-mixin">Click me</button>
+                            </div>
+                        </div>
+
                     </div> <!-- end row -->
 
                 </div>
