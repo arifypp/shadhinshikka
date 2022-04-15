@@ -114,7 +114,7 @@
 
                             </div>
                         </div>
-                        @if( $url == 'student' )
+                        @if( $url == 'student')
                         <div class="mt-5 text-center">
 
                             <div>

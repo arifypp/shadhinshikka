@@ -118,6 +118,25 @@ Route::middleware(['verified'])->group(function () {
 
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\StudentController@destroy')->name('student.delete');
             });
+            // Notice controlling
+            Route::group(['prefix' => 'notice'], function () {
+                Route::get('/manage', 'App\Http\Controllers\Backend\Admin\NoticeController@index')->name('notice.manage');
+
+                Route::get('/create', 'App\Http\Controllers\Backend\Admin\NoticeController@create')->name('notice.create');
+
+                Route::get('/show/{studentid}', 'App\Http\Controllers\Backend\Admin\NoticeController@show')->name('notice.show');
+
+                Route::post('/store', 'App\Http\Controllers\Backend\Admin\NoticeController@store')->name('notice.store');
+
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\Admin\NoticeController@edit')->name('notice.edit');
+
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\Admin\NoticeController@update')->name('notice.update');
+
+                Route::get('/status/{id}', 'App\Http\Controllers\Backend\Admin\NoticeController@status')->name('notice.status');
+
+
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\NoticeController@destroy')->name('notice.delete');
+            });
 
             // setting
             Route::group(['prefix' => 'setting'], function(){

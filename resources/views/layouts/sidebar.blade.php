@@ -7,7 +7,7 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
+                <li class="menu-title" key="t-menu">অ্যাপ্লিকেশন মেনু</li>
 
                 <li>
                     @if( Auth::user()->role == 'admin' )
@@ -72,8 +72,22 @@
                     </ul>
                 </li>
 
-                <!-- Basic settings -->
+                <!-- Announcement -->
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-bell"></i>
+                        <span key="t-notice">নোটিশ সেটিং</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('notice.manage') }}" key="t-list-notice">নোটিশ লিস্ট</a></li>
+                        </li>
+                        <li><a href="{{ route('notice.create') }}" key="t-send-notice">সেন্ড নোটিশ</a></li>
+                        </li>
+                    </ul>
+                </li>
+
+                 <!-- Basic settings -->
+                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-store"></i>
                         <span key="t-basic">ব্যাসিক সেটিং</span>
