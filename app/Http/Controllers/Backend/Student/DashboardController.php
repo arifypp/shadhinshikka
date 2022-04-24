@@ -4,11 +4,17 @@ namespace App\Http\Controllers\Backend\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Backend\Admin\Course;
+use App\Models\Backend\Admin\CourseItem;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Notifications\DatabaseNotification;
+use App\Notifications\CourseAssignedNotification;
 use App\Models\User;
-use Auth;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
+use Image;
+use File;
 use Session;
+use Auth;
 
 class DashboardController extends Controller
 {
@@ -24,7 +30,13 @@ class DashboardController extends Controller
     public function index()
     {
         //
-        return view('Backend.Student.dashboard');
+        if ( Auth::user()->role == 'student' )
+        {
+            $courses = Course::orderby('id', 'desc')->get();
+
+            return view('Backend.Student.dashboard', compact('courses'));
+        }
+        
     }
 
     /**

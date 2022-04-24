@@ -54,7 +54,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required','min:8', 'numeric', 'regex:/(?:\d{17}|\d{13}|\d{10})/'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
@@ -79,8 +80,10 @@ class RegisterController extends Controller
         }
         
         return User::create([
-            'name' => $data['name'],
+            'name' => $request['firstname']. $request['lastname'],
+            'address'      => $request['address1']. $request['thana']. $request['city']. $request['division'],
             'email' => $data['email'],
+            'role'     =>  'student',
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
             'dob' => date('Y-m-d', strtotime($data['dob'])),
@@ -106,9 +109,11 @@ class RegisterController extends Controller
          }
  
          $student = User::create([
-             'name' => $request['name'],
+             'name' => $request['firstname']. $request['lastname'],
+             'address'      => $request['address1']. $request['thana']. $request['city']. $request['division'],
              'phone' => $request['phone'],
              'address' => $request['address'],
+             'role'     =>  'student',
              'email' => $request['email'],
              'studentid'    =>  rand(1, 100000),
              'password' => Hash::make($request['password']),

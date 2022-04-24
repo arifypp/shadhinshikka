@@ -42,7 +42,7 @@
                                     <a href="index" class="auth-logo-dark">
                                         <div class="avatar-md profile-user-wid mb-4">
                                             <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{{ URL::asset('/assets/images/favicon.ico') }}" alt=""
+                                                <img src="{{ '/storage/'.LOGO_PATH.config('settings.favicon') }}" alt=""
                                                     class="rounded-circle" height="50">
                                             </span>
                                         </div>

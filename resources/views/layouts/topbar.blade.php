@@ -51,7 +51,7 @@
                     </span>
                 </a>
             @elseif( Auth::user()->role == 'student')
-                <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
+                <a href="{{ route('user.dashboard') }}" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="{{ '/storage/'.LOGO_PATH.config('settings.adminfavicon') }}" alt="" height="22">
                     </span>
