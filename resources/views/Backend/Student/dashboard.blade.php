@@ -88,9 +88,11 @@
                     </div>
                     <div class="card-footer bg-dark text-center text-white">
                         <ul class="list-inline m-2">
+                          
                             <li class="list-inline-item">
-                                <button type="submit" class="btn btn-info btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Admission Now') }}</h5></button>
+                                <a href="{{ route('purchase.course', $course->slug) }}" class="btn btn-info btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Admission Now') }}</h5></a>
                             </li>
+                           
                             <li class="list-inline-item">{{ __('Price') }}: ৳{{ number_format( $course->price , 0 , '.' , ',' ) }} BDT</li>
                         </ul>
                     </div>

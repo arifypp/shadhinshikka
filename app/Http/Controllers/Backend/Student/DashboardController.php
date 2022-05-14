@@ -9,6 +9,7 @@ use App\Models\Backend\Admin\CourseItem;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\CourseAssignedNotification;
 use App\Models\User;
+use App\Models\Common\Admission;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Image;
@@ -33,8 +34,10 @@ class DashboardController extends Controller
         if ( Auth::user()->role == 'student' )
         {
             $courses = Course::orderby('id', 'desc')->get();
-
-            return view('Backend.Student.dashboard', compact('courses'));
+            $admission = Admission::where('users_id', Auth::user()->id)->first();
+            
+            return view('Backend.Student.dashboard', compact('courses', 'admission'));
+            
         }
         
     }
@@ -44,9 +47,23 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function profile($studentid)
     {
         //
+        $student = User::where('studentid', $studentid)->first();
+
+        if ( !empty($student) ) {
+            return view('Backend.Student.profile', compact('student'));
+        }
+        else
+        {
+            $notification = array(
+                'message'       => 'ডাটা পাওয়া যায়নি!!!',
+                'alert-type'    => 'error'
+            );
+    
+            return back()->with($notification);
+        }
     }
 
     /**

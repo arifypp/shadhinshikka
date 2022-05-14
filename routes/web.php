@@ -46,10 +46,27 @@ Route::middleware(['verified'])->group(function () {
 
     Route::get('/notifyseen/{id}', 'App\Http\Controllers\Backend\NotificationController@notify')->name('notify.seend');
 
+    // Payment Routes for bKash
+    Route::post('bkash/get-token', 'App\Http\Controllers\Backend\BkashController@getToken')->name('bkash-get-token');
+    Route::post('bkash/create-payment', 'App\Http\Controllers\Backend\BkashController@createPayment')->name('bkash-create-payment');
+    Route::post('bkash/execute-payment', 'App\Http\Controllers\Backend\BkashController@executePayment')->name('bkash-execute-payment');
+    Route::get('bkash/query-payment', 'App\Http\Controllers\Backend\BkashController@queryPayment')->name('bkash-query-payment');
+    Route::post('bkash/success', 'App\Http\Controllers\Backend\BkashController@bkashSuccess')->name('bkash-success');
+
     // Student Route Settings
     Route::group(['prefix' => 'student'], function(){
         Route::group(['middleware' => 'student'], function () {
             Route::get('/dashboard','App\Http\Controllers\Backend\Student\DashboardController@index')->name('user.dashboard');
+
+            Route::get('/profile/{studentid}','App\Http\Controllers\Backend\Student\DashboardController@profile')->name('user.profile');
+
+            Route::group(['prefix' => 'purchase'], function() {
+                Route::get('/course/{slug}','App\Http\Controllers\Backend\Student\PurchaseController@index')->name('purchase.course');
+
+                Route::post('/confirm','App\Http\Controllers\Backend\Student\PurchaseController@store')->name('purchase.confirm');
+                
+            });
+                
         });
     });
     // Teacher Login Settings 

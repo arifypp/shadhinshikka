@@ -109,7 +109,7 @@ class RegisterController extends Controller
          }
  
          $student = User::create([
-             'name' => $request['firstname']. $request['lastname'],
+             'name' => $request['firstname'] . $request['lastname'],
              'address'      => $request['address1']. $request['thana']. $request['city']. $request['division'],
              'phone' => $request['phone'],
              'address' => $request['address'],

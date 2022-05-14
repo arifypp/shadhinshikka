@@ -19,3 +19,6 @@
 
 <!-- Sweet Alert-->
 <link href="{{ URL::asset('/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+
+<!-- Custom Css-->
+<link href="{{ URL::asset('/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />

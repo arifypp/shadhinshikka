@@ -5,6 +5,8 @@ namespace App\Models\Backend\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Common\Admission;
+
 class Course extends Model
 {
     use HasFactory;
@@ -33,5 +35,10 @@ class Course extends Model
     public function teachername()
     {
         return $this->belongsTo(User::class, 'teacher');
+    }
+
+    public function admission()
+    {
+        return $this->belongsTo(Admission::class, 'id');
     }
 }
