@@ -86,6 +86,20 @@
                     </ul>
                 </li>
 
+                <!-- Admission settings -->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-book"></i>
+                        <span key="t-admission">অ্যাডমিশন সেটিং</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('manage.admission') }}" key="t-admission-manage">অ্যাডমিশন লিস্ট</a></li>
+                        </li>
+                        <li><a href="{{ route('pending.admission') }}" key="t-admission-pending">অ্যাডমিশন পেন্ডিং লিস্ট</a></li>
+                        </li>
+                    </ul>
+                </li>
+
                  <!-- Basic settings -->
                  <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -95,6 +109,9 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('manage.settings') }}" key="t-platform-settings">প্লাটফর্ম সেটিংস</a></li>
                         </li>
+                        <li><a href="{{ route('manage.wallet') }}" key="t-platform-wallet">ওয়ালেট টাইপ</a></li>
+                        </li>
+                        
                     </ul>
                 </li>
                 @endif

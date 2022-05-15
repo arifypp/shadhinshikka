@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\GeneralSettingRequest;
 use App\Http\Requests\MailSettingRequest;
 use App\Models\Backend\Admin\Settings;
+use CoreProc\WalletPlus\Models\WalletType;
 use Auth;
 use App\Traits\UploadAble;
 
@@ -165,9 +166,11 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function wallet()
     {
         //
+        $wallet = WalletType::orderby('id', 'desc')->get();
+        return view('Backend.Admin.wallet', compact('wallet'));
     }
 
     /**
@@ -176,9 +179,26 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function walletstore(Request $request)
     {
         //
+        $request->validate([
+            'walletname' => 'required',
+        ],
+        $message = [
+            'walletname.required'   =>  'এই ঘরটি পূরণ করুন',
+        ]);
+
+        $walletType = WalletType::create([
+            'name' => $request->walletname,
+            'decimals' => 0, // Set how many decimal points your wallet accepts here. Defaults to 0.
+        ]);
+
+        $notification = array(
+            'message'       => 'নতুন ওয়ালেট তৈরি হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+        return back()->with($notification);
     }
 
     /**

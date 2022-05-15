@@ -155,6 +155,12 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\NoticeController@destroy')->name('notice.delete');
             });
 
+            // Admission list and details
+            Route::group(['prefix' => 'admission'], function(){
+                Route::get('/manage','App\Http\Controllers\Backend\Admin\AdmissionController@index')->name('manage.admission');
+                Route::get('/pending','App\Http\Controllers\Backend\Admin\AdmissionController@pending')->name('pending.admission');
+            });
+
             // setting
             Route::group(['prefix' => 'setting'], function(){
                 
@@ -163,6 +169,11 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/general-setting','App\Http\Controllers\Backend\Admin\SettingController@generelsetting')->name('general.settings');
 
                 Route::post('/mail-setting','App\Http\Controllers\Backend\Admin\SettingController@mailsetting')->name('mail.settings');
+
+                Route::get('/wallet/manage','App\Http\Controllers\Backend\Admin\SettingController@wallet')->name('manage.wallet');
+
+                Route::post('/wallet/manage/request','App\Http\Controllers\Backend\Admin\SettingController@walletstore')->name('settings.walletstore');
+
             });
 
             
