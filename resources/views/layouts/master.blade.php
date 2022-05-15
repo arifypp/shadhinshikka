@@ -18,10 +18,13 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
         @include('layouts.topbar')
-        @if( Auth::user('role', 'student') )
+
+        @if( auth()->user()->role == 'student')
             @include('Backend.Student.sidebar')
-        @else
+            
+        @elseif( auth()->user()->role == 'admin') )
             @include('layouts.sidebar')
+
         @endif
         <!-- ============================================================== -->
         <!-- Start right Content here -->

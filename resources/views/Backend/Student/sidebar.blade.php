@@ -11,7 +11,7 @@
 
                 <li>                    
                     <a href="{{ route('user.dashboard') }}" class="waves-effect">
-                        <span key="t-dashboards">ড্যাশবোর্ড</span>
+                        <span key="t-dashboards">ড্যাশবোর্ড student</span>
                     </a>   
                 </li>
                 

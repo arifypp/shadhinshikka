@@ -12,6 +12,17 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="row">
+                <!-- Warning for admission -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12 my-1">
+                    @if( !empty($admission->status == 'inactive') )
+                    <div class="admission-warning alert alert-danger">
+                        <span> {{ __('আপনার অ্যাডমিশন এখনো একটিভ হয়নি। অনুগ্রহ করে অপেক্ষা করুন ধন্যবাদ।') }} </span>
+                    </div>
+                    @endif
+                    
+                    {{ App\Models\Common\Admission::payment_progress() }}
+                    
+                </div>
                 <div class="col-md-4">
                     <div class="card mini-stats-wid">
                         <div class="card-body">
@@ -88,11 +99,15 @@
                     </div>
                     <div class="card-footer bg-dark text-center text-white">
                         <ul class="list-inline m-2">
-                          
+                          @if( $course->id == $admission->courses_id )
+                            <li class="list-inline-item">
+                                <a href="javascript:void(0)" class="btn btn-info btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Admitted') }}</h5></a>
+                            </li>
+                            @else
                             <li class="list-inline-item">
                                 <a href="{{ route('purchase.course', $course->slug) }}" class="btn btn-info btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Admission Now') }}</h5></a>
                             </li>
-                           
+                           @endif
                             <li class="list-inline-item">{{ __('Price') }}: ৳{{ number_format( $course->price , 0 , '.' , ',' ) }} BDT</li>
                         </ul>
                     </div>
