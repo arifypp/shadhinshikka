@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2022 at 11:34 AM
+-- Generation Time: May 17, 2022 at 05:16 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -20,6 +20,99 @@ SET time_zone = "+00:00";
 --
 -- Database: `ssedu`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admissions`
+--
+
+CREATE TABLE `admissions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `admission_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `courses_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `users_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `admissions`
+--
+
+INSERT INTO `admissions` (`id`, `admission_id`, `courses_id`, `users_id`, `status`, `created_at`, `updated_at`) VALUES
+(14, '23906', 5, 25, 'active', '2022-05-15 12:59:12', '2022-05-17 08:46:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ch_favorites`
+--
+
+CREATE TABLE `ch_favorites` (
+  `id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `favorite_id` bigint(20) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ch_favorites`
+--
+
+INSERT INTO `ch_favorites` (`id`, `user_id`, `favorite_id`, `created_at`, `updated_at`) VALUES
+(42340352, 6, 5, '2022-05-17 13:50:05', '2022-05-17 13:50:05'),
+(65024135, 25, 6, '2022-05-17 13:50:51', '2022-05-17 13:50:51'),
+(81347214, 6, 25, '2022-05-17 11:06:18', '2022-05-17 11:06:18'),
+(81980488, 25, 5, '2022-05-17 13:50:58', '2022-05-17 13:50:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ch_messages`
+--
+
+CREATE TABLE `ch_messages` (
+  `id` bigint(20) NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `from_id` bigint(20) NOT NULL,
+  `to_id` bigint(20) NOT NULL,
+  `body` varchar(5000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `attachment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seen` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ch_messages`
+--
+
+INSERT INTO `ch_messages` (`id`, `type`, `from_id`, `to_id`, `body`, `attachment`, `seen`, `created_at`, `updated_at`) VALUES
+(1679498128, 'user', 6, 25, 'hi', NULL, 1, '2022-05-17 13:28:01', '2022-05-17 13:28:02'),
+(1687385705, 'user', 25, 6, 'g\\', NULL, 1, '2022-05-17 12:48:45', '2022-05-17 12:53:43'),
+(1802365852, 'user', 6, 25, 'hi', NULL, 1, '2022-05-17 12:59:07', '2022-05-17 13:02:45'),
+(1913747837, 'user', 25, 6, 'gret', NULL, 0, '2022-05-17 14:29:21', '2022-05-17 14:29:21'),
+(1928774796, 'user', 6, 25, 'hi', NULL, 1, '2022-05-17 13:32:52', '2022-05-17 13:32:53'),
+(1983815561, 'user', 25, 6, 'great', NULL, 1, '2022-05-17 13:06:03', '2022-05-17 13:22:34'),
+(2036726585, 'user', 25, 6, 'Hello Admin', NULL, 1, '2022-05-17 10:57:59', '2022-05-17 11:02:13'),
+(2077832659, 'user', 25, 6, 'I am new student of ss280', NULL, 1, '2022-05-17 10:58:42', '2022-05-17 11:02:13'),
+(2094566899, 'user', 25, 6, 'Hi', NULL, 1, '2022-05-17 13:23:10', '2022-05-17 13:23:11'),
+(2242818368, 'user', 6, 25, 'Hi', NULL, 1, '2022-05-17 11:02:18', '2022-05-17 11:05:07'),
+(2267948699, 'user', 25, 6, 'gg', NULL, 1, '2022-05-17 13:23:58', '2022-05-17 13:23:58'),
+(2310466485, 'user', 25, 6, 'hi', NULL, 1, '2022-05-17 13:58:38', '2022-05-17 13:58:40'),
+(2324642060, 'user', 6, 25, '122', NULL, 1, '2022-05-17 11:04:34', '2022-05-17 11:05:07'),
+(2335383530, 'user', 25, 6, 'hi', NULL, 1, '2022-05-17 12:39:19', '2022-05-17 12:53:43'),
+(2381053100, 'user', 25, 6, 'hi', NULL, 1, '2022-05-17 12:46:35', '2022-05-17 12:53:43'),
+(2509942423, 'user', 25, 5, 'hi', NULL, 0, '2022-05-17 14:31:06', '2022-05-17 14:31:06'),
+(2523024940, 'user', 6, 5, 'hi', NULL, 0, '2022-05-17 11:56:33', '2022-05-17 11:56:33'),
+(2573406172, 'user', 6, 25, 'hi', NULL, 1, '2022-05-17 12:53:46', '2022-05-17 13:02:45'),
+(2593345000, 'user', 6, 25, 'nice', NULL, 1, '2022-05-17 13:23:51', '2022-05-17 13:23:52'),
+(2603670557, 'user', 25, 6, 'nicew', NULL, 1, '2022-05-17 13:51:13', '2022-05-17 13:51:14'),
+(2612287899, 'user', 25, 6, '301', NULL, 1, '2022-05-17 11:05:24', '2022-05-17 11:05:25'),
+(2646655721, 'user', 25, 6, 'hlw', NULL, 1, '2022-05-17 13:56:19', '2022-05-17 13:56:19');
 
 -- --------------------------------------------------------
 
@@ -263,7 +356,17 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (20, '2022_03_26_102959_create_notifications_table', 5),
 (21, '2022_03_26_104548_create_jobs_table', 6),
 (22, '2022_03_29_173342_create_user_education_table', 7),
-(26, '2022_03_29_173739_create_user_experiences_table', 8);
+(26, '2022_03_29_173739_create_user_experiences_table', 8),
+(28, '2022_04_05_161941_create_notices_table', 9),
+(31, '2022_05_13_210126_create_admissions_table', 10),
+(33, '2022_05_15_102420_create_payment_transictions_table', 11),
+(34, '2022_05_15_121906_create_wallet_plus_tables', 12),
+(47, '2022_05_17_999999_add_active_status_to_users', 13),
+(48, '2022_05_17_999999_add_avatar_to_users', 13),
+(49, '2022_05_17_999999_add_dark_mode_to_users', 13),
+(50, '2022_05_17_999999_add_messenger_color_to_users', 13),
+(51, '2022_05_17_999999_create_favorites_table', 13),
+(52, '2022_05_17_999999_create_messages_table', 13);
 
 -- --------------------------------------------------------
 
@@ -280,14 +383,6 @@ CREATE TABLE `notices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `notices`
---
-
-INSERT INTO `notices` (`id`, `reciever`, `title`, `description`, `course_id`, `created_at`, `updated_at`) VALUES
-(8, '2', 'নতুন নোটিশ নোটিফিকেশন', 'নতুন মেসেজ দিয়েছি', 5, '2022-04-14 23:39:27', '2022-04-14 23:39:27'),
-(9, '2', 'Lorem lipsum', 'hello word An easy way to set a timezone for a user in your application and then show date/times to them in their local timezone. An easy way to set a timezone for a user in your application and then show date/times to them in their local timezone.', 5, '2022-04-14 23:46:12', '2022-04-14 23:46:12');
 
 -- --------------------------------------------------------
 
@@ -311,15 +406,21 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('06108415-f5f0-4913-bc1f-c63aa54cd334', 'App\\Notifications\\AdmissionNotification', 'App\\Models\\User', 6, '{\"id\":9,\"courses_id\":5,\"users_id\":\"MrStudent\",\"created_at\":{\"id\":6,\"name\":\"admin\",\"studentid\":\"ss-admin\",\"email\":\"info@shadhinshikka.com\",\"email_verified_at\":\"2022-03-25T05:52:47.000000Z\",\"phone\":null,\"address\":null,\"role\":\"admin\",\"status\":1,\"dob\":\"2021-12-14\",\"avatar\":\"\\/images\\/1648035991.png\",\"created_at\":\"2022-03-23T05:46:31.000000Z\",\"updated_at\":\"2022-03-23T05:46:31.000000Z\"}}', NULL, '2022-05-15 04:56:54', '2022-05-15 04:56:54'),
 ('06e5cdb2-4b16-49fc-8711-ec2d3f3b8015', 'App\\Notifications\\NoticeNotification', 'App\\Models\\User', 5, '{\"id\":7,\"title\":\"\\u09b9\\u09cd\\u09af\\u09be\\u09b2\\u09cb \\u099f\\u09be\\u0987\\u099f\\u09c7\\u09b2\",\"created_at\":{\"id\":5,\"name\":\"Mr Teacher\",\"studentid\":null,\"email\":\"abrarmediany@gmail.com\",\"email_verified_at\":null,\"phone\":null,\"address\":null,\"role\":\"teacher\",\"status\":1,\"dob\":\"1997-12-17\",\"avatar\":\"\\/images\\/1648032608.png\",\"created_at\":\"2022-03-23T10:50:09.000000Z\",\"updated_at\":\"2022-04-04T15:48:18.000000Z\"}}', NULL, '2022-04-14 23:32:14', '2022-04-14 23:32:14'),
 ('115f4062-4894-425d-a340-247c71392373', 'App\\Notifications\\CourseAssignedNotification', 'App\\Models\\User', 5, '{\"id\":4,\"name\":\"The Journey of Wordpress\",\"created_at\":{\"id\":5,\"name\":\"Mr Teacher\",\"studentid\":null,\"email\":\"n01636442424@gmail.com\",\"email_verified_at\":null,\"phone\":null,\"address\":null,\"role\":\"teacher\",\"status\":1,\"dob\":\"1997-12-17\",\"avatar\":\"\\/images\\/1648032608.png\",\"created_at\":\"2022-03-23T10:50:09.000000Z\",\"updated_at\":\"2022-03-23T10:50:09.000000Z\"}}', '2022-03-26 07:15:38', '2022-03-26 05:18:23', '2022-03-26 07:15:38'),
 ('1981534c-79d7-4d04-affa-efdce430116f', 'App\\Notifications\\NoticeNotification', 'App\\Models\\User', 5, '{\"id\":5,\"title\":\"\\u09a8\\u09a4\\u09c1\\u09a8 \\u099f\\u09be\\u0987\\u099f\\u09c7\\u09b2\",\"created_at\":{\"id\":5,\"name\":\"Mr Teacher\",\"studentid\":null,\"email\":\"n01636442424@gmail.com\",\"email_verified_at\":null,\"phone\":null,\"address\":null,\"role\":\"teacher\",\"status\":1,\"dob\":\"1997-12-17\",\"avatar\":\"\\/images\\/1648032608.png\",\"created_at\":\"2022-03-23T10:50:09.000000Z\",\"updated_at\":\"2022-04-04T15:48:18.000000Z\"}}', NULL, '2022-04-14 23:25:08', '2022-04-14 23:25:08'),
+('2d919b5e-7fbe-4039-9d23-b27358151f4c', 'App\\Notifications\\AdmissionNotification', 'App\\Models\\User', 6, '{\"id\":2,\"courses_id\":5,\"users_id\":\"MrStudent\",\"created_at\":{\"id\":6,\"name\":\"admin\",\"studentid\":\"ss-admin\",\"email\":\"info@shadhinshikka.com\",\"email_verified_at\":\"2022-03-25T05:52:47.000000Z\",\"phone\":null,\"address\":null,\"role\":\"admin\",\"status\":1,\"dob\":\"2021-12-14\",\"avatar\":\"\\/images\\/1648035991.png\",\"created_at\":\"2022-03-23T05:46:31.000000Z\",\"updated_at\":\"2022-03-23T05:46:31.000000Z\"}}', '2022-05-15 04:20:22', '2022-05-15 03:31:01', '2022-05-15 04:20:22'),
 ('321ef31c-105e-4551-a271-a86970327bb3', 'App\\Notifications\\NoticeNotification', 'App\\Models\\User', 5, '{\"id\":8,\"title\":\"\\u09a8\\u09a4\\u09c1\\u09a8 \\u09a8\\u09cb\\u099f\\u09bf\\u09b6 \\u09a8\\u09cb\\u099f\\u09bf\\u09ab\\u09bf\\u0995\\u09c7\\u09b6\\u09a8\",\"created_at\":{\"id\":5,\"name\":\"Mr Teacher\",\"studentid\":null,\"email\":\"abrarmediany@gmail.com\",\"email_verified_at\":null,\"phone\":null,\"address\":null,\"role\":\"teacher\",\"status\":1,\"dob\":\"1997-12-17\",\"avatar\":\"\\/images\\/1648032608.png\",\"created_at\":\"2022-03-23T10:50:09.000000Z\",\"updated_at\":\"2022-04-04T15:48:18.000000Z\"}}', NULL, '2022-04-14 23:39:31', '2022-04-14 23:39:31'),
 ('48d05580-dbd2-4226-b849-47b6aed1e813', 'App\\Notifications\\NoticeNotification', 'App\\Models\\User', 5, '{\"id\":11,\"title\":\"Checking timezone\",\"created_at\":{\"id\":5,\"name\":\"Mr Teacher\",\"studentid\":null,\"email\":\"abrarmediany@gmail.com\",\"email_verified_at\":null,\"phone\":null,\"address\":null,\"role\":\"teacher\",\"status\":1,\"dob\":\"1997-12-17\",\"avatar\":\"\\/images\\/1648032608.png\",\"created_at\":\"2022-03-23T04:50:09.000000Z\",\"updated_at\":\"2022-04-04T09:48:18.000000Z\"}}', NULL, '2022-04-15 06:01:26', '2022-04-15 06:01:26'),
 ('492efa7a-74cd-4b32-934f-d5a9fc5d2eb6', 'App\\Notifications\\NoticeNotification', 'App\\Models\\User', 5, '{\"id\":10,\"title\":\"Look up this package\",\"created_at\":{\"id\":5,\"name\":\"Mr Teacher\",\"studentid\":null,\"email\":\"abrarmediany@gmail.com\",\"email_verified_at\":null,\"phone\":null,\"address\":null,\"role\":\"teacher\",\"status\":1,\"dob\":\"1997-12-17\",\"avatar\":\"\\/images\\/1648032608.png\",\"created_at\":\"2022-03-23T10:50:09.000000Z\",\"updated_at\":\"2022-04-04T15:48:18.000000Z\"}}', NULL, '2022-04-14 23:52:26', '2022-04-14 23:52:26'),
+('49eb649d-79ef-4ad4-bb35-1805fb9cabae', 'App\\Notifications\\AcceptAdmissionNotification', 'App\\Models\\User', 25, '{\"id\":14,\"courses_id\":5,\"users_id\":\"MrStudent\",\"created_at\":{\"id\":25,\"name\":\"MrStudent\",\"studentid\":\"3914\",\"email\":\"student@demo.com\",\"email_verified_at\":\"2022-04-01T03:16:59.000000Z\",\"phone\":\"01789208820\",\"address\":null,\"role\":\"student\",\"status\":1,\"dob\":\"2022-03-27\",\"avatar\":\"\\/images\\/1650770003.png\",\"created_at\":\"2022-04-24T03:13:24.000000Z\",\"updated_at\":\"2022-04-24T03:13:24.000000Z\"}}', NULL, '2022-05-17 08:46:28', '2022-05-17 08:46:28'),
 ('782b640e-bbe3-44be-9f47-3e3fad9d169b', 'App\\Notifications\\NoticeNotification', 'App\\Models\\User', 5, '{\"id\":4,\"title\":\"\\u09a1\\u09c7\\u09ae\\u09cb \\u099f\\u09be\\u0987\\u099f\\u09c7\\u09b2\",\"created_at\":{\"id\":5,\"name\":\"Mr Teacher\",\"studentid\":null,\"email\":\"n01636442424@gmail.com\",\"email_verified_at\":null,\"phone\":null,\"address\":null,\"role\":\"teacher\",\"status\":1,\"dob\":\"1997-12-17\",\"avatar\":\"\\/images\\/1648032608.png\",\"created_at\":\"2022-03-23T10:50:09.000000Z\",\"updated_at\":\"2022-04-04T15:48:18.000000Z\"}}', NULL, '2022-04-14 23:22:26', '2022-04-14 23:22:26'),
 ('787346e9-4ab9-439d-a2ad-fdaabcb7f32d', 'App\\Notifications\\NoticeNotification', 'App\\Models\\User', 5, '{\"id\":9,\"title\":\"Lorem lipsum\",\"created_at\":{\"id\":5,\"name\":\"Mr Teacher\",\"studentid\":null,\"email\":\"abrarmediany@gmail.com\",\"email_verified_at\":null,\"phone\":null,\"address\":null,\"role\":\"teacher\",\"status\":1,\"dob\":\"1997-12-17\",\"avatar\":\"\\/images\\/1648032608.png\",\"created_at\":\"2022-03-23T10:50:09.000000Z\",\"updated_at\":\"2022-04-04T15:48:18.000000Z\"}}', NULL, '2022-04-14 23:46:17', '2022-04-14 23:46:17'),
+('af34905b-3934-419a-b186-918eee16e21e', 'App\\Notifications\\AdmissionNotification', 'App\\Models\\User', 6, '{\"id\":14,\"courses_id\":5,\"users_id\":\"MrStudent\",\"created_at\":{\"id\":6,\"name\":\"admin\",\"studentid\":\"ss-admin\",\"email\":\"info@shadhinshikka.com\",\"email_verified_at\":\"2022-03-25T05:52:47.000000Z\",\"phone\":null,\"address\":null,\"role\":\"admin\",\"status\":1,\"dob\":\"2021-12-14\",\"avatar\":\"\\/images\\/1648035991.png\",\"created_at\":\"2022-03-23T05:46:31.000000Z\",\"updated_at\":\"2022-03-23T05:46:31.000000Z\"}}', NULL, '2022-05-15 12:59:18', '2022-05-15 12:59:18'),
 ('b3e992f3-ae73-45bc-be29-22043fc2dede', 'App\\Notifications\\NoticeNotification', 'App\\Models\\User', 5, '{\"id\":6,\"title\":\"\\u09b9\\u09cd\\u09af\\u09be\\u09b2\\u09cb \\u099f\\u09be\\u0987\\u099f\\u09c7\\u09b2\",\"created_at\":{\"id\":5,\"name\":\"Mr Teacher\",\"studentid\":null,\"email\":\"n01636442424@gmail.com\",\"email_verified_at\":null,\"phone\":null,\"address\":null,\"role\":\"teacher\",\"status\":1,\"dob\":\"1997-12-17\",\"avatar\":\"\\/images\\/1648032608.png\",\"created_at\":\"2022-03-23T10:50:09.000000Z\",\"updated_at\":\"2022-04-04T15:48:18.000000Z\"}}', NULL, '2022-04-14 23:28:30', '2022-04-14 23:28:30'),
+('be909bf1-8579-41ad-a57f-9e1ddd5fef3a', 'App\\Notifications\\AdmissionNotification', 'App\\Models\\User', 6, '{\"id\":10,\"courses_id\":5,\"users_id\":\"MrStudent\",\"created_at\":{\"id\":6,\"name\":\"admin\",\"studentid\":\"ss-admin\",\"email\":\"info@shadhinshikka.com\",\"email_verified_at\":\"2022-03-25T05:52:47.000000Z\",\"phone\":null,\"address\":null,\"role\":\"admin\",\"status\":1,\"dob\":\"2021-12-14\",\"avatar\":\"\\/images\\/1648035991.png\",\"created_at\":\"2022-03-23T05:46:31.000000Z\",\"updated_at\":\"2022-03-23T05:46:31.000000Z\"}}', NULL, '2022-05-15 04:58:40', '2022-05-15 04:58:40'),
+('c4f11cb8-955c-47eb-ad15-4c9ea097babf', 'App\\Notifications\\AdmissionNotification', 'App\\Models\\User', 6, '{\"id\":1,\"courses_id\":5,\"users_id\":25,\"created_at\":{\"id\":6,\"name\":\"admin\",\"studentid\":\"ss-admin\",\"email\":\"info@shadhinshikka.com\",\"email_verified_at\":\"2022-03-25T05:52:47.000000Z\",\"phone\":null,\"address\":null,\"role\":\"admin\",\"status\":1,\"dob\":\"2021-12-14\",\"avatar\":\"\\/images\\/1648035991.png\",\"created_at\":\"2022-03-23T05:46:31.000000Z\",\"updated_at\":\"2022-03-23T05:46:31.000000Z\"}}', '2022-05-15 03:34:06', '2022-05-15 03:25:17', '2022-05-15 03:34:06'),
 ('fe8fb7d2-0045-4536-95cc-17da4feb7296', 'App\\Notifications\\CourseAssignedNotification', 'App\\Models\\User', 5, '{\"id\":5,\"name\":\"The Journey of Wordpress\",\"created_at\":{\"id\":5,\"name\":\"Mr Teacher\",\"studentid\":null,\"email\":\"n01636442424@gmail.com\",\"email_verified_at\":null,\"phone\":null,\"address\":null,\"role\":\"teacher\",\"status\":1,\"dob\":\"1997-12-17\",\"avatar\":\"\\/images\\/1648032608.png\",\"created_at\":\"2022-03-23T10:50:09.000000Z\",\"updated_at\":\"2022-03-23T10:50:09.000000Z\"}}', NULL, '2022-03-26 05:26:31', '2022-03-26 05:26:31');
 
 -- --------------------------------------------------------
@@ -340,6 +441,31 @@ CREATE TABLE `password_resets` (
 
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 ('abdur@gmail.com', '$2y$10$Mna844K5fUqVfZEFt18Vlutoh.xyUXvWBblyMTje/.6jKBfLlX5b2', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_transictions`
+--
+
+CREATE TABLE `payment_transictions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `amount` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `courses_id` bigint(20) UNSIGNED NOT NULL,
+  `users_id` bigint(20) UNSIGNED NOT NULL,
+  `adm_id` bigint(20) UNSIGNED NOT NULL,
+  `traxid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `payment_transictions`
+--
+
+INSERT INTO `payment_transictions` (`id`, `amount`, `courses_id`, `users_id`, `adm_id`, `traxid`, `phone`, `created_at`, `updated_at`) VALUES
+(7, '1200', 5, 25, 14, 'TXTXTXHJ', '01763746979', '2022-05-15 12:59:12', '2022-05-15 12:59:12');
 
 -- --------------------------------------------------------
 
@@ -5557,21 +5683,24 @@ CREATE TABLE `users` (
   `status` tinyint(1) NOT NULL DEFAULT 1,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
-  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `active_status` tinyint(1) NOT NULL DEFAULT 0,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'avatar.png',
+  `dark_mode` tinyint(1) NOT NULL DEFAULT 0,
+  `messenger_color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#2180f3'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `studentid`, `email`, `email_verified_at`, `phone`, `address`, `role`, `status`, `password`, `dob`, `avatar`, `remember_token`, `created_at`, `updated_at`) VALUES
-(5, 'Mr Teacher', NULL, 'abrarmediany@gmail.com', NULL, NULL, NULL, 'teacher', 1, '$2y$10$0u1ztPaNHN4iiogrIUDeZ.oueTJiiig1Yn4mTh0XO3.NgeDE2w7v2', '1997-12-17', '/images/1648032608.png', 'lBI1wMBbWLSlzTO4vlpGnwTZO66hgnccBvVLu4UhqqIZKrs9ZuvKSU7XCsjY', '2022-03-23 04:50:09', '2022-04-04 09:48:18'),
-(6, 'admin', NULL, 'info@shadhinshikka.com', '2022-03-25 05:52:47', NULL, NULL, 'admin', 1, '$2y$10$fu6qZN5aPv2EVWSfk4yEe.O1MCeAtwoWtvDFTIkbomx1Px2iZ1RR6', '2021-12-14', '/images/1648035991.png', '5wIQFbaJChbkxV1ZInbigylR82SG2pmvmQ85MEG5F1KuXKeALDD5nQ3N0mb8', '2022-03-23 05:46:31', '2022-03-23 05:46:31'),
-(24, 'Md Student', 'SS-23513', 'abdur@gmail.com', '2022-04-24 02:58:11', '01742369851', 'Jashim Uddin 123 14 2 125 14 2', 'student', 1, '$2y$10$Odi.6EHKt5d2FiAtAnQFnexnonqOAf/Wi49CemLgTds0vhlvQXl6u', '2022-03-29', '/images/1649096498.jpeg', NULL, '2022-04-04 12:21:38', '2022-04-04 12:49:21'),
-(25, 'MrStudent', '3914', 'student@demo.com', '2022-04-01 03:16:59', '01789208820', NULL, 'student', 1, '$2y$10$BgK9/EYLTvsTXWb2q.iyceOVImB579ILu6v2IVf9YKn9mf789YsDG', '2022-03-27', '/images/1650770003.png', '41l7vDeyndcXfGxmXWJm2ee3Po5hJV9oL3l4gdYdXSxGB5TxH6Fvv1xf4zk0', '2022-04-24 03:13:24', '2022-04-24 03:13:24');
+INSERT INTO `users` (`id`, `name`, `studentid`, `email`, `email_verified_at`, `phone`, `address`, `role`, `status`, `password`, `dob`, `remember_token`, `created_at`, `updated_at`, `active_status`, `avatar`, `dark_mode`, `messenger_color`) VALUES
+(5, 'Mr Teacher', 'ss-teacher', 'abrarmediany@gmail.com', NULL, NULL, NULL, 'teacher', 1, '$2y$10$0u1ztPaNHN4iiogrIUDeZ.oueTJiiig1Yn4mTh0XO3.NgeDE2w7v2', '1997-12-17', 'ChiUmFGzqaKZzPpgWvZEgfS1aBDWWLeeeKVwu3m08a7GwTR6NXRsZq0wQe3C', '2022-03-23 04:50:09', '2022-04-04 09:48:18', 0, 'avatar.png', 0, '#2180f3'),
+(6, 'admin', 'ss-admin', 'info@shadhinshikka.com', '2022-03-25 05:52:47', NULL, NULL, 'admin', 1, '$2y$10$fu6qZN5aPv2EVWSfk4yEe.O1MCeAtwoWtvDFTIkbomx1Px2iZ1RR6', '2021-12-14', 't6MSVsOOTO6A3BPIdc1NxddrCu8lrewcF63JIxKbIQtbhfmgHMdSy6qYnSNB', '2022-03-23 05:46:31', '2022-05-17 14:12:02', 1, '630f72a8-832b-41e3-8240-627eba1c207c.png', 0, '#2180f3'),
+(24, 'Md Student', 'SS-23513', 'abdur@gmail.com', '2022-04-24 02:58:11', '01742369851', 'Jashim Uddin 123 14 2 125 14 2', 'student', 1, '$2y$10$Odi.6EHKt5d2FiAtAnQFnexnonqOAf/Wi49CemLgTds0vhlvQXl6u', '2022-03-29', NULL, '2022-04-04 12:21:38', '2022-04-04 12:49:21', 0, 'avatar.png', 0, '#2180f3'),
+(25, 'MrStudent', '3914', 'student@demo.com', '2022-04-01 03:16:59', '01789208820', NULL, 'student', 1, '$2y$10$BgK9/EYLTvsTXWb2q.iyceOVImB579ILu6v2IVf9YKn9mf789YsDG', '2022-03-27', 'HRU56SFwnEWyqUnVh3S5dQ5TQdg5MD0cRfi8GqQfh7sYhf2vs2cpInozChYc', '2022-04-24 03:13:24', '2022-05-17 14:16:27', 1, '71aedecc-3981-451f-802c-f894939e844c.png', 0, '#2180f3');
 
 -- --------------------------------------------------------
 
@@ -5612,9 +5741,103 @@ CREATE TABLE `user_experiences` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallets`
+--
+
+CREATE TABLE `wallets` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `wallet_type_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `raw_balance` bigint(20) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wallets`
+--
+
+INSERT INTO `wallets` (`id`, `user_type`, `user_id`, `wallet_type_id`, `raw_balance`, `created_at`, `updated_at`) VALUES
+(4, 'App\\Models\\User', 25, 1, 3600, '2022-05-15 12:59:12', '2022-05-17 08:46:23'),
+(5, 'App\\Models\\User', 25, 1, 0, '2022-05-17 07:49:50', '2022-05-17 07:49:50'),
+(6, 'App\\Models\\User', 25, 1, 0, '2022-05-17 07:50:38', '2022-05-17 07:50:38'),
+(7, 'App\\Models\\User', 25, 1, 0, '2022-05-17 07:54:11', '2022-05-17 07:54:11'),
+(8, 'App\\Models\\User', 25, 1, 0, '2022-05-17 08:46:23', '2022-05-17 08:46:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallet_ledgers`
+--
+
+CREATE TABLE `wallet_ledgers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `wallet_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `transaction_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `transaction_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `amount` bigint(20) NOT NULL DEFAULT 0,
+  `running_raw_balance` bigint(20) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wallet_ledgers`
+--
+
+INSERT INTO `wallet_ledgers` (`id`, `wallet_id`, `transaction_type`, `transaction_id`, `amount`, `running_raw_balance`, `created_at`, `updated_at`) VALUES
+(3, 4, NULL, NULL, 1200, 1200, '2022-05-15 12:59:12', '2022-05-15 12:59:12'),
+(4, 4, NULL, NULL, 1200, 2400, '2022-05-17 07:54:11', '2022-05-17 07:54:11'),
+(5, 4, NULL, NULL, 1200, 3600, '2022-05-17 08:46:23', '2022-05-17 08:46:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallet_types`
+--
+
+CREATE TABLE `wallet_types` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `decimals` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wallet_types`
+--
+
+INSERT INTO `wallet_types` (`id`, `name`, `decimals`, `created_at`, `updated_at`) VALUES
+(1, 'SS ACCOUNT', 0, '2022-05-15 11:10:34', '2022-05-15 11:10:34'),
+(2, 'Teacher Wallet', 0, '2022-05-15 11:10:56', '2022-05-15 11:10:56');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admissions`
+--
+ALTER TABLE `admissions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `admissions_users_id_foreign` (`users_id`);
+
+--
+-- Indexes for table `ch_favorites`
+--
+ALTER TABLE `ch_favorites`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ch_messages`
+--
+ALTER TABLE `ch_messages`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `courses`
@@ -5685,6 +5908,14 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `payment_transictions`
+--
+ALTER TABLE `payment_transictions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `payment_transictions_users_id_foreign` (`users_id`),
+  ADD KEY `payment_transictions_adm_id_foreign` (`adm_id`);
+
+--
 -- Indexes for table `settings`
 --
 ALTER TABLE `settings`
@@ -5728,8 +5959,36 @@ ALTER TABLE `user_experiences`
   ADD KEY `user_experiences_user_id_foreign` (`user_id`);
 
 --
+-- Indexes for table `wallets`
+--
+ALTER TABLE `wallets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `wallets_user_type_user_id_index` (`user_type`,`user_id`),
+  ADD KEY `wallets_wallet_type_id_foreign` (`wallet_type_id`);
+
+--
+-- Indexes for table `wallet_ledgers`
+--
+ALTER TABLE `wallet_ledgers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `wallet_ledgers_transaction_type_transaction_id_index` (`transaction_type`,`transaction_id`),
+  ADD KEY `wallet_ledgers_wallet_id_foreign` (`wallet_id`);
+
+--
+-- Indexes for table `wallet_types`
+--
+ALTER TABLE `wallet_types`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `admissions`
+--
+ALTER TABLE `admissions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -5771,13 +6030,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `notices`
 --
 ALTER TABLE `notices`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `payment_transictions`
+--
+ALTER TABLE `payment_transictions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -5816,8 +6081,32 @@ ALTER TABLE `user_experiences`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `wallets`
+--
+ALTER TABLE `wallets`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `wallet_ledgers`
+--
+ALTER TABLE `wallet_ledgers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `wallet_types`
+--
+ALTER TABLE `wallet_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `admissions`
+--
+ALTER TABLE `admissions`
+  ADD CONSTRAINT `admissions_users_id_foreign` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `courses`
@@ -5836,6 +6125,13 @@ ALTER TABLE `courses_item`
 --
 ALTER TABLE `districts`
   ADD CONSTRAINT `districts_division_id_foreign` FOREIGN KEY (`division_id`) REFERENCES `divisions` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `payment_transictions`
+--
+ALTER TABLE `payment_transictions`
+  ADD CONSTRAINT `payment_transictions_adm_id_foreign` FOREIGN KEY (`adm_id`) REFERENCES `admissions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `payment_transictions_users_id_foreign` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `thanas`
@@ -5860,6 +6156,18 @@ ALTER TABLE `user_education`
 --
 ALTER TABLE `user_experiences`
   ADD CONSTRAINT `user_experiences_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `wallets`
+--
+ALTER TABLE `wallets`
+  ADD CONSTRAINT `wallets_wallet_type_id_foreign` FOREIGN KEY (`wallet_type_id`) REFERENCES `wallet_types` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `wallet_ledgers`
+--
+ALTER TABLE `wallet_ledgers`
+  ADD CONSTRAINT `wallet_ledgers_wallet_id_foreign` FOREIGN KEY (`wallet_id`) REFERENCES `wallets` (`id`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
