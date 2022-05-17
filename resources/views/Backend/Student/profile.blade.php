@@ -28,7 +28,7 @@
                 <table class="table table responsive">
                     <tbody>
                         <tr>
-                            <th>{{নাম}}</th>
+                            <th>{{ __('নাম') }}</th>
                             <td>:</td>
                             <td>{{ $student->name }}</td>
                         </tr>

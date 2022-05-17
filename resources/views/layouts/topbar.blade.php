@@ -202,7 +202,28 @@
                             </div>
                         </div>
                     </a>
+                    
+                    @elseif(Str::snake(class_basename($notification->type)) == 'accept_admission_notification')
+                    <a href="{{ route('admin.dashboard') }}" class="text-reset notification-item" id="MarkasRead" data-id="{{ $notification->id }}" data-attr="{{ route('notify.seend', $notification->id) }}">
+                        <div class="media">
+                            <div class="avatar-xs me-3">
+                                <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                    <i class="bx bx-bell"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mt-0 mb-1" key="t-your-order">
+                                    {{ $notification->data['users_id'] }} আপনার অ্যাডমিশন অ্যাপ্রুভ করু হয়েছে। 
+                                </h6>
+                                <div class="font-size-12 text-muted">
+                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{ $notification->created_at->format('M d, H:i A') }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                     @endif
+
+                    
                 @empty
                     <a href="javascript:void(0)" class="text-reset notification-item">
                         <div class="media">
@@ -225,7 +246,7 @@
         <div class="dropdown d-inline-block">
             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="rounded-circle header-profile-user" src="{{ isset(Auth::user()->avatar) ? asset(Auth::user()->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
+                <img class="rounded-circle header-profile-user" src="{{ asset('/storage/users-avatar/'.Auth::user()->avatar) }} "
                     alt="Header Avatar">
                 <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ucfirst(Auth::user()->name)}}</span>
                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>

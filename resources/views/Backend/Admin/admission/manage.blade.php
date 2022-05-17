@@ -16,7 +16,7 @@
                     <h2 class="card-title text-white">অ্যাডমিশন লিস্ট</h2>
                 </div>
                 <div class="card-body">
-                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 align-middle">
+                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 align-middle">
                         <thead>
                             <tr>
                                 <th>ক্র.নং</th>
@@ -25,6 +25,7 @@
                                 <th>কোর্সের নাম</th>
                                 <th>মোবাইল নং</th>
                                 <th>ই-মেইল</th>
+                                <th>স্ট্যাটাস</th>
                                 <th>অ্যাকশন</th>
                             </tr>
                         </thead>
@@ -33,8 +34,8 @@
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>
-                                    @if( !empty( $value->avatar ) )
-                                        <img class="rounded-circle avatar-xs" src="{{ asset($value->avatar) }}" alt="{{ $value->name }}">
+                                    @if( !empty( $value->user->avatar ) )
+                                        <img class="rounded-circle avatar-xs" src="{{ asset($value->user->avatar) }}" alt="{{ $value->user->name }}">
                                     @else
                                     <div class="avatar-xs">
                                         <span class="avatar-title rounded-circle">
@@ -43,15 +44,21 @@
                                     </div>
                                     @endif
                                 </td>
-                                <td> <a href="{{ route('teacher.show', $value->id) }}">{{ $value->user->name }}</a> </td>
+                                <td> <a href="{{ route('student.show', $value->user->id) }}">{{ $value->user->name }}</a> </td>
                                 <td>
-                                    <a href="#" class="badge badge-soft-primary font-size-11 m-1">Photoshop</a>
-                                    <a href="#" class="badge badge-soft-primary font-size-11 m-1">illustrator</a>
+                                    {{ $value->courses->name }}
                                 </td>
-                                <td>{{ $value->phone }}</td>
-                                <td>{{ $value->email }}</td>
+                                <td>{{ $value->user->phone }}</td>
+                                <td>{{ $value->user->email }}</td>
                                 <td>
-                                    <a href="{{ route('teacher.show', $value->id) }}"> <span><i class="mdi mdi-eye"></i></span> </a>
+                                    @if( $value->status == 'inactive' )
+                                        <span class="text-danger">In-Active</span>
+                                    @else
+                                    <span class="text-success">Active</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('admission.show', $value->id) }}"> <span><i class="mdi mdi-eye"></i></span> </a>
                                     <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"> <span><i class="mdi mdi-delete"></i></span> </a>
                                 </td>
                             </tr>
@@ -88,7 +95,7 @@ function deleteConfirmation(id) {
 	            });
                 $.ajax({
                     type: 'POST',
-                    url:  '{{ url("/admin/teacher/delete") }}/' + id,
+                     url:  '{{ url("/admin/admission/delete") }}/' + id,
                     data: {_token: CSRF_TOKEN},
                     dataType: 'JSON',
                     success: function (results) {

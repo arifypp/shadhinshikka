@@ -44,7 +44,7 @@
                                     </div>
                                     @endif
                                 </td>
-                                <td> <a href="{{ route('teacher.show', $value->user->id) }}">{{ $value->user->name }}</a> </td>
+                                <td> <a href="{{ route('student.show', $value->user->id) }}">{{ $value->user->name }}</a> </td>
                                 <td>
                                     {{ $value->courses->name }}
                                 </td>
@@ -58,7 +58,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('teacher.show', $value->id) }}"> <span><i class="mdi mdi-eye"></i></span> </a>
+                                    <a href="{{ route('admission.show', $value->id) }}"> <span><i class="mdi mdi-eye"></i></span> </a>
                                     <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"> <span><i class="mdi mdi-delete"></i></span> </a>
                                 </td>
                             </tr>
@@ -95,7 +95,7 @@ function deleteConfirmation(id) {
 	            });
                 $.ajax({
                     type: 'POST',
-                    url:  '{{ url("/admin/teacher/delete") }}/' + id,
+                    url:  '{{ url("/admin/admission/delete") }}/' + id,
                     data: {_token: CSRF_TOKEN},
                     dataType: 'JSON',
                     success: function (results) {

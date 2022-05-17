@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use lemonpatwari\bangladeshgeocode\Models\Division;
+use App\Models\User;
 use View;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,5 +29,8 @@ class AppServiceProvider extends ServiceProvider
         //
         $divisions = Division::all();
         View::share('divisions', $divisions);
+
+        $chuser = User::all();
+        View::share('users', $chuser);
     }
 }

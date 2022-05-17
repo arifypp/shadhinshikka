@@ -159,6 +159,9 @@ Route::middleware(['verified'])->group(function () {
             Route::group(['prefix' => 'admission'], function(){
                 Route::get('/manage','App\Http\Controllers\Backend\Admin\AdmissionController@index')->name('manage.admission');
                 Route::get('/pending','App\Http\Controllers\Backend\Admin\AdmissionController@pending')->name('pending.admission');
+                Route::get('/show/{id}', 'App\Http\Controllers\Backend\Admin\AdmissionController@show')->name('admission.show');
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\Admin\AdmissionController@update')->name('admission.udate');
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\AdmissionController@destroy')->name('admission.destroy');
             });
 
             // setting

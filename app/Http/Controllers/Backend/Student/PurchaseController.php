@@ -97,29 +97,6 @@ class PurchaseController extends Controller
         
         $transaction->save();
         
-        $user = User::where('id', $transaction->users_id)->first();
-
-        $findwallelt = WalletType::where("name", "=", "SS ACCOUNT")->get();
-
-        $walletidrequest = $findwallelt['0']->id;
-
-        $agentBalance = $user->wallet('SS ACCOUNT');
-        
-        if( empty( $user->wallets()->wallet_type_id )  )
-        {
-            // Increase money             
-            $user->wallets()->create(['wallet_type_id' => $walletidrequest]);
-
-            $PayingAmount = $user->wallet('SS ACCOUNT');
-            $PayingAmount->incrementBalance($request->amount);
-            $PayingAmount->balance;
-        }
-        else
-        {
-            $PayingAmount = $user->wallet('SS ACCOUNT');
-            $PayingAmount->incrementBalance($request->amount);
-            $PayingAmount->balance;
-        }
 
         $adminnotify = User::where('role', 'admin')->where('status', '1')->get();
 

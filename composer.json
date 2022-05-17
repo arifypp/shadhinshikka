@@ -17,7 +17,8 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "lemonpatwari/bangladeshgeocode": "^2.0"
+        "lemonpatwari/bangladeshgeocode": "^2.0",
+        "munafio/chatify": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -31,6 +31,11 @@ class Admission extends Model
         return $this->belongsTo(Course::class, 'courses_id');
     }
 
+    public function transition()
+    {
+        return $this->belongsTo(PaymentTransiction::class, 'adm_id');
+    }
+
     public static function payment_progress()
     {
         if ( Auth::user()->role == 'student' )

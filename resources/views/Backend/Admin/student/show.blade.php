@@ -31,17 +31,17 @@
                                         <td scope="col">{{ $user->name }}</td>
                                     </tr>
                                     <tr>
-                                        <td>শিক্ষক আইডি</td>
+                                        <td>শিক্ষার্থী আইডি</td>
                                         <td>:</td>
                                         <td>{{ $user->studentid }}</td>
                                     </tr>
                                     <tr>
-                                        <td>শিক্ষক ই-মেইল </td>
+                                        <td>শিক্ষার্থী ই-মেইল </td>
                                         <td>:</td>
                                         <td>{{ $user->email }}</td>
                                     </tr>
                                     <tr>
-                                        <td>শিক্ষক একাউন্ট ভেরিফাইড </td>
+                                        <td>শিক্ষার্থী একাউন্ট ভেরিফাইড </td>
                                         <td>:</td>
                                         <td>
                                             @if( !is_null($user->email_verified_at) )
@@ -52,17 +52,17 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>শিক্ষক মোবাইল নং </td>
+                                        <td>শিক্ষার্থী মোবাইল নং </td>
                                         <td>:</td>
                                         <td>{{ $user->phone }}</td>
                                     </tr>
                                     <tr>
-                                        <td>শিক্ষক ঠিকানা </td>
+                                        <td>শিক্ষার্থী ঠিকানা </td>
                                         <td>:</td>
                                         <td>{{ $user->address }}</td>
                                     </tr>
                                     <tr>
-                                        <td>শিক্ষক জন্ম-তারিখ </td>
+                                        <td>শিক্ষার্থী জন্ম-তারিখ </td>
                                         <td>:</td>
                                         <td>{{ date('d M, Y', strtotime($user->dob )) }}</td>
                                     </tr>
