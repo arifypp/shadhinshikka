@@ -30,7 +30,7 @@
                     <span class="fas fa-{{ $seen > 0 ? 'check-double' : 'check' }} seen"></span> {{ $time }}</sub>
                 </sub>
                 {{-- If attachment is a file --}}
-                @if(@$attachment[2] == 'file')
+                @if(@$attachment[2] == 'file') attachments
                 <a href="{{ route(config('chatify.attachments.download_route_name'), ['fileName'=>$attachment[0]]) }}" class="file-download">
                     <span class="fas fa-file"></span> {{$attachment[1]}}</a>
                 @endif
@@ -38,7 +38,7 @@
         </div>
         {{-- If attachment is an image --}}
         @if(@$attachment[2] == 'image')
-        <div class="image-file chat-image" style="margin-top:10px;width: 250px; height: 150px;background-image: url('{{ Chatify::getAttachmentUrl($attachment[0]) }}')">
+        <div class="image-file chat-image" style="margin-top:10px;width: 250px; height: 150px;background-image: url('{{ asset('/storage/attachments/'.$attachment[0]) }}')"> 
         </div>
         @endif
     </div>

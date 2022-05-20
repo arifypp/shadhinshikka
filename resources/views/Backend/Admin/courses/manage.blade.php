@@ -88,7 +88,7 @@
                                                                     <td>
                                                                         <ul>
 @php 
-    $iteslist = App\Models\Backend\Admin\CourseItem::where('course_id', $value->id)->get();
+    $iteslist = App\Models\Backend\Admin\CourseItem::where('cicourse_id', $value->id)->get();
 @endphp
 @foreach( $iteslist as $items )
    <li> {{ $items->name }} </li>

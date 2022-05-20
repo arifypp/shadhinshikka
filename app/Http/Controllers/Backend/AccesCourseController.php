@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Student;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\Admin\Course;
-use App\Models\Backend\Admin\CourseItem;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\CourseAssignedNotification;
+use App\Notifications\AdmissionNotification;
 use App\Models\User;
 use App\Models\Common\Admission;
+use App\Models\Common\CourseResource;
+use App\Models\Common\ResourcesItem; 
+use CoreProc\WalletPlus\Models\WalletType;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Image;
@@ -17,29 +19,32 @@ use File;
 use Session;
 use Auth;
 
-class DashboardController extends Controller
+class AccesCourseController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth','verified']);
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( $slug )
     {
         //
-        if ( Auth::user()->role == 'student' )
-        {
-            $courses = Course::orderby('id', 'desc')->get();
-            $admission = Admission::where('users_id', Auth::user()->id)->first() ?: app(Admission::class);
-            
-            return view('Backend.Student.dashboard', compact('courses', 'admission'));
-            
+        $course = Course::where('slug', $slug)->first();
+        $admission = Admission::where('status', 'active')->where('users_id', Auth::user()->id)->first();
+        $sectionTitle = CourseResource::where('crcourse_id', $course->id)->where('status', 'Active')->get();
+
+        if ( !empty($admission) ) {
+            return view('Backend.Student.coursepage', compact('admission', 'course', 'sectionTitle',));
         }
-        
+        else
+        {
+            $notification = array(
+                'message'       => 'কোর্স অ্যাপ্রুভ হয়নি!!!',
+                'alert-type'    => 'error'
+            );
+    
+            return back()->with($notification);
+        }
     }
 
     /**
@@ -47,23 +52,9 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function profile($studentid)
+    public function create()
     {
         //
-        $student = User::where('studentid', $studentid)->first();
-
-        if ( !empty($student) ) {
-            return view('Backend.Student.profile', compact('student'));
-        }
-        else
-        {
-            $notification = array(
-                'message'       => 'ডাটা পাওয়া যায়নি!!!',
-                'alert-type'    => 'error'
-            );
-    
-            return back()->with($notification);
-        }
     }
 
     /**

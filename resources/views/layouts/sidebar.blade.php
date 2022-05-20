@@ -29,8 +29,8 @@
                 <!--#### Admin Panel ####-->
                 @if( Auth::user()->role == 'admin' )
                 <li class="menu-title" key="t-apps">প্লাটফর্ম ফিচারড</li>
-                <!-- Course Manage -->
-                
+
+                <!-- Course Manage -->                
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-play"></i>
@@ -40,6 +40,20 @@
                         <li><a href="{{ route('course.manage') }}" key="t-course-manage">ম্যানেজ কোর্স</a></li>
                         </li>
                         <li><a href="{{ route('course.create') }}" key="t-course-create">কোর্স তৈরি করুন</a></li>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Courses Resource -->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-book"></i>
+                        <span key="t-course">কোর্স রিসোর্স</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('resource.manage') }}" key="t-course-manage">ম্যানেজ রিসোর্স</a></li>
+                        </li>
+                        <li><a href="{{ route('resource.create') }}" key="t-course-create">অ্যাড রিসোর্স</a></li>
                         </li>
                     </ul>
                 </li>
@@ -98,6 +112,14 @@
                         <li><a href="{{ route('pending.admission') }}" key="t-admission-pending">অ্যাডমিশন পেন্ডিং লিস্ট</a></li>
                         </li>
                     </ul>
+                </li>
+
+                <!-- Messanger settings -->
+                <li>
+                    <a href="{{ url('/sschat') }}" class="waves-effect">
+                        <i class="bx bx-chat"></i>
+                        <span key="t-chat">{{ __('ম্যাসেন্জার') }}</span>
+                    </a>
                 </li>
 
                  <!-- Basic settings -->

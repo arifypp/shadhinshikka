@@ -15,19 +15,19 @@
                     </a>   
                 </li>
                 
-                <li class="menu-title" key="t-apps">@lang('translation.Apps')</li>
+                <li class="menu-title" key="t-apps">{{ __('ফিচারড মেনু') }}</li>
+
+                <li>
+                    <a href="{{ url('/sschat') }}" class="waves-effect">
+                        <i class="bx bx-chat"></i>
+                        <span key="t-chat">{{ __('ম্যাসেন্জার') }}</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="calendar" class="waves-effect">
                         <i class="bx bx-calendar"></i>
                         <span key="t-calendar">@lang('translation.Calendar')</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="chat" class="waves-effect">
-                        <i class="bx bx-chat"></i>
-                        <span key="t-chat">@lang('translation.Chat')</span>
                     </a>
                 </li>
 

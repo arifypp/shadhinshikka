@@ -14,9 +14,10 @@ class CreateCoursesTable extends Migration
     public function up()
     {
         Schema::create('courses', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('slug');
+            $table->text('c_desc')->nullable();
             $table->integer('student_capacity')->default('0');
             $table->string('batch_no');
             $table->string('class_count');
@@ -31,9 +32,9 @@ class CreateCoursesTable extends Migration
         });
 
         Schema::create('courses_item', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('course_id');
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('cicourse_id');
+            $table->foreign('cicourse_id')->references('id')->on('courses')->onDelete('cascade');
             $table->string('name')->nullable();
             $table->timestamps();
         });

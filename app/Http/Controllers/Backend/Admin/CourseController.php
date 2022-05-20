@@ -94,6 +94,7 @@ class CourseController extends Controller
 
         $course->name                   =   $request->cname;
         $course->slug                   =   Str::slug($request->cname);
+        $course->c_desc                 =   $request->c_desc;
         $course->student_capacity       =   $request->cseat;
         $course->batch_no               =   $request->cbatch;
         $course->class_count            =   $request->cclasscount;
@@ -120,7 +121,7 @@ class CourseController extends Controller
             $feaitems = implode(" ",$value);
 
             CourseItem::insert([
-                'course_id' =>  $course->id,
+                'cicourse_id' =>  $course->id,
                 'name' => $feaitems,
             ]);
         }
@@ -220,6 +221,7 @@ class CourseController extends Controller
         $course = Course::find($id);
 
         $course->name                   =   $request->cname;
+        $course->c_desc                 =   $request->c_desc;
         $course->student_capacity       =   $request->cseat;
         $course->class_count            =   $request->cclasscount;
         $course->batch_no               =   $request->cbatch;
@@ -265,13 +267,6 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $featureItem = CourseItem::where('course_id', $id)->get();
-        
-        foreach ($featureItem as $featItems) {
-            $featItems->delete();
-        }
-
         $delImage = Course::find($id);
         unlink("assets/images/course/".$delImage->image);
         

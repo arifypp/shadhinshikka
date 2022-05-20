@@ -60,12 +60,19 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/profile/{studentid}','App\Http\Controllers\Backend\Student\DashboardController@profile')->name('user.profile');
 
+            // Purchase setting
             Route::group(['prefix' => 'purchase'], function() {
                 Route::get('/course/{slug}','App\Http\Controllers\Backend\Student\PurchaseController@index')->name('purchase.course');
 
                 Route::post('/confirm','App\Http\Controllers\Backend\Student\PurchaseController@store')->name('purchase.confirm');
                 
             });
+            // Access course activites
+            Route::group(['prefix' => 'access'], function() {
+                Route::get('/course/{slug}','App\Http\Controllers\Backend\AccesCourseController@index')->name('access.course');
+                
+            });
+            
                 
         });
     });
@@ -163,6 +170,19 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/update/{id}', 'App\Http\Controllers\Backend\Admin\AdmissionController@update')->name('admission.udate');
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\AdmissionController@destroy')->name('admission.destroy');
             });
+
+            // Resources for course
+            Route::group(['prefix' => 'resources'], function(){
+                Route::get('/manage','App\Http\Controllers\Backend\ResourceController@index')->name('resource.manage');
+                Route::get('/create','App\Http\Controllers\Backend\ResourceController@create')->name('resource.create');
+                Route::post('/storetitle', 'App\Http\Controllers\Backend\ResourceController@lecture')->name('resource.lecture');
+                Route::post('/basic-info', 'App\Http\Controllers\Backend\ResourceController@basicinfo')->name('resource.basicinfo');
+                Route::post('/video-url', 'App\Http\Controllers\Backend\ResourceController@video')->name('resource.video');
+                Route::post('/attachment-url', 'App\Http\Controllers\Backend\ResourceController@attachment')->name('resource.attachment');
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\ResourceController@update')->name('resource.udate');
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\ResourceController@destroy')->name('resource.destroy');
+            });
+            
 
             // setting
             Route::group(['prefix' => 'setting'], function(){

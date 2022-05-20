@@ -129,6 +129,11 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group mb-3">
+                                <label for="description">কোর্সের বিবরণ</label>
+                                <textarea name="c_desc" class="form-control" id="c_desc" cols="10" rows="5"></textarea>
+                            </div>
+
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label for="আপলোড ফটো">আপলোড ফটো</label>
