@@ -32,9 +32,10 @@ class AccesCourseController extends Controller
         $course = Course::where('slug', $slug)->first();
         $admission = Admission::where('status', 'active')->where('users_id', Auth::user()->id)->first();
         $sectionTitle = CourseResource::where('crcourse_id', $course->id)->where('status', 'Active')->get();
+        $resourceItems = ResourcesItem::where('resource_id', $sectionTitle['0']->id)->first();
 
         if ( !empty($admission) ) {
-            return view('Backend.Student.coursepage', compact('admission', 'course', 'sectionTitle',));
+            return view('Backend.Student.coursepage', compact('admission', 'course', 'sectionTitle', 'resourceItems'));
         }
         else
         {

@@ -10,27 +10,46 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') {{ $course->name }} @endslot
-        @slot('title') Course @endslot
+        @slot('li_1') {{ __('Course') }} @endslot
+        @slot('title') {{ $course->name }}  @endslot
     @endcomponent
 
     <div class="container">
         <div class="row">
             <div class="col-md-8 p-0">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body p-0 pb-2">
                        
-                    <div class="plyr__video-embed" id="player">
-                        <iframe
-                            src="https://www.youtube.com/embed/bhaS8sOfYIo"
-                            allowfullscreen
-                            allowtransparency
-                            allow="autoplay=1"
-                        ></iframe>
-                    </div>
-
-                    
-
+                        <div class="plyr__video-embed" id="player">
+                            <iframe
+                                src="{{ $resourceItems->video_url }}?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1"
+                                allowfullscreen
+                                allowtransparency
+                                allow="autoplay"
+                            ></iframe>
+                        </div>
+                        <div class="video__footer m-2">
+                            <div class="row align-middle">
+                                <div class="col-md-6">
+                                    <div class="instructor-info-video align-middle">
+                                        <p class="p-0 m-0">Instructor: <a href="#"> {{$course->teachername->name}} </a></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="paginate text-end text-right float-right">
+                                        <a href="javascript:void(0)" class="btn btn-primary me-1 btn-sm">Previous</a>
+                                        <a href="javascript:void(0)" class="btn btn-info btn-sm">Next</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="description my-2">
+                                        <hr>
+                                        <h4><button class="bg-ss border-0 rounded">Course: </button> {{ $course->name }}</h4>
+                                        <p class="m-0">{{ $course->c_desc }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,17 +58,19 @@
                     <div class="card-body  p-0">
                         <div class="button-group p-3 justify-content-center align-items-center text-center mb-3">
                             <a href="javascrip:void(0)" class="btn btn-info text-left text-start">Claim Certificate</a>
-                            <a href="javascrip:void(0)" class="btn btn-warning text-right text-end">Message</a>
+                            <a href="{{ url('/sschat', $course->teacher) }}" class="btn btn-warning text-right text-end">Message</a>
                         </div>
                         <!-- Video play list -->
                         <div class="video-list">
-                            <div class="video-duration p-3 text-center bg-ss text-white">
+                            <div class="video-duration p-3 pl-1 pr-1 text-center bg-ss text-white">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-7">
                                         <h6 class="text-white m-0">Course Curriculum</h6>
                                     </div>
-                                    <div class="col-md-6 text-end">
-                                        <h6 class="text-white m-0">09:56:05</h6>
+                                    <div class="col-md-5 text-end">
+                                        <h6 class="text-white m-0">
+                                            {{ App\Models\Common\Admission::duration() }}
+                                        </h6>
                                     </div>
                                 </div>
                             </div>
@@ -113,6 +134,8 @@
         noCookie: false, rel: 0,
         iv_load_policy: 3, 
         modestbranding: 1,
+        pause: 'Pause',
+        played: 'Played',
         controls: ['play', 'progress', 'current-time', 'volume', 'settings', 'fullscreen'],
     });
     player.play();
@@ -145,7 +168,22 @@
                 controls: ['play', 'progress', 'current-time', 'volume', 'settings', 'fullscreen'],
             });
             player.play();
+
+
+            if ($(this).hasClass("active")) {
+                $("a#video_url").removeClass("active");
+            }
+            // Else, the element doesn't have the active class, so we remove it from every element before applying it to the element that was clicked
+            else {
+                $("a#video_url").removeClass("active");
+                $(this).addClass("active");
+            }
         });
+    });
+
+//    Show first toggle be loading page
+    $(document).ready(function() {
+        $(".collapse:first").addClass("show");        
     });
 
 </script>

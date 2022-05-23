@@ -8,6 +8,10 @@ use CoreProc\WalletPlus\Models\Traits\HasWallets;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Backend\Admin\Course;
+use App\Models\Common\Admission;
+use App\Models\Common\PaymentTransiction;
+use Auth;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -35,6 +39,25 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         // Your your own implementation.
         $this->notify(new ResetPasswordNotification($user));
+    }
+
+    public static function purchaseCounter()
+    {
+      $counter = Admission::where('users_id', Auth::user()->id)->count();
+      return $counter;
+    }
+
+    public static function paidCounter()
+    {
+      $sum = PaymentTransiction::where('users_id', Auth::user()->id)->sum('amount');
+      $sumresult =  "৳". number_format( $sum , 0 , '.' , ',' ). " BDT";
+      return $sumresult;
+    }
+
+    public static function admissioncount()
+    {
+        $count = Admission::all()->count('id');
+        return $count;
     }
 
     /**

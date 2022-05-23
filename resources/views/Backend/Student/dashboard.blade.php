@@ -28,8 +28,10 @@
                         <div class="card-body">
                             <div class="media">
                                 <div class="media-body">
-                                    <p class="text-muted fw-medium">Orders</p>
-                                    <h4 class="mb-0">1,235</h4>
+                                    <p class="text-muted fw-medium">{{ __('Total Purchase Course') }} </p>
+                                    <h4 class="mb-0">
+                                        {{ App\Models\User::purchaseCounter() }}
+                                    </h4>
                                 </div>
 
                                 <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
@@ -46,8 +48,11 @@
                         <div class="card-body">
                             <div class="media">
                                 <div class="media-body">
-                                    <p class="text-muted fw-medium">Revenue</p>
-                                    <h4 class="mb-0">$35, 723</h4>
+                                    <p class="text-muted fw-medium">{{ __('Total Paid') }}</p>
+                                    <h4 class="mb-0">
+                                    {{ App\Models\User::paidCounter() }}
+                                    
+                                    </h4>
                                 </div>
 
                                 <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
@@ -64,8 +69,10 @@
                         <div class="card-body">
                             <div class="media">
                                 <div class="media-body">
-                                    <p class="text-muted fw-medium">Average Price</p>
-                                    <h4 class="mb-0">$16.2</h4>
+                                    <p class="text-muted fw-medium">{{ __('All Courses') }}</p>
+                                    <h4 class="mb-0">
+                                        {{ App\Models\User::admissioncount() }}
+                                    </h4>
                                 </div>
 
                                 <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
