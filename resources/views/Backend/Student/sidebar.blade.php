@@ -25,6 +25,15 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('resource.codetools') }}" class="waves-effect">
+                        <i class="bx bx-code"></i>
+                        <span key="t-tools">{{ __('রিসোর্স টুলস্') }}</span>
+                    </a>
+                </li>
+
+                
+
+                <li>
                     <a href="calendar" class="waves-effect">
                         <i class="bx bx-calendar"></i>
                         <span key="t-calendar">@lang('translation.Calendar')</span>

@@ -157,3 +157,20 @@ table#resouce_items a i {
 video-duration .pl {
     padding-left: 2px!important;
 }
+.resource__items span {
+    font-size: 12px;
+    color: #999;
+    font-weight: 300;
+    line-height: 10px;
+}
+.resource__items a::before .active{
+    color: #209e93;
+}
+.resource__items a.active {
+    background-color: #a7ebd25c !important;
+    color: #34c38f !important;
+    border: none;
+}
+.nav-pills .nav-link:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}

@@ -58,6 +58,22 @@
                     </ul>
                 </li>
 
+                <!-- Code resources -->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-code"></i>
+                        <span key="t-code">কোড রিসোর্স</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('resource.toolscode') }}" key="t-code-manage">ম্যানেজ কোড</a></li>
+                        </li>
+                        <li><a href="{{ route('toolscode.create') }}" key="t-code-create">অ্যাড রিসোর্স</a></li>
+                        </li>
+                    </ul>
+                </li>
+
+                
+
                 <!-- Teacher Settings -->
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

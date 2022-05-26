@@ -15,10 +15,10 @@ use CoreProc\WalletPlus\Models\WalletType;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Image;
-use File;
+use Carbon\Carbon;
 use Session;
 use Auth;
-
+use DB;
 class ResourceController extends Controller
 {
     /**
@@ -176,15 +176,71 @@ class ResourceController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    /***
+     Student resource
+     ***/
+    public function tools()
     {
         //
+        $permission = Admission::where('users_id', Auth::user()->id)->where('status', 'active')->first();
+        if( !is_null($permission) )
+        {
+            return view('Backend.Student.resource');
+        }
+        else
+        {
+            $notification = array(
+                'message'       => 'নূন্যতম একটি কোর্স কিনুন !!!',
+                'alert-type'    => 'error'
+            );
+    
+            return back()->with($notification);
+        }
+    }
+
+    // Admin and teachers resource
+    public function toolscode()
+    {
+        return view('Backend.Admin.resource.code');
+    }
+
+    // Admin and teachers add resource
+    public function createcode()
+    {
+        $langName = DB::table('program_languegs')->get();
+
+        return view('Backend.Admin.resource.createcode', compact('langName'));
+    }
+
+    // Store code data
+    public function codestore(Request $request)
+    {
+        dd($request);
+    }
+
+    // Store lang
+    public function codelangstore(Request $request)
+    {
+        $request->validate([
+            'name'      =>  ['required', 'string', 'max:255', 'unique:code_resources'],
+        ], $message= [
+            'required'     =>  'This field is required',
+            'string'     =>  'Support only text not number',
+            'max'     =>  'Max character 255',
+            'unique'     =>  'The name is already exit!',
+        ]);
+
+        $data = $request->all();    
+        $lang =  DB::table('program_languegs')->insertGetId(array(
+            'name'          => $data['name'],
+            'created_at'    => Carbon::now(),
+            'updated_at'    => Carbon::now(),
+        ));
+
+       
+
+        return response()->json(['success' =>true, 'message'=> 'প্রোগ্রাম তৈরি হয়েছে!!!', 'data' => $data, 'dataid' => $lang]);
+
     }
 
     /**

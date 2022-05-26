@@ -72,6 +72,12 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/course/{slug}','App\Http\Controllers\Backend\AccesCourseController@index')->name('access.course');
                 
             });
+
+            // Resource Tool
+            Route::group(['prefix' => 'tools'], function() {
+                Route::get('/manage','App\Http\Controllers\Backend\ResourceController@tools')->name('resource.codetools');
+
+            });
             
                 
         });
@@ -175,6 +181,10 @@ Route::middleware(['verified'])->group(function () {
             Route::group(['prefix' => 'resources'], function(){
                 Route::get('/manage','App\Http\Controllers\Backend\ResourceController@index')->name('resource.manage');
                 Route::get('/create','App\Http\Controllers\Backend\ResourceController@create')->name('resource.create');
+                Route::get('/tools/code','App\Http\Controllers\Backend\ResourceController@toolscode')->name('resource.toolscode');
+                Route::get('/tools/createcode','App\Http\Controllers\Backend\ResourceController@createcode')->name('toolscode.create');
+                Route::post('/tools/codestore','App\Http\Controllers\Backend\ResourceController@codestore')->name('toolscode.codestore');
+                Route::post('/tools/codelangstore','App\Http\Controllers\Backend\ResourceController@codelangstore')->name('toolscode.codelangstore');
                 Route::post('/storetitle', 'App\Http\Controllers\Backend\ResourceController@lecture')->name('resource.lecture');
                 Route::post('/basic-info', 'App\Http\Controllers\Backend\ResourceController@basicinfo')->name('resource.basicinfo');
                 Route::post('/video-url', 'App\Http\Controllers\Backend\ResourceController@video')->name('resource.video');
