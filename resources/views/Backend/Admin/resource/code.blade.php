@@ -5,6 +5,22 @@
 @section('css')
    <!-- CSS -->
    <link rel="stylesheet" href="{{ asset('/prism.css') }}" />
+   <style>
+       pre {
+            max-height: 50em;
+            overflow: auto;
+        }
+        .resource__items {
+            max-height: 50em;
+            overflow: auto;
+        }
+        .resource__items::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+   </style>
 @endsection
 
 @section('content')
@@ -34,98 +50,46 @@
                         <div class="resource__items">
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
-                                <a class="nav-link mb-2 active" id="v-pills-home-tab" data-bs-toggle="pill"
-                                    href="#v-pills-home" role="tab" aria-controls="v-pills-home"
+                            @foreach( $codeblock as $key => $code )
+                                <a class="nav-link mb-2 @if($key == 0) active @endif" id="codeblock{{$code->id}}-tab" data-bs-toggle="pill"
+                                    href="#codeblock{{$code->id}}" role="tab" aria-controls="codeblock{{$code->id}}"
                                     aria-selected="true">
-                                    <p class="m-0">Html Markup Code</p>
-                                    <span>Language: html</span>
+                                    <p class="m-0">{{ $code->name }}</p>
+                                    <span>Language: 
+                                    @php 
+                                    $lname = DB::table('program_languegs')->where('id', $code->lang_id)->get();
+                                        foreach($lname as $lang_name)
+                                        {
+                                            echo strtolower($lang_name->name);
+                                        }
+                                    @endphp
+                                    </span>
                                 </a>
-                                <a class="nav-link mb-2" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                    href="#v-pills-profile" role="tab" aria-controls="v-pills-profile"
-                                    aria-selected="false">Profile</a>
-                                <a class="nav-link mb-2" id="v-pills-messages-tab" data-bs-toggle="pill"
-                                    href="#v-pills-messages" role="tab" aria-controls="v-pills-messages"
-                                    aria-selected="false">Messages</a>
-                                <a class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings"
-                                    role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+                            @endforeach
                             </div>
                         </div>
                 </div>
                 <div class="col-md-9">
                     <div class="resource__item">
                         <div class="tab-content text-muted mt-4 mt-md-0" id="v-pills-tabContent">
-                            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
-                                aria-labelledby="v-pills-home-tab">
+@foreach( $codeblock as $key => $code )                            
+<div class="tab-pane fade @if($key == 0) active show @endif" id="codeblock{{$code->id}}" role="tabpanel" aria-labelledby="codeblock{{$code->id}}">
 <!-- Body text -->
-<pre class="line-numbers"><code class="language-markup">
+@php 
+    $lname = DB::table('program_languegs')->where('id', $code->lang_id)->get();
+        foreach($lname as $lang_name)
+        { @endphp
+            <pre class="line-numbers language-{{ strtolower($lang_name->name) }}"><code class="language-{{ strtolower($lang_name->name) }}">
+          @php
+        }
+@endphp
 @verbatim
-    &lt;!DOCTYPE html&gt;
-        &lt;html lang=&quot;en&quot;&gt;
-        &lt;head&gt;
-            &lt;meta charset=&quot;UTF-8&quot;&gt;
-            &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
-            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-            &lt;title&gt;Document&lt;/title&gt;
-        &lt;/head&gt;
-        &lt;body&gt;
-            &lt;h6&gt;Hello test&lt;/h6&gt;
-        &lt;/body&gt;
-    &lt;/html&gt;
+   <?php echo htmlspecialchars($code->description); ?>
 @endverbatim
 </code></pre>
-                            </div>
-                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                                aria-labelledby="v-pills-profile-tab">
-<!-- Body text -->
-<pre class="line-numbers"><code class="language-css">
-@verbatim
-    @font-face {
-        font-family: Chunkfive; src: url('Chunkfive.otf');
-        }
-
-        body, .usertext {
-        color: #F0F0F0; 
-        background: #600;
-        font-family: Chunkfive, sans;
-        --heading-1: 30px/32px Helvetica, sans-serif;
-        }
-
-        @import url(print.css);
-        @media print {
-        a[href^=http]::after {
-            content: attr(href)
-        }
-    }
-@endverbatim
-</code></pre>
-                            </div>
-                            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
-                                aria-labelledby="v-pills-messages-tab">
-<!-- Body text -->
-<pre class="line-numbers">
-<code class="language-php">
-@verbatim
-    @php echo "hello world"; @endphp 
-@endverbatim
-</code>
-</pre>
-                            </div>
-                            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
-                                aria-labelledby="v-pills-settings-tab">
-                                <p>
-                                    Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
-                                    art party before they sold out master cleanse gluten-free squid
-                                    scenester freegan cosby sweater. Fanny pack portland seitan DIY,
-                                    art party locavore wolf cliche high life echo park Austin. Cred
-                                    vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                                    farm-to-table.
-                                </p>
-                                <p class="mb-0">Fanny pack portland seitan DIY,
-                                    art party locavore wolf cliche high life echo park Austin. Cred
-                                    vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                                    farm-to-table.
-                                </p>
-                            </div>
+</div>
+@endforeach  
+                            
                         </div>
                     </div>
                 </div>

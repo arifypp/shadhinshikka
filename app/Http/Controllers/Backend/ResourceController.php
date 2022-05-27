@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Common\Admission;
 use App\Models\Common\CourseResource;
 use App\Models\Common\ResourcesItem; 
+use App\Models\Common\CodeResource;
 use CoreProc\WalletPlus\Models\WalletType;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
@@ -201,7 +202,8 @@ class ResourceController extends Controller
     // Admin and teachers resource
     public function toolscode()
     {
-        return view('Backend.Admin.resource.code');
+        $codeblock = CodeResource::orderBy('name', 'asc')->get();
+        return view('Backend.Admin.resource.code', compact('codeblock'));
     }
 
     // Admin and teachers add resource
@@ -215,7 +217,32 @@ class ResourceController extends Controller
     // Store code data
     public function codestore(Request $request)
     {
-        dd($request);
+        $request->validate([
+            'title'         =>  ['required', 'string', 'max:255', 'unique:code_resources,name'],
+            'code_type'     =>  ['required', 'not_in:0'],
+            'code'          =>  ['required'],
+        ], $message = [
+            'required'      =>  'This field is required',
+            'string'        =>  'Support only text not number',
+            'max'           =>  'Max character 255',
+            'unique'        =>  'The name is already exit!',
+        ]);
+
+        $code = new CodeResource();
+
+        $code->name             =   $request->title;
+        $code->slug             =   Str::slug($request->title);
+        $code->lang_id          =   $request->code_type;
+        $code->description      =   $request->code;
+
+        $code->save();
+
+        $notification = array(
+            'message'       => 'রিসোর্স পাবলিশ সম্পন্ন হয়েছে !!!',
+            'alert-type'    => 'success'
+        );
+
+        return redirect()->route('resource.toolscode')->with($notification);
     }
 
     // Store lang
