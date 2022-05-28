@@ -13,11 +13,57 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
+                    <!-- SReset Password Modal -->
+                    <div class="modal fade" id="ResetPassword{{ $user->id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Reset Password Now</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('student.updatePassword', $user->id) }}" method="post">
+                                        @csrf
+                                        <div class="form-group col-12 mb-3">
+                                            <label for="Enter Password">Enter Password</label>
+                                            <input type="password" name="password" id="password" placeholder="Enter password" class="form-control">
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-12 mb-3">
+                                            <label for="Enter Password">Confirm Password</label>
+                                            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Enter confirm password" class="form-control">
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Reset Password</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     <form action="{{ route('student.update', $user->id) }}" method="post" id="teacherRgter" class="needs-validation" enctype="multipart/form-data" novalidate>
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>শিক্ষার্থীদের বেসিক তথ্য</h4><hr> 
+                                <h4 class="float-left">শিক্ষার্থীদের বেসিক তথ্য</h4>
+                                <div class="reset-password text-end">
+                                    <button type="button" class="btn bg-ss" data-bs-toggle="modal"
+                            data-bs-target="#ResetPassword{{ $user->id }}">Reset Password</button>
+                                </div>
+                                <hr> 
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">

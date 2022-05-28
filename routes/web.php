@@ -73,6 +73,14 @@ Route::middleware(['verified'])->group(function () {
                 
             });
 
+            // Transiction history
+            
+            Route::group(['prefix' => 'access'], function() {
+                Route::get('/purchase/history','App\Http\Controllers\Backend\Student\TransactionListController@index')->name('trans.manage');
+                
+            });
+
+
             // Resource Tool
             Route::group(['prefix' => 'tools'], function() {
                 Route::get('/manage','App\Http\Controllers\Backend\ResourceController@tools')->name('resource.codetools');
@@ -145,6 +153,7 @@ Route::middleware(['verified'])->group(function () {
 
                 Route::get('/status/{id}', 'App\Http\Controllers\Backend\Admin\StudentController@status')->name('student.status');
 
+                Route::post('/reset/password/{id}', 'App\Http\Controllers\Backend\Admin\StudentController@updatePassword')->name('student.updatePassword');
 
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\StudentController@destroy')->name('student.delete');
             });

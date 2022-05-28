@@ -13,6 +13,7 @@ use App\Models\Common\UserEducation;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use App\Traits\UploadAble;
+use Illuminate\Support\Facades\Storage;
 use Image;
 use File;
 use Session;
@@ -275,6 +276,33 @@ class StudentController extends Controller
         );
 
         return redirect()->route('student.manage')->with($notification);
+    }
+
+    // Reset password
+    public function updatePassword(Request $request, $id)
+    {
+        $request->validate([
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ]);
+
+        $user = User::find($id);
+        $user->password = Hash::make($request->get('password'));
+        $user->update();
+        if ($user) {
+
+            $notification = array(
+                'message'       => 'Password updated successfully!',
+                'alert-type'    => 'success'
+            );
+            return back()->with($notification);
+        } else {
+            Session::flash('message', 'Something went wrong!');
+            Session::flash('alert-class', 'alert-danger');
+            return response()->json([
+                'isSuccess' => true,
+                'Message' => "Something went wrong!"
+            ], 200); // Status code here
+        }
     }
 
     /**

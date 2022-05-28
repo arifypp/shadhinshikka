@@ -74,14 +74,14 @@ class NoticeController extends Controller
         $notice->created_at     =   Carbon::now()->format('Y-m-d H:i:s');
         $notice->save();
 
-        if ( $request->reciever == 1 ) {
-            $user = User::where('id', $notice->courses->teacher)->get();
-            Notification::send($user, new NoticeNotification($notice));
-        }
-        else if ( $request->reciever == 2 ) {
-            $user = User::where('id', $notice->courses->teacher)->get();
-            Notification::send($user, new NoticeNotification($notice));
-        }
+        // if ( $request->reciever == 1 ) {
+        //     $user = User::where('id', $notice->courses->teacher)->get();
+        //     Notification::send($user, new NoticeNotification($notice));
+        // }
+        // else if ( $request->reciever == 2 ) {
+        //     $user = User::where('id', $notice->courses->teacher)->get();
+        //     Notification::send($user, new NoticeNotification($notice));
+        // }
         
 
         $notification = array(
