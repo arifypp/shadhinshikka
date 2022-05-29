@@ -221,6 +221,26 @@
                             </div>
                         </div>
                     </a>
+
+                    @elseif(Str::snake(class_basename($notification->type)) == 'notice_notification')
+                    <a href="{{ route('student.notice.manage') }}" class="text-reset notification-item" id="MarkasRead" data-id="{{ $notification->id }}" data-attr="{{ route('notify.seend', $notification->id) }}">
+                        <div class="media">
+                            <div class="avatar-xs me-3">
+                                <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                    <i class="bx bx-bell"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mt-0 mb-1" key="t-your-order">
+                                    {{ $notification->data['title'] }}
+                                </h6>
+                                <div class="font-size-12 text-muted">
+                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{ $notification->created_at->format('M d, H:i A') }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
                     @endif
 
                     

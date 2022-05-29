@@ -9,6 +9,7 @@ use App\Models\Backend\Admin\Notice;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\NoticeNotification;
 use App\Models\User;
+use App\Models\Common\Admission;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -74,15 +75,19 @@ class NoticeController extends Controller
         $notice->created_at     =   Carbon::now()->format('Y-m-d H:i:s');
         $notice->save();
 
-        // if ( $request->reciever == 1 ) {
-        //     $user = User::where('id', $notice->courses->teacher)->get();
-        //     Notification::send($user, new NoticeNotification($notice));
-        // }
-        // else if ( $request->reciever == 2 ) {
-        //     $user = User::where('id', $notice->courses->teacher)->get();
-        //     Notification::send($user, new NoticeNotification($notice));
-        // }
+        $adm = Admission::where('courses_id', $notice->course_id)->where('status', 'active')->get();      
         
+        if ( $request->reciever == 1 ) {
+            foreach ($adm as $key => $admissionuserid) {
+                $user = User::where('id', $admissionuserid->users_id)->get();
+                Notification::send($user, new NoticeNotification($notice));
+            }
+        }
+        else if ( $request->reciever == 2 ) {
+            $user = User::where('id', $notice->courses->teacher)->get();
+            Notification::send($user, new NoticeNotification($notice));
+        }
+                
 
         $notification = array(
             'message'       => 'নোটিশ সেন্ড সম্পন্ন হয়েছে!!!',

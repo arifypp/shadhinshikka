@@ -73,6 +73,17 @@ Route::middleware(['verified'])->group(function () {
                 
             });
 
+            // Access All Course
+            Route::group(['prefix' => 'auth/au/'], function() {
+                Route::get('/course/all/','App\Http\Controllers\Backend\Student\CourseController@index')->name('student.course.manage');                
+            });
+
+            // Student Notice control
+            
+            Route::group(['prefix' => 'all/notice/'], function() {
+                Route::get('/show','App\Http\Controllers\Backend\Student\NoticeController@index')->name('student.notice.manage');                
+            });
+
             // Transiction history
             
             Route::group(['prefix' => 'access'], function() {

@@ -189,3 +189,8 @@ video-duration .pl {
     color: #fff !important;
     font-size: 14px;
 }
+
+.all-courses {
+    padding-left: 3.5px;
+    padding-right: 3.5px;
+}

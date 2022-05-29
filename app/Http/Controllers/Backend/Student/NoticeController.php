@@ -5,19 +5,19 @@ namespace App\Http\Controllers\Backend\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\Admin\Course;
-use App\Models\Backend\Admin\CourseItem;
+use App\Models\Backend\Admin\Notice;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\CourseAssignedNotification;
+use App\Notifications\NoticeNotification;
 use App\Models\User;
 use App\Models\Common\Admission;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Image;
 use File;
 use Session;
 use Auth;
-
-class DashboardController extends Controller
+class NoticeController extends Controller
 {
     public function __construct()
     {
@@ -31,15 +31,12 @@ class DashboardController extends Controller
     public function index()
     {
         //
-        if ( Auth::user()->role == 'student' )
-        {
-            $courses = Course::orderby('id', 'desc')->take(3)->get();
-            $admission = Admission::where('users_id', Auth::user()->id)->first() ?: app(Admission::class);
-            
-            return view('Backend.Student.dashboard', compact('courses', 'admission'));
-            
+        $admission = Admission::where('users_id', Auth::user()->id)->get();
+        foreach ($admission as $key => $value) {
+            # code...
+            $notice = Notice::where('course_id', $value->courses_id)->get();
+            return view('Backend.Student.notice', compact('notice'));
         }
-        
     }
 
     /**
@@ -47,23 +44,9 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function profile($studentid)
+    public function create()
     {
         //
-        $student = User::where('studentid', $studentid)->first();
-
-        if ( !empty($student) ) {
-            return view('Backend.Student.profile', compact('student'));
-        }
-        else
-        {
-            $notification = array(
-                'message'       => 'ডাটা পাওয়া যায়নি!!!',
-                'alert-type'    => 'error'
-            );
-    
-            return back()->with($notification);
-        }
     }
 
     /**

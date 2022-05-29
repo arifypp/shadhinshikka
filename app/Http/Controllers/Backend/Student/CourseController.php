@@ -17,7 +17,7 @@ use File;
 use Session;
 use Auth;
 
-class DashboardController extends Controller
+class CourseController extends Controller
 {
     public function __construct()
     {
@@ -33,13 +33,12 @@ class DashboardController extends Controller
         //
         if ( Auth::user()->role == 'student' )
         {
-            $courses = Course::orderby('id', 'desc')->take(3)->get();
+            $courses = Course::orderby('id', 'desc')->get();
             $admission = Admission::where('users_id', Auth::user()->id)->first() ?: app(Admission::class);
             
-            return view('Backend.Student.dashboard', compact('courses', 'admission'));
+            return view('Backend.Student.courses', compact('courses', 'admission'));
             
         }
-        
     }
 
     /**
@@ -47,23 +46,9 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function profile($studentid)
+    public function create()
     {
         //
-        $student = User::where('studentid', $studentid)->first();
-
-        if ( !empty($student) ) {
-            return view('Backend.Student.profile', compact('student'));
-        }
-        else
-        {
-            $notification = array(
-                'message'       => 'ডাটা পাওয়া যায়নি!!!',
-                'alert-type'    => 'error'
-            );
-    
-            return back()->with($notification);
-        }
     }
 
     /**

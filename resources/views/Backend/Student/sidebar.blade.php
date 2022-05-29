@@ -32,9 +32,9 @@
                 </li>
 
                 <li>
-                    <a href="#" class="waves-effect">
+                    <a href="{{ route('student.course.manage') }}" class="waves-effect">
                         <i class="bx bx-play"></i>
-                        <span key="t-wallet">{{ __('কোর্স সমূহ') }}</span>
+                        <span key="t-courses">{{ __('কোর্স সমূহ') }}</span>
                     </a>
                 </li>
 
@@ -53,7 +53,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ url('#') }}" class="waves-effect">
+                    <a href="{{ route('student.notice.manage') }}" class="waves-effect">
                         <i class="bx bx-alarm"></i>
                         <span key="t-notice">{{ __('নোটিশ') }}</span>
                     </a>
