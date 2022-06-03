@@ -10,6 +10,7 @@
     <div class="row">
         <div class="col-12 col-xl-12 col-md-12 col-lg-12">
             <div class="row">
+
             @foreach( $courses as $course )
                 <div class="col-xl-4 pl-0 all-courses">
                     <div class="card student-courses">
@@ -28,16 +29,23 @@
                         </div>
                         <div class="card-footer bg-dark text-center text-white">
                             <ul class="list-inline m-2">
-                            @if( $course->id == $admission->courses_id )
-                                <li class="list-inline-item">
-                                    <a href="javascript:void(0)" class="btn btn-info btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Admitted') }}</h5></a>
-                                </li>
-                                @if( !empty($admission->status == 'active') )
-                                <li class="list-inline-item">
-                                    <a href="{{ route('access.course', $course->slug) }}" class="btn btn-warning btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Continue Course') }}</h5></a>
-                                </li>
-                                @endif
-                                @else
+                            <!-- {{-- If the user has purchased course --}} -->
+                            @if(in_array($course->id, $admissions->pluck('courses_id')->toArray()))
+                                @foreach($admissions as $admission)
+                                    <!-- {{-- If the course is active --}} -->
+                                    @if($admission->courses_id === $course->id && $admission->status === 'active')
+                                        <li class="list-inline-item">
+                                            <a href="{{ route('access.course', $course->slug) }}" class="btn btn-warning btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Continue Course') }}</h5></a>
+                                        </li>
+                                    @else
+                                    <!-- {{-- If the course is not active --}} -->
+                                        <li class="list-inline-item">
+                                            <a href="javascript:void(0)" class="btn btn-info btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Admitted') }}</h5></a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            @else        
+                                <!-- {{-- User has not purchased the course --}} -->
                                 <li class="list-inline-item">
                                     <a href="{{ route('purchase.course', $course->slug) }}" class="btn btn-info btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Admission Now') }}</h5></a>
                                 </li>

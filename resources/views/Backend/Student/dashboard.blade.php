@@ -1,10 +1,7 @@
 @extends('layouts.master')
 
 @section('title') @lang('translation.Dashboards') @endsection
-@section('css')
-<link rel="stylesheet" href="{{ asset('/prism.css') }}" />
 
-@endsection
 @section('content')
 
     @component('components.breadcrumb')
@@ -17,10 +14,11 @@
             <div class="row">
                 <!-- Warning for admission -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12 my-1">
-                    @if( !empty($admission->status == 'inactive') )
+                    @if( $admissions->pluck('status') == 'inactive' )
                     <div class="admission-warning alert alert-danger">
                         <span> {{ __('আপনার অ্যাডমিশন এখনো একটিভ হয়নি। অনুগ্রহ করে অপেক্ষা করুন ধন্যবাদ।') }} </span>
                     </div>
+                    <input type="hidden" name="course_ids" value="{{ $admission->courses_id }}">
                     @endif
                     
                     {{ App\Models\Common\Admission::payment_progress() }}
@@ -106,16 +104,22 @@
                         </div>
                         <div class="card-footer bg-dark text-center text-white">
                             <ul class="list-inline m-2">
-                            @if( $course->id == $admission->courses_id )
-                                <li class="list-inline-item">
-                                    <a href="javascript:void(0)" class="btn btn-info btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Admitted') }}</h5></a>
-                                </li>
-                                @if( !empty($admission->status == 'active') )
-                                <li class="list-inline-item">
-                                    <a href="{{ route('access.course', $course->slug) }}" class="btn btn-warning btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Continue Course') }}</h5></a>
-                                </li>
-                                @endif
-                                @else
+                            @if(in_array($course->id, $admissions->pluck('courses_id')->toArray()))
+                                @foreach($admissions as $admission)
+                                    <!-- {{-- If the course is active --}} -->
+                                    @if($admission->courses_id === $course->id && $admission->status === 'active')
+                                        <li class="list-inline-item">
+                                            <a href="{{ route('access.course', $course->slug) }}" class="btn btn-warning btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Continue Course') }}</h5></a>
+                                        </li>
+                                    @else
+                                    <!-- {{-- If the course is not active --}} -->
+                                        <li class="list-inline-item">
+                                            <a href="javascript:void(0)" class="btn btn-info btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Admitted') }}</h5></a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            @else        
+                                <!-- {{-- User has not purchased the course --}} -->
                                 <li class="list-inline-item">
                                     <a href="{{ route('purchase.course', $course->slug) }}" class="btn btn-info btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Admission Now') }}</h5></a>
                                 </li>

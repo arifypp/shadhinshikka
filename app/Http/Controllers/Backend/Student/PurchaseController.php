@@ -63,9 +63,8 @@ class PurchaseController extends Controller
     {
         //
         $request->validate([
-            'user_id'  =>  ['unique:admissions,users_id'],
             'number'    => ['required' , 'numeric', 'digits:11'],
-            'traxID'    => ['required'],
+            'traxID'    => ['required', 'unique:payment_transictions,traxid'],
             'TrxID'     => ['accepted']
         ],
     
@@ -74,10 +73,11 @@ class PurchaseController extends Controller
             'number.numeric'   =>   'সঠিকভাবে নাম্বার লিখুন!',
             'number.digits'   =>   '১১ ডিজিটের নাম্বার লিখুন!',
             'traxID.required'   =>   'ট্রান্সিকশন আইডি দিন!',
+            'traxID.unique'   =>   'ভুল ট্রান্সিকশন আইডি!',
             'TrxID.accepted'   =>   'টিওএস একসেপট করুন!',
-            'user_id.unique'   =>   'আপনি ইতিমধ্যে অ্যাডমিশন নিয়েছেন!',
         ]);
 
+        
         $admission = new Admission();
         $admission->admission_id    =   $request->admissonID;
         $admission->courses_id      =   $request->course_id;

@@ -33,10 +33,12 @@ class CourseController extends Controller
         //
         if ( Auth::user()->role == 'student' )
         {
-            $courses = Course::orderby('id', 'desc')->get();
-            $admission = Admission::where('users_id', Auth::user()->id)->first() ?: app(Admission::class);
             
-            return view('Backend.Student.courses', compact('courses', 'admission'));
+            $courses = Course::orderby('id', 'desc')->get();
+            $admissions = Admission::where('users_id', Auth::id())->get() ?: app(Admission::class);
+            
+            
+            return view('Backend.Student.courses', compact('courses', 'admissions'));
             
         }
     }

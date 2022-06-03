@@ -26,9 +26,31 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $note->title }}</td>
                                     <td>{{ \Illuminate\Support\Str::limit($note->description, 20)}}</td>
-                                    <td>{{ date('D M, Y H:i', strtotime($note->created_at)); }}</td>
+                                    <td>{{ date('D M, Y H:i A', strtotime($note->created_at)); }}
+
+                                    </td>
                                     <td>
-                                        <a href="#"><span><i class="fa fa-eye"></i></span></a>
+                                        <a href="#" data-bs-toggle="modal"
+                            data-bs-target="#Coursedetails{{ $note->id }}"><span><i class="fa fa-eye"></i></span></a>
+                                        <!-- Static Backdrop Modal -->
+                                        <div class="modal fade" id="Coursedetails{{ $note->id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+                                            tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">{{ $note->title }}</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>{{ $note->description }}.</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach

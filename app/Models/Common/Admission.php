@@ -12,6 +12,7 @@ use App\Models\Common\PaymentTransiction;
 use Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use DB;
 class Admission extends Model
 {
     use HasFactory;
@@ -72,7 +73,7 @@ class Admission extends Model
                        
                         <div class="alert alert-danger" role="alert">
                             <label for=""> 
-                                <?php echo 'আপনার কোর্সে ফি ডিউ রয়েছে?'; ?> 
+                                <?php echo 'আপনার '.$value->name.' কোর্সে ফি ডিউ রয়েছে?'; ?> 
                             </label>
 
                             <div class="progress col-md-12">
@@ -152,6 +153,5 @@ class Admission extends Model
             
         }
     }
-
 
 }

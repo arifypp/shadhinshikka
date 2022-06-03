@@ -34,9 +34,9 @@ class DashboardController extends Controller
         if ( Auth::user()->role == 'student' )
         {
             $courses = Course::orderby('id', 'desc')->take(3)->get();
-            $admission = Admission::where('users_id', Auth::user()->id)->first() ?: app(Admission::class);
+            $admissions = Admission::where('users_id', Auth::id())->get() ?: app(Admission::class);
             
-            return view('Backend.Student.dashboard', compact('courses', 'admission'));
+            return view('Backend.Student.dashboard', compact('courses', 'admissions'));
             
         }
         
