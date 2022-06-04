@@ -14,13 +14,13 @@
             <div class="row">
                 <!-- Warning for admission -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12 my-1">
-                    @if( $admissions->pluck('status') == 'inactive' )
-                    <div class="admission-warning alert alert-danger">
-                        <span> {{ __('আপনার অ্যাডমিশন এখনো একটিভ হয়নি। অনুগ্রহ করে অপেক্ষা করুন ধন্যবাদ।') }} </span>
-                    </div>
-                    <input type="hidden" name="course_ids" value="{{ $admission->courses_id }}">
-                    @endif
-                    
+                        @if( $admissions->pluck('status') === 'inactive' )
+                        <div class="admission-warning alert alert-danger">
+                            <span> {{ __('আপনার অ্যাডমিশন এখনো একটিভ হয়নি। অনুগ্রহ করে অপেক্ষা করুন ধন্যবাদ।') }} </span>
+                        </div>
+                        <input type="hidden" name="course_ids" value="{{ $admission->courses_id }}">
+                        @endif
+                    {{ $admissions->pluck('status') }}
                     {{ App\Models\Common\Admission::payment_progress() }}
                     
                 </div>
@@ -107,10 +107,12 @@
                             @if(in_array($course->id, $admissions->pluck('courses_id')->toArray()))
                                 @foreach($admissions as $admission)
                                     <!-- {{-- If the course is active --}} -->
-                                    @if($admission->courses_id === $course->id && $admission->status === 'active')
-                                        <li class="list-inline-item">
-                                            <a href="{{ route('access.course', $course->slug) }}" class="btn btn-warning btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Continue Course') }}</h5></a>
-                                        </li>
+                                    @if($admission->courses_id === $course->id)
+                                        @if($admission->status === 'active')
+                                            <li class="list-inline-item">
+                                                <a href="{{ route('access.course', $course->slug) }}" class="btn btn-warning btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Continue Course') }}</h5></a>
+                                            </li>
+                                        @endif
                                     @else
                                     <!-- {{-- If the course is not active --}} -->
                                         <li class="list-inline-item">

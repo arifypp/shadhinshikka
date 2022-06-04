@@ -186,7 +186,8 @@ class ResourceController extends Controller
         $permission = Admission::where('users_id', Auth::user()->id)->where('status', 'active')->first();
         if( !is_null($permission) )
         {
-            return view('Backend.Student.resource');
+            $codeblock = CodeResource::orderBy('name', 'asc')->get();
+            return view('Backend.Student.resource', compact('codeblock'));
         }
         else
         {
@@ -229,6 +230,60 @@ class ResourceController extends Controller
         ]);
 
         $code = new CodeResource();
+
+        $code->name             =   $request->title;
+        $code->slug             =   Str::slug($request->title);
+        $code->lang_id          =   $request->code_type;
+        $code->description      =   $request->code;
+
+        $code->save();
+
+        $notification = array(
+            'message'       => 'রিসোর্স পাবলিশ সম্পন্ন হয়েছে !!!',
+            'alert-type'    => 'success'
+        );
+
+        return redirect()->route('resource.toolscode')->with($notification);
+    }
+
+    // Edit code resource
+    public function editcode(Request $request, $id)
+    {
+        
+
+        $code =  CodeResource::find($id);
+
+        if( !empty($code) )
+        {
+            $langName = DB::table('program_languegs')->get();
+            return view('Backend.Admin.resource.editcode', compact('code', 'langName'));
+        }else
+        {
+            $notification = array(
+                'message'       => 'ডাটা খুঁজে পাওয়া যায়নি !!!',
+                'alert-type'    => 'error'
+            );
+    
+            return back()->with($notification);
+        }
+       
+    }
+
+    // Update code resource 
+    public function updatecode(Request $request, $id)
+    {
+        $request->validate([
+            'title'         =>  ['required', 'string', 'max:255', 'unique:code_resources,name,'.$id],
+            'code_type'     =>  ['required', 'not_in:0'],
+            'code'          =>  ['required'],
+        ], $message = [
+            'required'      =>  'This field is required',
+            'string'        =>  'Support only text not number',
+            'max'           =>  'Max character 255',
+            'unique'        =>  'The name is already exit!',
+        ]);
+
+        $code =  CodeResource::find($id);
 
         $code->name             =   $request->title;
         $code->slug             =   Str::slug($request->title);
@@ -292,6 +347,27 @@ class ResourceController extends Controller
     {
         //
         $delete = CourseResource::where('id', $id)->delete();
+
+        // check data deleted or not
+        if ($delete == 1) {
+            $success = true;
+            $message = "ডিলেট সম্পন্ন হয়েছে!!!";            
+        } else {
+            $success = false;
+            $message = "ডিলেটে ত্রুটি রয়েছে!!!";
+        }
+
+        //  Return response
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
+    }
+
+    public function tooldestroy($id)
+    {
+        
+        $delete = CodeResource::where('id', $id)->delete();
 
         // check data deleted or not
         if ($delete == 1) {

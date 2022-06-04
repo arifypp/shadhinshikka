@@ -20,14 +20,14 @@ class CodeResource extends Model
     ];
 
 
-    public static function codetype()
+    public static function codetype($lang_id)
     {
-        $lname = DB::table('program_languegs')->get();
+        $resoucestools = CodeResource::all();
 
-        foreach ($lname as $key => $value) {
-
-            $codereouse = CodeResource::where('lang_id', $value->id)->first();
-            echo $codereouse->name;
+        foreach ($resoucestools as $key => $value) {
+            
+            $codereouse = DB::table('program_languegs')->where('id', $value->lang_id)->first();
+            return $codereouse->name;
             
         }
 

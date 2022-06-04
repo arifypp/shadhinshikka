@@ -1,29 +1,20 @@
 @extends('layouts.master')
 
-@section('title') {{ __('Add Code Resource') }} @endsection
+@section('title') {{ __('Uppdate Code Resource') }} @endsection
+
 @section('css')
+
 <link rel="stylesheet" href="{{ asset('/prism.css') }}" />
 <link rel="stylesheet" href="https://live.prismjs.com/prism-live.css" />
 <link rel="stylesheet" href="https://prismjs.com/plugins/line-numbers/prism-line-numbers.css" />
 
-<style type="text/css" media="screen">
-   #editor {
-        /* position: absolute; */
-        width: 100%;
-        height: 400px;
-        max-width: 100%;
-    }
-    .scrollmargin {
-        height: 400px;
-        text-align: center;
-    }
-</style>
 @endsection
+
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') {{ __('Add Code Resource') }} @endslot
-        @slot('title') {{ __('Add Code Resource') }}  @endslot
+        @slot('li_1') {{ __('Uppdate Code Resource') }} @endslot
+        @slot('title') {{ __('Uppdate Code Resource') }}  @endslot
     @endcomponent
 
 <div class="container">
@@ -55,12 +46,12 @@
                         </div>
                     </div>
                 </div>
-                <form action="{{ route('toolscode.codestore') }}" method="post">
+                <form action="{{ route('toolscode.updatecode', $code->id) }}" method="post">
                     @csrf
                     <div class="row">
                         <div class="form-group col-6 mb-3">
                             <label for="Resource title">Title</label>
-                            <input type="text" name="title" id="title" class="form-control" placeholder="Enter Title">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="Enter Title" value="{{ old('title', $code->name) }}">
                         </div>
                         <div class="form-group col-6 mb-3">
                             <label for="Select Language">Select Language &nbsp; <a href="javascript" data-bs-toggle="modal"
@@ -68,14 +59,17 @@
                             <select name="code_type" id="code_type" class="form-control">
                                 <option value="0">Please select language</option>
                                 @foreach($langName as $lang)
-                                <option value="{{ $lang->id }}">{{ $lang->name }}</option>
+                                <option value="{{ $lang->id }}" @if($code->lang_id == $lang->id) selected @endif>{{ $lang->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group col-12 mb-3">
+@php 
+$langname = DB::table('program_languegs')->where('id', $code->lang_id)->first();
+@endphp
 <label for="Type your code">Enter Your Code</label>
-<textarea class="prism-live line-numbers language-html fill" name="code" style="--max-height: 30em">
-
+<textarea class="prism-live line-numbers language-{{ strtolower($langname->name) }} fill" name="code" style="--max-height: 30em">
+{{ $code->description }}
 </textarea>
                         </div>
                         <div class="form-group col-12">
@@ -89,6 +83,12 @@
 @endsection
 
 @section('script')
+<script src="https://blissfuljs.com/bliss.shy.min.js"></script>
+<script src="{{ asset('/prism.js') }}"></script>
+<script src="https://prismjs.com/plugins/line-numbers/prism-line-numbers.js"></script>
+<script src="{{ asset('/prism/prism-live.js') }}"></script>
+<script src="https://raw.githubusercontent.com/PrismJS/live/master/index.js"></script>
+
 <script>
     @if(count($errors) > 0)
         @foreach($errors->all() as $error)
@@ -143,17 +143,5 @@
             })
         })
     })
-</script>
-
-<script src="https://blissfuljs.com/bliss.shy.min.js"></script>
-<script src="{{ asset('/prism.js') }}"></script>
-<script src="https://prismjs.com/plugins/line-numbers/prism-line-numbers.js"></script>
-<script src="{{ asset('/prism/prism-live.js') }}"></script>
-<script src="https://raw.githubusercontent.com/PrismJS/live/master/index.js"></script>
-
-<script>
-    // $(document).on('change','#code_type',function(){
-        
-    // });
 </script>
 @endsection

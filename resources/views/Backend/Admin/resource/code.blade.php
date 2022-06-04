@@ -6,6 +6,10 @@
    <!-- CSS -->
    <link rel="stylesheet" href="{{ asset('/prism.css') }}" />
    <style>
+       pre, code {
+            padding:0;
+            margin:0;
+        }
        pre {
             max-height: 50em;
             overflow: auto;
@@ -76,17 +80,23 @@
 <div class="tab-pane fade @if($key == 0) active show @endif" id="codeblock{{$code->id}}" role="tabpanel" aria-labelledby="codeblock{{$code->id}}">
 <!-- Body text -->
 @php 
-    $lname = DB::table('program_languegs')->where('id', $code->lang_id)->get();
-        foreach($lname as $lang_name)
-        { @endphp
-            <pre class="line-numbers language-{{ strtolower($lang_name->name) }}"><code class="language-{{ strtolower($lang_name->name) }}">
-          @php
-        }
+$lname = DB::table('program_languegs')->where('id', $code->lang_id)->get();
+foreach($lname as $lang_name)
+{ @endphp<pre class="line-numbers language-{{ strtolower($lang_name->name) }}">
+<code class="language-{{ strtolower($lang_name->name) }}">
+@php
+}
 @endphp
 @verbatim
    <?php echo htmlspecialchars($code->description); ?>
 @endverbatim
 </code></pre>
+
+<!-- Delete query -->
+<div class="update-code text-end">
+    <a href="{{ route('toolscode.edit', $code->id) }}" class="btn btn-info btn-sm">Edit Resource </a>
+    <a class="btn btn-danger btn-sm"  href="javascript:void(0)" onclick="deleteConfirmation('{{$code->id}}')">Delete Resource </a>
+</div>
 </div>
 @endforeach  
                             
@@ -97,26 +107,79 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </div>
-            <!-- end row -->
+</div>
+<!-- end row -->
 
 @endsection
 
 @section('script')
 <script src="{{ asset('/prism.js') }}"></script>
+
+<script type="text/javascript">
+function deleteConfirmation(id) {
+        swal.fire({
+            title: "ডিলেট?",
+            icon: 'question',
+            text: "দয়া করে কনর্ফাম করুন!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "হ্যা, ডিলেট করুন!",
+            cancelButtonText: "না, বাতিল করুন!",
+            dangerMode: true,
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajaxSetup({
+	                headers: {
+	                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+	                }
+	            });
+                $.ajax({
+                    type: 'POST',
+                     url:  '{{ url("/admin/resources/tools/delete") }}/' + id,
+                    data: {_token: CSRF_TOKEN},
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            window.setTimeout(function(){location.reload()},2000)
+                            
+                            Swal.mixin({
+                                toast: !0,
+                                position: "top-end",
+                                showConfirmButton: !1,
+                                timer: 3e3,
+                                timerProgressBar: !0,
+                                onOpen: function (t) {
+                                t.addEventListener("mouseenter", Swal.stopTimer), t.addEventListener("mouseleave", Swal.resumeTimer)
+                                }
+                            }).fire({
+                                icon: "success",
+                                title: "Data Deleted Successfully"
+                            })
+                        } else {
+                            swal.fire("Error!", results.message, "error");
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+    }
+</script>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function(){
+        $("code[class^='language-']").each(function(){
+            $(this).html($(this).html().trim());
+        });
+
+        Prism.highlightAll();
+    });
+</script>
 @endsection

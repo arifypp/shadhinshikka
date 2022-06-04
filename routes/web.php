@@ -203,7 +203,10 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/create','App\Http\Controllers\Backend\ResourceController@create')->name('resource.create');
                 Route::get('/tools/code','App\Http\Controllers\Backend\ResourceController@toolscode')->name('resource.toolscode');
                 Route::get('/tools/createcode','App\Http\Controllers\Backend\ResourceController@createcode')->name('toolscode.create');
+                Route::get('/tools/editcode/{id}','App\Http\Controllers\Backend\ResourceController@editcode')->name('toolscode.edit');
+                
                 Route::post('/tools/codestore','App\Http\Controllers\Backend\ResourceController@codestore')->name('toolscode.codestore');
+                Route::post('/tools/updatecode/{id}','App\Http\Controllers\Backend\ResourceController@updatecode')->name('toolscode.updatecode');
                 Route::post('/tools/codelangstore','App\Http\Controllers\Backend\ResourceController@codelangstore')->name('toolscode.codelangstore');
                 Route::post('/storetitle', 'App\Http\Controllers\Backend\ResourceController@lecture')->name('resource.lecture');
                 Route::post('/basic-info', 'App\Http\Controllers\Backend\ResourceController@basicinfo')->name('resource.basicinfo');
@@ -211,6 +214,7 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/attachment-url', 'App\Http\Controllers\Backend\ResourceController@attachment')->name('resource.attachment');
                 Route::post('/update/{id}', 'App\Http\Controllers\Backend\ResourceController@update')->name('resource.udate');
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\ResourceController@destroy')->name('resource.destroy');
+                Route::post('/tools/delete/{id}', 'App\Http\Controllers\Backend\ResourceController@tooldestroy')->name('resource.toolsdestroy');
             });
             
 
