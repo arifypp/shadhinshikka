@@ -33,7 +33,7 @@
                             @if(in_array($course->id, $admissions->pluck('courses_id')->toArray()))
                                 @foreach($admissions as $admission)
                                     <!-- {{-- If the course is active --}} -->
-                                    @if($admission->courses_id === $course->id && $admission->status === 'active')
+                                    @if($admission->courses_id == $course->id && $admission->status == 'active')
                                         <li class="list-inline-item">
                                             <a href="{{ route('access.course', $course->slug) }}" class="btn btn-warning btn-sm"><h5 class="p-0 m-0 text-white"> {{ __('Continue Course') }}</h5></a>
                                         </li>
