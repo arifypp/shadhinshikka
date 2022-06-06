@@ -204,7 +204,7 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/tools/code','App\Http\Controllers\Backend\ResourceController@toolscode')->name('resource.toolscode');
                 Route::get('/tools/createcode','App\Http\Controllers\Backend\ResourceController@createcode')->name('toolscode.create');
                 Route::get('/tools/editcode/{id}','App\Http\Controllers\Backend\ResourceController@editcode')->name('toolscode.edit');
-                
+                Route::post('/tools/search','App\Http\Controllers\Backend\ResourceController@search')->name('resource.search');
                 Route::post('/tools/codestore','App\Http\Controllers\Backend\ResourceController@codestore')->name('toolscode.codestore');
                 Route::post('/tools/updatecode/{id}','App\Http\Controllers\Backend\ResourceController@updatecode')->name('toolscode.updatecode');
                 Route::post('/tools/codelangstore','App\Http\Controllers\Backend\ResourceController@codelangstore')->name('toolscode.codelangstore');

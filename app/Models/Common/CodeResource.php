@@ -5,6 +5,7 @@ namespace App\Models\Common;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Models\Common\CodeLangName;
 
 class CodeResource extends Model
 {
@@ -19,19 +20,9 @@ class CodeResource extends Model
         'description'
     ];
 
-
-    public static function codetype($lang_id)
+    public function programname()
     {
-        $resoucestools = CodeResource::all();
-
-        foreach ($resoucestools as $key => $value) {
-            
-            $codereouse = DB::table('program_languegs')->where('id', $value->lang_id)->first();
-            return $codereouse->name;
-            
-        }
-
+        return $this->belongsTo(CodeLangName::class, 'lang_id');
     }
-
 
 }

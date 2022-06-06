@@ -332,9 +332,16 @@ class ResourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function search(Request $request)
     {
         //
+        $coderesuources = CodeResource::all();
+        if($request->keyword != ''){
+            $coderesuources = CodeResource::where('name','LIKE','%'.$request->keyword.'%')->get();
+        }
+        return response()->json([
+            'coderesuources' => $coderesuources,
+        ]);
     }
 
     /**
