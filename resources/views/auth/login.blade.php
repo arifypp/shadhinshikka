@@ -39,7 +39,7 @@
                                         </div>
                                     </a>
 
-                                    <a href="index" class="auth-logo-dark">
+                                    <a href="{{ route('home') }}" class="auth-logo-dark">
                                         <div class="avatar-md profile-user-wid mb-4">
                                             <span class="avatar-title rounded-circle bg-light">
                                                 <img src="{{ '/storage/'.LOGO_PATH.config('settings.favicon') }}" alt=""

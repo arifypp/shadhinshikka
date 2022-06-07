@@ -47,6 +47,16 @@ class LoginController extends Controller
         return redirect('/login/student')->with($notification);
     }
 
+    public function authenticated()
+    {
+        if (auth()->user()) {
+            return redirect(route('user.dashboard'));
+        }
+        else {
+            return redirect(route('userlogin'));
+        }
+    }
+
     // This is for user login form
     public function showUserloginform(){
         return view('auth.login', ['url'=>'student']);

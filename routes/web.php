@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['prefix' => '/'], function(){
+    Route::get('home', 'App\Http\Controllers\Frontend\HomeController@index')->name('home');
+});
+
 Route::get('/login', function () {
     return redirect(route('userlogin'));
 });
@@ -238,8 +242,6 @@ Route::middleware(['verified'])->group(function () {
     });
 });
 
-
-Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');

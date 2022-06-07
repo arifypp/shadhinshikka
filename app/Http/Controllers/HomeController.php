@@ -37,11 +37,6 @@ class HomeController extends Controller
         return abort(404);
     }
 
-    public function root()
-    {
-        return view('index');
-    }
-
     /*Language Translation*/
     public function lang($locale)
     {

@@ -33,7 +33,7 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div>
-                                    <a href="index">
+                                    <a href="{{ route('home') }}">
                                         <div class="avatar-md profile-user-wid mb-4">
                                             <span class="avatar-title rounded-circle bg-light">
                                                 <img src="{{ '/storage/'.LOGO_PATH.config('settings.favicon') }}" alt=""
