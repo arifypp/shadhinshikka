@@ -4,8 +4,21 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Response;
-use DB;
+use App\Models\Backend\Admin\Course;
+use App\Models\Backend\Admin\Category;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AcceptAdmissionNotification;
+use App\Models\User;
+use CoreProc\WalletPlus\Models\WalletType;
+use App\Models\Common\Admission;
+use App\Models\Common\PaymentTransiction;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
+use Image;
+use File;
+use Session;
+use Auth;
+
 
 class HomeController extends Controller
 {
@@ -17,7 +30,9 @@ class HomeController extends Controller
     public function index()
     {
         //
-        return view('Frontend.pages.home');
+        $categories = Category::where('status', 'Active')->get();
+        $courses = Course::orderBy('id', 'DESC')->get();
+        return view('Frontend.pages.home', compact('courses', 'categories'));
     }
 
     public function getDistrictsByDivision(Request $request)

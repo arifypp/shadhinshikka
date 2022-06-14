@@ -30,6 +30,20 @@
                 @if( Auth::user()->role == 'admin' )
                 <li class="menu-title" key="t-apps">প্লাটফর্ম ফিচারড</li>
 
+                <!-- Category Manage -->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-move"></i>
+                        <span key="t-category">কোর্স ক্যাটাগরি</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('category.manage') }}" key="t-category-manage">ম্যানেজ ক্যাটাগরি</a></li>
+                        </li>
+                        <li><a href="{{ route('category.create') }}" key="t-category-create">ক্যটাগরি তৈরি করুন</a></li>
+                        </li>
+                    </ul>
+                </li>
+
                 <!-- Course Manage -->                
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

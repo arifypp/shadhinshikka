@@ -1,18 +1,9 @@
 <div class="category-responsive d-xl-none d-block">
         <div class="container">
             <div class="category-slider owl-carousel">
-                <div class="item">
-                    <a href="category.html">Development</a>
-                </div>
-                <div class="item"><a href="category.html">Design</a></div>
-                <div class="item"><a href="category.html">Marketing</a></div>
-                <div class="item"><a href="category.html">Business</a></div>
-                <div class="item"><a href="category.html">Office Productivity</a></div>
-                <div class="item"><a href="category.html">Photography</a></div>
-                <div class="item"><a href="category.html">Video</a></div>
-                <div class="item"><a href="category.html">Health & Fitness</a></div>
-                <div class="item"><a href="category.html">Music</a></div>
-                <div class="item"><a href="category.html">IT & Software</a></div>
+                @foreach($categories as $key => $category)
+                <div class="item"><a href="category.html">{{ $category->name }}</a></div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -21,33 +12,11 @@
             <div class="container nav-container">
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav menu-open">
+                        @foreach($categories as $key => $category)
                         <li>
-                            <a href="category.html">Development</a>
+                            <a href="{{ __($category->slug) }}">{{ $category->name }}</a>
                         </li>
-                        <li>
-                            <a href="category.html">Design</a>
-                        </li>
-                        <li>
-                            <a href="category.html">Marketing</a>
-                        </li>
-                        <li>
-                            <a href="category.html">Business</a>
-                        </li>
-                        <li>
-                            <a href="category.html">Office Productivity</a>
-                        </li>
-                        <li>
-                            <a href="category.html">Photography & Video</a>
-                        </li>
-                        <li>
-                            <a href="category.html">Health & Fitness</a>
-                        </li>
-                        <li>
-                            <a href="category.html">Music</a>
-                        </li>
-                        <li>
-                            <a href="category.html">IT & Software</a>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

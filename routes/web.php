@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', 'App\Http\Controllers\Frontend\HomeController@index')->name('inedex');
 
 Route::group(['prefix' => '/'], function(){
-    Route::get('home', 'App\Http\Controllers\Frontend\HomeController@index')->name('home');
+    Route::get('/home', 'App\Http\Controllers\Frontend\HomeController@index')->name('home');
 });
 
 Route::get('/login', function () {
@@ -115,6 +116,18 @@ Route::middleware(['verified'])->group(function () {
     Route::group(['prefix' => 'admin'], function(){
         Route::group(['middleware' => 'admin'], function () {
             Route::get('/dashboard','App\Http\Controllers\Backend\Admin\DashboardController@index')->name('admin.dashboard');
+
+            // Category Settings
+            Route::group(['prefix' => 'categories'], function () {
+                Route::get('/manage', 'App\Http\Controllers\Backend\Admin\CategoryController@index')->name('category.manage');
+                Route::get('/create', 'App\Http\Controllers\Backend\Admin\CategoryController@create')->name('category.create');
+                Route::get('/show/{studentid}', 'App\Http\Controllers\Backend\Admin\CategoryController@show')->name('category.show');
+                Route::post('/store', 'App\Http\Controllers\Backend\Admin\CategoryController@store')->name('category.store');
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\Admin\CategoryController@edit')->name('category.edit');
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\Admin\CategoryController@update')->name('category.update');
+                Route::get('/status/{id}', 'App\Http\Controllers\Backend\Admin\CategoryController@status')->name('category.status');
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\CategoryController@destroy')->name('category.delete');
+            });
 
             // Course 
             Route::group(['prefix' => 'courses'], function() {

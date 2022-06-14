@@ -8,7 +8,7 @@
             </button>
         </div>
         <div class="logo">
-            <a class="main-logo" href="home.html"><img src="{{ '/storage/'.LOGO_PATH.config('settings.logo') }}" alt="img"></a>
+            <a class="main-logo" href="{{ route('home') }}"><img src="{{ '/storage/'.LOGO_PATH.config('settings.logo') }}" alt="Logo"></a>
         </div>
         <div class="nav-right-part nav-right-part-mobile">
             <ul>

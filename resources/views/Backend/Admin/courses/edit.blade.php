@@ -119,10 +119,57 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 col-6">
                                 <label for="Total Class">মোট ক্লাস</label>
                                 <input type="text" name="cclasscount" id="cclasscount" class="form-control  @error('cclasscount') is-invalid @enderror" value="{{ old('cclasscount', $courses->class_count) }}" placeholder="মোট ক্লাস" autocomplete="off">
                                 @error('cclasscount')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3 col-6">
+                                <label for="Category Course">ক্যাটাগরি</label>
+                                <select class="form-select form-control select2" name="category" id="category">
+                                    @foreach( App\Models\Backend\Admin\Category::all() as $category )
+                                        <option value="{{ $category->id }}" @if($courses->category_id == $category->id) selected @endif>{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                               
+                                @error('category')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3 col-6">
+                                <label for="Category Level">কোর্স লেভেল</label>
+                                <select class="form-select form-control select2" name="level" id="level">
+                                   <option value="Beginner" @if($courses->level == 'Beginner') selected @endif>Beginner</option>
+                                   <option value="Medium" @if($courses->level == 'Medium') selected @endif>Medium</option>
+                                   <option value="Expert" @if($courses->level == 'Expert') selected @endif>Expert</option>
+                                   <option value="All Level" @if($courses->level == 'All Level') selected @endif>All Level</option>
+                                </select>
+                               
+                                @error('level')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3 col-6">
+                                <label for="Category Skills">কোর্স স্কিল</label>
+                                <select class="form-select form-control select2" name="skills" id="level">
+                                   <option value="Beginner">Beginner</option>
+                                   <option value="Medium">Medium</option>
+                                   <option value="Expert">Expert</option>
+                                   <option value="All Level">All Level</option>
+                                </select>
+                               
+                                @error('skills')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

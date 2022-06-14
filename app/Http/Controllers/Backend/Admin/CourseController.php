@@ -70,6 +70,8 @@ class CourseController extends Controller
             'cenddate'          =>  ['required'],
             'cprise'            =>  ['required'],
             'cclasscount'       =>  ['required'],
+            'category'          =>  ['required', 'not_in:0'],
+            'level'             =>  ['required', 'not_in:0'],
             'moreFields.*.name' => ['required'],
         ],
         $message = [
@@ -86,7 +88,11 @@ class CourseController extends Controller
             'cenddate.date'     =>  'তথ্যটি পূরণ করা আবশ্যক',
             'cenddate.after'     =>  'তথ্যটি পূরণ করা আবশ্যক',
             'cprise.required'       =>  'তথ্যটি পূরণ করা আবশ্যক',
-            'cclasscount.required'  =>  'তথ্যটি পূরণ করা আবশ্যক'
+            'cclasscount.required'  =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'category.required'       =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'category.not_in'       =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'level.required'       =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'level.not_in'       =>  'তথ্যটি পূরণ করা আবশ্যক',
         ]);
 
 
@@ -103,6 +109,8 @@ class CourseController extends Controller
         $course->end_on                 =   $request->cenddate;
         $course->class_location         =   $request->clocation;
         $course->price                  =   $request->cprise;
+        $course->category_id            =   $request->category;
+        $course->level                  =   $request->level;
 
         if( $request->image )
         {
@@ -163,7 +171,7 @@ class CourseController extends Controller
         //
         $courses = Course::where('slug', $slug)->first();
 
-        $coursefeatures = CourseItem::where('course_id', $courses->id)->get();
+        $coursefeatures = CourseItem::where('cicourse_id', $courses->id)->get();
 
         if( !empty( $slug ) )
         {
@@ -199,6 +207,8 @@ class CourseController extends Controller
             'cenddate'          =>  ['required'],
             'cprise'            =>  ['required'],
             'cclasscount'       =>  ['required'],
+            'category'          =>  ['required', 'not_in:0'],
+            'level'             =>  ['required', 'not_in:0'],
             'moreFields.*.name' => ['required'],
         ],
         $message = [
@@ -215,6 +225,10 @@ class CourseController extends Controller
             'cenddate.date'     =>  'তথ্যটি পূরণ করা আবশ্যক',
             'cenddate.after'     =>  'তথ্যটি পূরণ করা আবশ্যক',
             'cprise.required'       =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'category.required'       =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'category.not_in'       =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'level.required'       =>  'তথ্যটি পূরণ করা আবশ্যক',
+            'level.not_in'       =>  'তথ্যটি পূরণ করা আবশ্যক',
         ]);
 
 
@@ -231,6 +245,8 @@ class CourseController extends Controller
         $course->end_on                 =   $request->cenddate;
         $course->class_location         =   $request->clocation;
         $course->price                  =   $request->cprise;
+        $course->category_id            =   $request->category;
+        $course->level                  =   $request->level;
 
         if( !is_null($request->image) )
         {

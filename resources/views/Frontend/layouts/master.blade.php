@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title') - Shahdhin Shikkah Online Courses Html Template</title>
+    <title>@yield('title') - {{ config('settings.title') ? config('settings.title') : env('APP_NAME') }}</title>
     <!--fivicon icon-->
-    <link rel="icon" href="{{ asset('Frontend/assets/img/fevicon.png') }}">
+    <link rel="icon" href="{{ '/storage/'.LOGO_PATH.config('settings.adminfavicon') }}">
 
     <!-- Stylesheet -->
     @include('Frontend.includes.css')

@@ -75,10 +75,10 @@
                 <div class="col-xl-7 align-self-center">
                     <div class="d-md-flex align-items-center mb-4 mb-xl-0">
                         <div class="logo d-inline-block">
-                            <img src="{{ asset('Frontend/assets/img/logo.png') }}" alt="img">
+                            <img src="{{ '/storage/'.LOGO_PATH.config('settings.logo') }}" alt="Logo">
                         </div>
                         <div class="copyright-area">
-                            <p>© 2021 - Themefie. All Rights Reserved</p>       
+                            <p>{{ __('© 2022 - স্বাধীন শিক্ষা. All Rights Reserved') }}</p>       
                         </div>
                     </div>                        
                 </div>
