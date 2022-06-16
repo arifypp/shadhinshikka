@@ -75,14 +75,13 @@ table#resouce_items a i {
     top: 2px;
 }
 .video-list {
-    height: 400px;
-    overflow: hidden;
+    height: 750px;
+    overflow: auto;
 }
 .video-list .accordion {
-    height: 335px;
+    height: 700px;
     border: none;
     border-radius: 0px;
-    overflow-y: scroll;
     min-height: auto;
 }
 

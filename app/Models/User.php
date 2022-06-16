@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static function admissioncount()
     {
-        $count = Admission::all()->count('id');
+        $count = Course::all()->count();
         return $count;
     }
 

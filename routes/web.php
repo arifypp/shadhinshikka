@@ -81,6 +81,7 @@ Route::middleware(['verified'])->group(function () {
             // Access All Course
             Route::group(['prefix' => 'auth/au/'], function() {
                 Route::get('/course/all/','App\Http\Controllers\Backend\Student\CourseController@index')->name('student.course.manage');                
+                Route::post('/course/payment/','App\Http\Controllers\Backend\Student\CourseController@store')->name('student.course.payment');                
             });
 
             // Student Notice control
@@ -100,7 +101,7 @@ Route::middleware(['verified'])->group(function () {
             // Resource Tool
             Route::group(['prefix' => 'tools'], function() {
                 Route::get('/manage','App\Http\Controllers\Backend\ResourceController@tools')->name('resource.codetools');
-
+                Route::post('/tools/search','App\Http\Controllers\Backend\ResourceController@search')->name('resourcestd.search');
             });
             
                 

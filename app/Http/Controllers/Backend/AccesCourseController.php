@@ -15,7 +15,7 @@ use CoreProc\WalletPlus\Models\WalletType;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Image;
-use File;
+use DB;
 use Session;
 use Auth;
 
@@ -33,6 +33,12 @@ class AccesCourseController extends Controller
         $admission = Admission::where('status', 'active')->where('users_id', Auth::user()->id)->first();
         $sectionTitle = CourseResource::where('crcourse_id', $course->id)->where('status', 'Active')->get() ?: app(CourseResource::class);
         $resourceItems = ResourcesItem::where('resource_id', $sectionTitle['0']->id)->first() ?: app(ResourcesItem::class);
+
+        $users = DB::table('courses')
+        ->leftJoin('course_resources', 'courses.id', '=', 'course_resources.crcourse_id')
+        ->leftJoin('course_resources_items', 'course_resources.id', '=', 'course_resources_items.resource_id')// you may add more joins
+        ->get();
+
 
         if ( !empty($admission) ) {
             return view('Backend.Student.coursepage', compact('admission', 'course', 'sectionTitle', 'resourceItems'));

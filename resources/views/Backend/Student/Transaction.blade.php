@@ -17,39 +17,35 @@
                     <div class="card-body">
                         <table class="table data-table table-responsive align-middle">
                             <th>ক্র. নং</th>
-                            <th>ট্রান্জিকশন এমাউন্ট </th>
+                            <th>এমাউন্ট </th>
+                            <th>কোর্সের নাম </th>
+                            <th>ট্রান্জিকশন আইডি </th>
+                            <th>মোবাইল নং</th>
+                            <th>ডিউ টাকা</th>
                             <th> ব্যবহারকারীর নাম </th>
                             <th> তারিখ </th>
 
                             <tbody>
                             @php $i = 1; @endphp
+                            @foreach( $transaction as $key => $transData )
                             
-                            @php 
-                            $wallet = DB::table('wallets')->where('user_id', Auth::user()->id)->get(); 
-                            @endphp
 
-                            @foreach( $wallet as $ledger )
-                            @php 
-                                $walletledger = DB::table('wallet_ledgers')->where('wallet_id', $ledger->id)->get();
-                            @endphp
-
-                            @foreach( $walletledger as $ledgerdata )
                             <tr>
-                                <td> {{ $i++ }}</td>
-                               
-                                <td>৳{{ number_format( $ledgerdata->amount , 0 , '.' , ',' ) }} BDT</td>
+                                <td> {{ $key+1 }}</td>
+                                <td>৳{{ number_format( $transData->amount , 0 , '.' , ',' ) }} BDT</td>
+                                <td>{{ $transData->name }} </td>
+                                <td>{{ $transData->traxid }}</td>
+                                <td>{{ $transData->phone }}</td>
+                                <td>
+                                    @if($transData->price != $transData->amount)
+                                    <span class="text-danger">৳{{ number_format( $transData->amount- $transData->price, 0 , '.' , ',' ) }} BDT</span>
+                                    @endif
+                                </td>                               
                                 
-                                <td> 
-                                @php $username= App\Models\User::where('id', $ledger->user_id)->get();  @endphp
-                                    @foreach( $username as $usernamsi)
-                                    {{ $usernamsi->name }}
-                                    @endforeach
-
-                                </td>
+                                <td> {{ App\Models\User::find($transData->users_id)->name }} </td>
                                 
-                                <td>{{ date('d M, Y h:i:s a', strtotime($ledgerdata->created_at)) }}</td>
+                                <td>{{ date('d M, Y h:i:s a', strtotime($transData->created_at)) }}</td>
                             </tr>
-                            @endforeach
 
                             @endforeach
                         </tbody>

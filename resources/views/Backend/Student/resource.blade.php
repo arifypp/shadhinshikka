@@ -5,6 +5,26 @@
 @section('css')
    <!-- CSS -->
    <link rel="stylesheet" href="{{ asset('/prism.css') }}" />
+   <style>
+       pre, code {
+            padding:0;
+            margin:0;
+        }
+       pre {
+            max-height: 50em;
+            overflow: auto;
+        }
+        .resource__items {
+            max-height: 50em;
+            overflow: auto;
+        }
+        .resource__items::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+   </style>
 @endsection
 
 @section('content')
@@ -26,31 +46,15 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Search what are you looking for..." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2"> @ </span>
-                        </div>
+                        <form action="" method="post">
+                            <input type="text" id="search" class="form-control" placeholder="Search..." autocomplete="off">
+                        </form>
                     </div>
                     <!-- All the items -->
                         <div class="resource__items">
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
-                            @foreach( $codeblock as $key => $code )
-                                <a class="nav-link mb-2 @if($key == 0) active @endif" id="codeblock{{$code->id}}-tab" data-bs-toggle="pill"
-                                    href="#codeblock{{$code->id}}" role="tab" aria-controls="codeblock{{$code->id}}"
-                                    aria-selected="true">
-                                    <p class="m-0">{{ $code->name }}</p>
-                                    <span>Language: 
-                                    @php 
-                                    $lname = DB::table('program_languegs')->where('id', $code->lang_id)->get();
-                                        foreach($lname as $lang_name)
-                                        {
-                                            echo strtolower($lang_name->name);
-                                        }
-                                    @endphp
-                                    </span>
-                                </a>
-                            @endforeach
+                            
                             </div>
                         </div>
                 </div>
@@ -82,15 +86,70 @@
         </div>
     </div>
 </div>
-
-
-
-
-            </div>
-            <!-- end row -->
+</div>
+<!-- end row -->
 
 @endsection
 
 @section('script')
 <script src="{{ asset('/prism.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        $("code[class^='language-']").each(function(){
+            $(this).html($(this).html().trim());
+        });
+
+        Prism.highlightAll();
+    });
+</script>
+
+<script>
+// Search things
+$('document').ready(function(){
+    $('#search').on('keyup', function(){
+        search();
+    });
+    search();
+
+    function search(){
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': '{{csrf_token()}}'
+            }
+        });
+        var keyword = $('#search').val();
+        $.post('{{ route("resourcestd.search") }}',
+        {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            keyword:keyword
+        },
+        function(data){
+            table_post_row(data);
+            // console.log(data);
+        });
+    }
+
+    function table_post_row(res){
+    let htmlView = '';
+    if(res.coderesuources.length <= 0){
+        htmlView+= `
+        <div class="alert alert-danger">
+            Ops!  data not found
+        </div class="alert alert-danger">`;
+    }
+    for(let i = 0; i < res.coderesuources.length; i++){
+        var actieclass = i == "0" ? "active" : "";
+
+        htmlView += `<a class="nav-link `+actieclass+` mb-2"  id="codeblock`+res.coderesuources[i].id+`-tab" data-bs-toggle="pill"
+                href="#codeblock`+res.coderesuources[i].id+`" role="tab" aria-controls="codeblock`+res.coderesuources[i].id+`"
+                aria-selected="true">
+                <p class="m-0">`+res.coderesuources[i].name+`</p>
+                <span>Language: `+res.coderesuources[i].lang_id+`</span>
+            </a> `;
+    }
+        $('#v-pills-tab').html(htmlView);
+    }
+});
+</script>
 @endsection

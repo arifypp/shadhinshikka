@@ -14,14 +14,15 @@
             <div class="row">
                 <!-- Warning for admission -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12 my-1">
+                    <form action="{{ route('student.course.payment') }}" method="post">
+                        @csrf
                         @if( $admissions->pluck('status') === 'inactive' )
-                        <div class="admission-warning alert alert-danger">
-                            <span> {{ __('আপনার অ্যাডমিশন এখনো একটিভ হয়নি। অনুগ্রহ করে অপেক্ষা করুন ধন্যবাদ।') }} </span>
-                        </div>
-                        <input type="hidden" name="course_ids" value="{{ $admission->courses_id }}">
-                        @endif
-                    {{ $admissions->pluck('status') }}
-                    {{ App\Models\Common\Admission::payment_progress() }}
+                            <div class="admission-warning alert alert-danger">
+                                <span> {{ __('আপনার অ্যাডমিশন এখনো একটিভ হয়নি। অনুগ্রহ করে অপেক্ষা করুন ধন্যবাদ।') }} </span>
+                            </div>
+                            @endif
+                        {{ App\Models\Common\Admission::payment_progress() }}
+                    </form>
                     
                 </div>
                 <div class="col-md-4">

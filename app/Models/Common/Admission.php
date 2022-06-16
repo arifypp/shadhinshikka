@@ -127,6 +127,8 @@ class Admission extends Model
                                             <div class="payment-field">
                                                 <input type="text" name="number" class="form-control my-2" placeholder="e.g 01xxxxxxxxx">
                                                 <input type="text" name="traxID" class="form-control my-2" placeholder="e.g 9EA2W88S88">
+                                                <input type="hidden" name="course_ids" value="<?php echo $admission->courses_id; ?>">
+
                                             </div>
                                             <div class="term-condition my-2 text-center">
                                                 <div class="form-check text-center">

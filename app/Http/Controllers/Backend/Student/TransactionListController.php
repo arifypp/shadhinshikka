@@ -14,7 +14,7 @@ use CoreProc\WalletPlus\Models\WalletType;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Image;
-use File;
+use DB;
 use Session;
 use Auth;
 class TransactionListController extends Controller
@@ -31,7 +31,11 @@ class TransactionListController extends Controller
     public function index()
     {
         //
-        return view('Backend.Student.Transaction');
+        $transaction = DB::table('payment_transictions')
+        ->leftJoin('courses', 'payment_transictions.courses_id', '=', 'courses.id')->where('payment_transictions.users_id', '=', Auth::user()->id)
+        ->get();
+        // print_r($transaction);
+        return view('Backend.Student.Transaction', compact('transaction'));
     }
 
     /**
