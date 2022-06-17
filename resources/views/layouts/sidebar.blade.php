@@ -44,6 +44,20 @@
                     </ul>
                 </li>
 
+                <!-- Skills Manage -->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-palette"></i>
+                        <span key="t-skills">স্কিল সেটিং</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('skills.manage') }}" key="t-skills-manage">ম্যানেজ স্কিল</a></li>
+                        </li>
+                        <li><a href="{{ route('skills.create') }}" key="t-skills-create">স্কিল তৈরি করুন</a></li>
+                        </li>
+                    </ul>
+                </li>
+
                 <!-- Course Manage -->                
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

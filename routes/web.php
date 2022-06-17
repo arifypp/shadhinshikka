@@ -118,6 +118,18 @@ Route::middleware(['verified'])->group(function () {
         Route::group(['middleware' => 'admin'], function () {
             Route::get('/dashboard','App\Http\Controllers\Backend\Admin\DashboardController@index')->name('admin.dashboard');
 
+            // Skills Settings
+            Route::group(['prefix' => 'skills'], function () {
+                Route::get('/manage', 'App\Http\Controllers\Backend\Admin\SkillsController@index')->name('skills.manage');
+                Route::get('/create', 'App\Http\Controllers\Backend\Admin\SkillsController@create')->name('skills.create');
+                Route::get('/show/{studentid}', 'App\Http\Controllers\Backend\Admin\SkillsController@show')->name('catskillsegory.show');
+                Route::post('/store', 'App\Http\Controllers\Backend\Admin\SkillsController@store')->name('skills.store');
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\Admin\SkillsController@edit')->name('skills.edit');
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\Admin\SkillsController@update')->name('skills.update');
+                Route::get('/status/{id}', 'App\Http\Controllers\Backend\Admin\SkillsController@status')->name('skills.status');
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\SkillsController@destroy')->name('skills.delete');
+            });
+
             // Category Settings
             Route::group(['prefix' => 'categories'], function () {
                 Route::get('/manage', 'App\Http\Controllers\Backend\Admin\CategoryController@index')->name('category.manage');
