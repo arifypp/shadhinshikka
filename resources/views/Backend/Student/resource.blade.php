@@ -126,7 +126,7 @@ $('document').ready(function(){
         },
         function(data){
             table_post_row(data);
-            // console.log(data);
+            console.log(data);
         });
     }
 
@@ -140,12 +140,12 @@ $('document').ready(function(){
     }
     for(let i = 0; i < res.coderesuources.length; i++){
         var actieclass = i == "0" ? "active" : "";
-
+        
         htmlView += `<a class="nav-link `+actieclass+` mb-2"  id="codeblock`+res.coderesuources[i].id+`-tab" data-bs-toggle="pill"
                 href="#codeblock`+res.coderesuources[i].id+`" role="tab" aria-controls="codeblock`+res.coderesuources[i].id+`"
                 aria-selected="true">
                 <p class="m-0">`+res.coderesuources[i].name+`</p>
-                <span>Language: `+res.coderesuources[i].lang_id+`</span>
+                <span>Language: `+res.lang_name[i].name+`</span>
             </a> `;
     }
         $('#v-pills-tab').html(htmlView);

@@ -14,7 +14,16 @@ class CreateProgressPaymentsTable extends Migration
     public function up()
     {
         Schema::create('progress_payments', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->string('phone');
+            $table->string('traxid')->unique();            
+            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('admission_id');
+            $table->enum('status', ['Active', 'Inactive'])->default('Active');
+            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('admission_id')->references('id')->on('admissions')->onDelete('cascade');
             $table->timestamps();
         });
     }

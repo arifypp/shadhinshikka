@@ -206,7 +206,7 @@ $('document').ready(function(){
                 href="#codeblock`+res.coderesuources[i].id+`" role="tab" aria-controls="codeblock`+res.coderesuources[i].id+`"
                 aria-selected="true">
                 <p class="m-0">`+res.coderesuources[i].name+`</p>
-                <span>Language: `+res.coderesuources[i].lang_id+`</span>
+                <span>Language: `+res.lang_name[i].name+`</span>
             </a> `;
     }
         $('#v-pills-tab').html(htmlView);

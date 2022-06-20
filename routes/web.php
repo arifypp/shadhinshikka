@@ -142,6 +142,13 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Admin\CategoryController@destroy')->name('category.delete');
             });
 
+            // Progress payment approve
+            Route::group(['prefix' => 'paymentAprove'], function() {
+                Route::get('/manage', 'App\Http\Controllers\Backend\Admin\ProgressController@index')->name('progress.manage');
+                Route::get('/pending', 'App\Http\Controllers\Backend\Admin\ProgressController@pending')->name('progress.pending');
+                
+            });
+
             // Course 
             Route::group(['prefix' => 'courses'], function() {
                 Route::get('/manage', 'App\Http\Controllers\Backend\Admin\CourseController@index')->name('course.manage');

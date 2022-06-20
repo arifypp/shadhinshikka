@@ -58,6 +58,20 @@
                     </ul>
                 </li>
 
+                <!-- Payment Progress Manage -->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-money"></i>
+                        <span key="t-payment">রিকুয়েস্ট পেমেন্ট</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('progress.pending') }}" key="t-payment-manage">রিকুয়েস্ট পেমেন্ট</a></li>
+                        </li>
+                        <li><a href="{{ route('progress.manage') }}" key="t-payment-create">এ্যাপ্রুভ পেমেন্ট</a></li>
+                        </li>
+                    </ul>
+                </li>
+
                 <!-- Course Manage -->                
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

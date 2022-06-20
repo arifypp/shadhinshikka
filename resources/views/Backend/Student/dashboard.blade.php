@@ -14,13 +14,17 @@
             <div class="row">
                 <!-- Warning for admission -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12 my-1">
-                    <form action="{{ route('student.course.payment') }}" method="post">
+                    <form action="{{ route('student.course.payment') }}" method="post" id="submitdata">
                         @csrf
-                        @if( $admissions->pluck('status') === 'inactive' )
+                        @foreach( $admissions as $adm )
+                        @if( $adm->status === 'inactive' )
                             <div class="admission-warning alert alert-danger">
                                 <span> {{ __('আপনার অ্যাডমিশন এখনো একটিভ হয়নি। অনুগ্রহ করে অপেক্ষা করুন ধন্যবাদ।') }} </span>
                             </div>
-                            @endif
+                        @endif
+                        <input type="hidden" name="admission_id" value="{{ $adm->id }}">
+                        <input type="hidden" name="user_id" value="{{ $adm->users_id }}">
+                        @endforeach
                         {{ App\Models\Common\Admission::payment_progress() }}
                     </form>
                     
@@ -144,17 +148,58 @@
 
     <!-- dashboard init -->
     <script src="{{ URL::asset('/assets/js/pages/dashboard.init.js') }}"></script>
-    <script src="{{ asset('/prism.js') }}"></script>
-    <script>
-    hljs.initHighlightingOnLoad();
-    document.addEventListener('DOMContentLoaded', (event) => {
-        document.querySelectorAll('pre code').forEach((el) => {
-            hljs.highlightElement(el);
-        });
-    });
 
-    document.querySelectorAll("code").forEach(function(element) {
-        element.innerHTML = element.innerHTML.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-    });
+    <script>
+        $(document).ready(function() {
+            $(document).on('submit', 'form', function() {
+                $('button').attr('disabled', 'disabled');
+                $("#submition").attr("disabled", true);
+                $("#submition").text("প্রসেসিং ...");
+                $('#submition').append('<div class="spinner-border spinner-border-sm"></div>')
+            });
+        });
+
+        $(function(){
+            $.ajaxSetup({
+            headers: {
+                    "X-CSRFToken": '{{csrf_token()}}'
+                }
+            });
+            $('#submitdata').submit(function(e){
+                e.preventDefault();
+                var mydata = $(this).serialize();
+                $.ajax({
+                    method : 'POST',
+                    url : "{{ route('student.course.payment') }}",
+                    data:mydata,
+                    success: function(response) {
+                        if(response.success){
+                            toastr.success(response.message);
+                        }
+                        setTimeout(function(){
+                            // window.location = '{{ route('user.dashboard') }}';
+                            document.getElementById("submitdata").reset();
+                        }, 3000);
+
+
+                        
+                },
+                error:function (response){
+                    $('.text-danger').html('');
+
+                    $.each(response.responseJSON.errors,function(field_name,error){
+                        $(document).find('[name='+field_name+']').after('<span class="text-strong ss-text-danger">' +error+ '</span>');                    
+                        toastr.error(error);
+                    })
+                    $('.text-danger').delay(5000).fadeOut();
+                    setTimeout(function(){
+                        // window.location = '{{ route('user.dashboard') }}';
+                    }, 3000);
+                }
+                })
+            })
+        })
+    </script>
 </script>
+
 @endsection

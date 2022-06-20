@@ -336,11 +336,15 @@ class ResourceController extends Controller
     {
         //
         $coderesuources = CodeResource::all();
+        $lang_name = DB::table('code_resources')
+            ->leftJoin('program_languegs', 'code_resources.lang_id', '=', 'program_languegs.id')->where('code_resources.status', '=', 'Active')
+            ->get();
         if($request->keyword != ''){
             $coderesuources = CodeResource::where('name','LIKE','%'.$request->keyword.'%')->get();
         }
         return response()->json([
             'coderesuources' => $coderesuources,
+            'lang_name' => $lang_name,
         ]);
     }
 

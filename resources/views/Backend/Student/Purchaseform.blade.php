@@ -384,45 +384,45 @@
         });
 
         $(function(){
-        $.ajaxSetup({
-        headers: {
-                "X-CSRFToken": '{{csrf_token()}}'
-            }
-        });
-        $('#submitdata').submit(function(e){
-            e.preventDefault();
-            var mydata = $(this).serialize();
-            $.ajax({
-                method : 'POST',
-                url : "{{ route('purchase.confirm') }}",
-                data:mydata,
-                success: function(response) {
-                    if(response.success){
-                        toastr.success(response.message);
-                    }
+            $.ajaxSetup({
+            headers: {
+                    "X-CSRFToken": '{{csrf_token()}}'
+                }
+            });
+            $('#submitdata').submit(function(e){
+                e.preventDefault();
+                var mydata = $(this).serialize();
+                $.ajax({
+                    method : 'POST',
+                    url : "{{ route('purchase.confirm') }}",
+                    data:mydata,
+                    success: function(response) {
+                        if(response.success){
+                            toastr.success(response.message);
+                        }
+                        setTimeout(function(){
+                            window.location = '{{ route('user.dashboard') }}';
+                            document.getElementById("submitdata").reset();
+                        }, 3000);
+
+
+                        
+                },
+                error:function (response){
+                    $('.text-danger').html('');
+
+                    $.each(response.responseJSON.errors,function(field_name,error){
+                        $(document).find('[name='+field_name+']').after('<span class="text-strong ss-text-danger">' +error+ '</span>');                    
+                        toastr.error(error);
+                    })
+                    $('.text-danger').delay(5000).fadeOut();
                     setTimeout(function(){
                         window.location = '{{ route('user.dashboard') }}';
-                        document.getElementById("submitdata").reset();
                     }, 3000);
-
-
-                    
-            },
-            error:function (response){
-                $('.text-danger').html('');
-
-                $.each(response.responseJSON.errors,function(field_name,error){
-                    $(document).find('[name='+field_name+']').after('<span class="text-strong ss-text-danger">' +error+ '</span>');                    
-                    toastr.error(error);
+                }
                 })
-                $('.text-danger').delay(5000).fadeOut();
-                setTimeout(function(){
-                    window.location = '{{ route('user.dashboard') }}';
-                }, 3000);
-            }
             })
         })
-    })
 
         
 </script>
